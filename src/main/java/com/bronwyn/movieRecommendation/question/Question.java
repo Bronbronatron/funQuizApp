@@ -1,6 +1,7 @@
 package com.bronwyn.movieRecommendation.question;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,8 @@ public class Question {
 	protected String prompt;
 	protected String topic;
 	protected LocalDateTime createdAt; 
+    private List<String> choices;
+    private String selectedChoice;
 	
 
 
@@ -65,6 +68,22 @@ public class Question {
 
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public List<String> getChoices() {
+		return choices;
+	}
+
+	public void setChoices(List<String> choices) {
+		this.choices = choices;
+	}
+
+	public String getSelectedChoice() {
+		return selectedChoice;
+	}
+
+	public void setSelectedChoice(String selectedChoice) {
+		this.selectedChoice = selectedChoice;
 	}
 	
 
