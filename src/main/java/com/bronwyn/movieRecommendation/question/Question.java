@@ -3,6 +3,7 @@ package com.bronwyn.movieRecommendation.question;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +22,7 @@ public class Question {
 	protected String prompt;
 	protected String topic;
 	protected LocalDateTime createdAt; 
+	@ElementCollection
     private List<String> choices;
     private String selectedChoice;
 	
