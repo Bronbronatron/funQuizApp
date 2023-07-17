@@ -21,9 +21,9 @@ public class Question {
 	protected long id;
 	protected String prompt;
 	protected String topic;
-	protected LocalDateTime createdAt; 
 	@ElementCollection
     private List<String> choices;
+	protected LocalDateTime createdAt; 
     private String selectedChoice;
 	
 
@@ -40,6 +40,12 @@ public class Question {
 		this.topic = topic;
 	}
 
+
+	public Question(String prompt, String topic, List<String> choices) {
+		this.prompt = prompt;
+		this.topic = topic;
+		this.choices = choices;
+	}
 
 	public String getTopic() {
 		return topic;

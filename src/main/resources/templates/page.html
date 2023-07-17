@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<meta charset="UTF-8">
-	<title>My page</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<meta charset="UTF-8">
+<title>My page</title>
 </head>
 
 <body>
 
-<table class="table table-dark">
-  <thead>
-    <tr>
-      <th scope="col">Prompt</th>
-      <th scope="col">Topic</th> 
-    </tr>
-  </thead>
-  <tbody>
-    <tr th:each="question: ${questions}">
-    <td th:text= "${question.prompt}"></td>
-    <td th:text= "${question.topic}"></td>
-  </tbody>
-</table>
+	<table class="table table-dark">
+		<thead>
+			<tr>
+				<th scope="col">Prompt</th>
+				<th scope="col">Answer options</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="question: ${questions}">
+				<td th:text="${question.prompt}"></td>
+				<td>
 
-
+					<div th:each="choice : ${question.choices}">
+						<label th:text="${choice}"> <input type="radio"
+							th:field="${question.id}" th:value="${choice}" />
+						</label><br>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </body>
-
-
 </html>

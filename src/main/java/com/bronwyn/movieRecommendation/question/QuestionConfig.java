@@ -14,9 +14,16 @@ public class QuestionConfig {
 	@Bean
 	CommandLineRunner commandLineRunner(QuestionRepository repository){
 		return args -> {
-			
-			Question questionOne = new Question("What's your favourite food?", "Food/Drink");
-			Question questionTwo = new Question("What's your favourite Meal?", "Food/Drink");
+		     List<String> choicesOne = new ArrayList<>();
+			 List<String> choicesTwo = new ArrayList<>();
+			 choicesOne.add("Sushi");
+			 choicesOne.add("Ramen");
+			 choicesOne.add("Chinese Food");
+			 choicesTwo.add("Tokyo");
+			 choicesTwo.add("I'd rather save my money");
+			 choicesTwo.add("Orlando");
+			Question questionOne = new Question("What's your favourite food?", "Food/Drink", choicesOne);
+			Question questionTwo = new Question("What's your favourite holiday destination?", "Free Time", choicesTwo);
 			 List<Question> questions = new ArrayList<>();
 	            questions.add(questionOne);
 	            questions.add(questionTwo);
