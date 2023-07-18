@@ -1,35 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <meta charset="UTF-8">
-    <title>My page</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<meta charset="UTF-8">
+<title>My page</title>
 </head>
 <body>
-    <form th:object="${question}" method="post">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">Prompt</th>
-                    <th scope="col">Answer options</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="question: ${questions}" th:object="${question}">
-                    <td th:text="${question.prompt}"></td>
-                    <td>
-                        <!-- Render answer options as radio buttons -->
-                        <div th:each="choice : ${question.choices}">
-                            <label class="form-check-label">
-                                <input type="radio"  th:field="*{selectedChoice}" th:value="${choice}" class="form-check-input"/>
-                                <span th:text="${choice}"></span>
-                            </label><br>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+	<form action="#" th:action="@{/api/v1/page}"
+		th:object="${formSubmission}" method="post">
+		<!-- Loop through the list of questions and create form fields for each question -->
+		<div th:each="question, questionStat : ${formSubmission.questions}">
+			<!-- Render the question prompt and choices -->
+			<h4 th:text="${question.prompt}"></h4>
+			<div th:each="choice : ${question.choices}">
+				<input type="radio"
+					th:field="*{questions[__${questionStat.index}__].selectedChoice}"
+					th:value="${choice}" /> <label th:text="${choice}"></label>
+			</div>
+		</div>
+		<button type="submit">Submit</button>
+	</form>
 </body>
 </html>
