@@ -3,16 +3,22 @@ package com.bronwyn.movieRecommendation.question;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
+
 @Entity
-@Table
+@Table(name = "question")
 public class Question {
 	
 	@Id
@@ -22,9 +28,9 @@ public class Question {
 	protected String prompt;
 	protected String topic;
 	@ElementCollection
-    private List<String> choices;
+    private List<QuestionChoice> choices;
 	protected LocalDateTime createdAt; 
-    private String selectedChoice;
+    private QuestionChoice selectedChoice;
 	
 
 
@@ -41,7 +47,7 @@ public class Question {
 	}
 
 
-	public Question(String prompt, String topic, List<String> choices) {
+	public Question(String prompt, String topic, List<QuestionChoice> choices) {
 		this.prompt = prompt;
 		this.topic = topic;
 		this.choices = choices;
@@ -78,19 +84,19 @@ public class Question {
 		this.createdAt = createdAt;
 	}
 
-	public List<String> getChoices() {
+	public List<QuestionChoice> getChoices() {
 		return choices;
 	}
 
-	public void setChoices(List<String> choices) {
+	public void setChoices(List<QuestionChoice> choices) {
 		this.choices = choices;
 	}
 
-	public String getSelectedChoice() {
+	public QuestionChoice getSelectedChoice() {
 		return selectedChoice;
 	}
 
-	public void setSelectedChoice(String selectedChoice) {
+	public void setSelectedChoice(QuestionChoice selectedChoice) {
 		this.selectedChoice = selectedChoice;
 	}
 	

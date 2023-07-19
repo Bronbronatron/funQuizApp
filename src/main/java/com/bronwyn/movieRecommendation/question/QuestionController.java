@@ -40,13 +40,13 @@ public class QuestionController {
 		questionService.deleteQuestion(questionId);
 	}
 
-	@PutMapping(path = "{questionId}")
+	/*@PutMapping(path = "{questionId}")
 	public void updateQuestion(@PathVariable("questionId") Long questionId,
 			@RequestParam(required = false) String prompt, @RequestParam(required = false) String topic) {
 		questionService.updateQuestion(questionId, prompt, topic);
 	}
 	
-	
+	*/
 	
 
 }
