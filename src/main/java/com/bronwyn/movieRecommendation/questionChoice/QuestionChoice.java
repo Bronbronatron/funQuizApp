@@ -1,5 +1,8 @@
 package com.bronwyn.movieRecommendation.questionChoice;
 
+import java.util.Optional;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,6 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.bronwyn.movieRecommendation.question.Question;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "question_choice")
@@ -24,16 +28,31 @@ public class QuestionChoice {
 	String ChoicePrompt;
 	
 	@Enumerated(EnumType.STRING)
-	ChoiceValue value;
+	protected ChoiceValue value;
 	
+	 @JsonIgnore
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "question_id", referencedColumnName = "id")
+	protected Question question; 
 	 
 	public QuestionChoice(String choicePrompt, ChoiceValue value) {
 		ChoicePrompt = choicePrompt;
 		this.value = value;
 	}
 
+	
 	public QuestionChoice() {
 	}
+	
+
+	public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+
 
 	public String getChoicePrompt() {
 		return ChoicePrompt;

@@ -14,15 +14,18 @@ import com.bronwyn.movieRecommendation.question.Question;
 import com.bronwyn.movieRecommendation.question.QuestionService;
 import com.bronwyn.movieRecommendation.questionChoice.ChoiceValue;
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
+import com.bronwyn.movieRecommendation.questionChoice.QuestionChoiceService;
 
 @Controller
 public class MainController {
 	
 	
 	   private final QuestionService questionService;
+	   
 	    @Autowired
 	    public MainController(QuestionService questionService) {
 	        this.questionService = questionService;
+	    
 	    }
 
 	@GetMapping(path = "api/v1/page")
@@ -32,7 +35,7 @@ public class MainController {
 		return "page";
 	}
 	
-	   @PostMapping(path = "api/v1/page")
+	 /*  @PostMapping(path = "api/v1/page")
 	    String processForm(@ModelAttribute("formSubmission") FormSubmission formSubmission) {
 	        List<Question> questions = formSubmission.getQuestions();
 	        ArrayList<ChoiceValue> answers = new  ArrayList<ChoiceValue>();
@@ -44,6 +47,8 @@ public class MainController {
 	        }
 	        return "result"; 
 	    }
+	    
+	    */
 	}
 	
 

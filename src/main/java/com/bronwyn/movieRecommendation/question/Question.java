@@ -1,6 +1,7 @@
 package com.bronwyn.movieRecommendation.question;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -9,16 +10,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "question")
 public class Question {
 	
 	@Id
@@ -30,9 +29,11 @@ public class Question {
 	@ElementCollection
     private List<QuestionChoice> choices;
 	protected LocalDateTime createdAt; 
-    private QuestionChoice selectedChoice;
 	
-
+	
+    @JsonIgnore
+    @OneToMany(mappedBy = "question", cascade=CascadeType.ALL)
+    protected List<QuestionChoice> questionChoice = new ArrayList<QuestionChoice>();
 
 	public Question() {
 	}
@@ -92,6 +93,16 @@ public class Question {
 		this.choices = choices;
 	}
 
+	public List<QuestionChoice> getQuestionChoice() {
+		return questionChoice;
+	}
+
+	public void setQuestionChoice(List<QuestionChoice> questionChoice) {
+		this.questionChoice = questionChoice;
+	}
+	
+	
+/*
 	public QuestionChoice getSelectedChoice() {
 		return selectedChoice;
 	}
@@ -100,5 +111,5 @@ public class Question {
 		this.selectedChoice = selectedChoice;
 	}
 	
-
+*/
 }
