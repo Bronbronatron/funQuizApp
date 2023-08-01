@@ -1,11 +1,10 @@
 package com.bronwyn.movieRecommendation.questionChoice;
 
-import java.util.Optional;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,26 +16,27 @@ import javax.persistence.Table;
 import com.bronwyn.movieRecommendation.question.Question;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
 @Entity
 @Table(name = "question_choice")
 public class QuestionChoice {
 	
 	@Id
-	@SequenceGenerator(name = "question_sequence", sequenceName = "question_sequence", allocationSize =1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "question_sequence")
+	@SequenceGenerator(name = "question_choice_sequence", sequenceName = "question_choice_sequence", allocationSize =1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "question_choice_sequence")
 	protected long id;
-	String ChoicePrompt;
+	String choicePrompt;
 	
 	@Enumerated(EnumType.STRING)
 	protected ChoiceValue value;
 	
-	 @JsonIgnore
+	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "question_id", referencedColumnName = "id")
 	protected Question question; 
 	 
 	public QuestionChoice(String choicePrompt, ChoiceValue value) {
-		ChoicePrompt = choicePrompt;
+		this.choicePrompt = choicePrompt;
 		this.value = value;
 	}
 
@@ -53,13 +53,12 @@ public class QuestionChoice {
 		this.question = question;
 	}
 
-
 	public String getChoicePrompt() {
-		return ChoicePrompt;
+		return choicePrompt;
 	}
 
 	public void setChoicePrompt(String choicePrompt) {
-		ChoicePrompt = choicePrompt;
+		this.choicePrompt = choicePrompt;
 	}
 
 	public ChoiceValue getValue() {

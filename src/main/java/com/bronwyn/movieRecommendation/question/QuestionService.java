@@ -19,11 +19,12 @@ import javax.transaction.Transactional;
 public class QuestionService {
 
 	private final QuestionRepository questionRepository;
-	private final QuestionChoiceRepository questionChoiceRepository;
+	// private final QuestionChoiceRepository questionChoiceRepository;
+	// QuestionChoiceRepository questionChoiceRepository
 
 	@Autowired
-	public QuestionService(QuestionRepository questionRepository, QuestionChoiceRepository questionChoiceRepository) {
-		this.questionChoiceRepository = questionChoiceRepository;
+	public QuestionService(QuestionRepository questionRepository) {
+		// this.questionChoiceRepository = questionChoiceRepository;
 		this.questionRepository = questionRepository;
 	}
 
@@ -39,16 +40,22 @@ public class QuestionService {
 			throw new IllegalStateException("Question already exists");
 		}
 		question.setCreatedAt(LocalDateTime.now());
+
+		List<QuestionChoice> questionChoices = question.getQuestionChoice();
+		if (questionChoices != null) {
+			for (QuestionChoice choice : questionChoices) {
+				// Set the bidirectional relationship with Question
+				choice.setQuestion(question);
+			}
+		}
+
 		questionRepository.save(question);
 	}
 
-	
-	
 	public Optional<Question> findQuestionByID(long questionID) {
-	    return questionRepository.findById(questionID);
+		return questionRepository.findById(questionID);
 	}
 
-	
 	public void deleteQuestion(Long questionId) {
 		boolean exists = questionRepository.existsById(questionId);
 		if (!exists) {
@@ -71,22 +78,6 @@ public class QuestionService {
 			;
 
 		}
+
+	}
 }
-	@Transactional
-    public void saveQuestionWithChoices(Question question, List<QuestionChoice> choices) {
-        // Save the question first (assuming you have a repository for Question)
-        Question savedQuestion = questionRepository.save(question);
-
-        // Associate the choices with the saved question
-        for (QuestionChoice choice : choices) {
-            choice.setQuestion(savedQuestion);
-        }
-
-        // Save the choices (assuming you have a repository for Choice)
-        questionChoiceRepository.saveAll(choices);
-    }
-	
-}	
-	
-
-

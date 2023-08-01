@@ -26,13 +26,10 @@ public class Question {
 	protected long id;
 	protected String prompt;
 	protected String topic;
-	@ElementCollection
-    private List<QuestionChoice> choices;
 	protected LocalDateTime createdAt; 
 	
 	
-    @JsonIgnore
-    @OneToMany(mappedBy = "question", cascade=CascadeType.ALL)
+	    @OneToMany(mappedBy = "question", cascade=CascadeType.ALL)
     protected List<QuestionChoice> questionChoice = new ArrayList<QuestionChoice>();
 
 	public Question() {
@@ -48,10 +45,10 @@ public class Question {
 	}
 
 
-	public Question(String prompt, String topic, List<QuestionChoice> choices) {
+	public Question(String prompt, LocalDateTime createdAt, List<QuestionChoice> questionChoice) {
 		this.prompt = prompt;
-		this.topic = topic;
-		this.choices = choices;
+		this.createdAt = createdAt;
+		this.questionChoice = questionChoice;
 	}
 
 	public String getTopic() {
@@ -85,14 +82,6 @@ public class Question {
 		this.createdAt = createdAt;
 	}
 
-	public List<QuestionChoice> getChoices() {
-		return choices;
-	}
-
-	public void setChoices(List<QuestionChoice> choices) {
-		this.choices = choices;
-	}
-
 	public List<QuestionChoice> getQuestionChoice() {
 		return questionChoice;
 	}
@@ -102,14 +91,4 @@ public class Question {
 	}
 	
 	
-/*
-	public QuestionChoice getSelectedChoice() {
-		return selectedChoice;
-	}
-
-	public void setSelectedChoice(QuestionChoice selectedChoice) {
-		this.selectedChoice = selectedChoice;
-	}
-	
-*/
 }

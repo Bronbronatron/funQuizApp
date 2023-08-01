@@ -24,13 +24,16 @@ private final QuestionChoiceRepository questionChoiceRepository;
 		this.questionChoiceRepository = questionChoiceRepository;
 	}
 
-
-
 	public void addNewQuestionChoice(QuestionChoice questionChoice) {
-		questionChoiceRepository.save(questionChoice);
-		
+	    Question question = questionChoice.getQuestion();
+	    if (question != null) {
+	        questionChoice.setQuestion(question);
+	    }
+	    questionChoiceRepository.save(questionChoice);
 	}
 	
+		
+
 	public Optional<QuestionChoice> findQuestionChoiceByID(long questionChoiceID) {
 	    return questionChoiceRepository.findById(questionChoiceID);
 	}
