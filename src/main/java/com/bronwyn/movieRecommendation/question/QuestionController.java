@@ -39,7 +39,9 @@ public class QuestionController {
 	public void deleteQuestion(@PathVariable("questionId") Long questionId) {
 		questionService.deleteQuestion(questionId);
 	}
-
+	
+	
+/*
 	@PutMapping(path = "{questionId}")
 	public void updateQuestion(@PathVariable("questionId") Long questionId,
 	                           @RequestBody Question updatedQuestion) {
@@ -48,5 +50,5 @@ public class QuestionController {
 
 	    questionService.updateQuestion(updatedQuestion, question);
 	}
-
+*/
 }

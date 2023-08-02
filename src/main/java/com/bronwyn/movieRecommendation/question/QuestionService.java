@@ -64,8 +64,6 @@ public class QuestionService {
 
 	@Transactional
 	public void updateQuestion(Question updatedQuestion, Question existingQuestion) {
-	    Long questionId = existingQuestion.getId();
-
 	    if (updatedQuestion.getPrompt() != null && !updatedQuestion.getPrompt().isEmpty() &&
 	        !Objects.equals(existingQuestion.getPrompt(), updatedQuestion.getPrompt())) {
 	        existingQuestion.setPrompt(updatedQuestion.getPrompt());
@@ -76,12 +74,18 @@ public class QuestionService {
 	        existingQuestion.setTopic(updatedQuestion.getTopic());
 	    }
 
-	    List<QuestionChoice> questionChoices = existingQuestion.getQuestionChoice();
-	    for (QuestionChoice choice : questionChoices) {
-	        choice.setQuestion(existingQuestion);
+	    List<QuestionChoice> existingChoices = existingQuestion.getQuestionChoice();
+	    List<QuestionChoice> updatedChoices = updatedQuestion.getQuestionChoice();
+
+	    for (int i = 0; i < existingChoices.size(); i++) {
+	        QuestionChoice existingChoice = existingChoices.get(i);
+	        QuestionChoice updatedChoice = updatedChoices.get(i);
+
+	        existingChoice.setChoicePrompt(updatedChoice.getChoicePrompt());
+	        // If you have other properties in QuestionChoice that need to be updated, do the same here
 	    }
 
 	    questionRepository.save(existingQuestion);
 	}
-	
+
 }

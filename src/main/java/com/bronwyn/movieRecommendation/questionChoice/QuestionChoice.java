@@ -30,7 +30,6 @@ public class QuestionChoice {
 	@Enumerated(EnumType.STRING)
 	protected ChoiceValue value;
 	
-	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "question_id", referencedColumnName = "id")
 	protected Question question; 
@@ -39,8 +38,8 @@ public class QuestionChoice {
 		this.choicePrompt = choicePrompt;
 		this.value = value;
 	}
-
 	
+
 	public QuestionChoice() {
 	}
 	

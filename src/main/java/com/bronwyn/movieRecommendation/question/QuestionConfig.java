@@ -15,7 +15,6 @@ import com.bronwyn.movieRecommendation.questionChoice.QuestionChoiceService;
 
 @Configuration
 public class QuestionConfig {
-	/*
 	@Bean
 	CommandLineRunner commandLineRunner(QuestionService questionService, QuestionChoiceService choiceService) {
 		return args -> {
@@ -67,5 +66,5 @@ public class QuestionConfig {
 		};
 		
 	}
-	*/
+
 }

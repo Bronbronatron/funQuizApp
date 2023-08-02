@@ -26,7 +26,7 @@ public class Question {
 	protected LocalDateTime createdAt; 
 	
 	
-	    @OneToMany(mappedBy = "question", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "question", cascade=CascadeType.ALL)
     protected List<QuestionChoice> questionChoice = new ArrayList<QuestionChoice>();
 
 	public Question() {
