@@ -1,7 +1,5 @@
 package com.bronwyn.movieRecommendation.questionChoice;
 
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -32,12 +30,10 @@ private final QuestionChoiceRepository questionChoiceRepository;
 	    questionChoiceRepository.save(questionChoice);
 	}
 	
-		
 
 	public Optional<QuestionChoice> findQuestionChoiceByID(long questionChoiceID) {
 	    return questionChoiceRepository.findById(questionChoiceID);
 	}
-
 
 	public void deleteQuestionChoice(Long questionChoiceId) {
 		boolean exists = questionChoiceRepository.existsById(questionChoiceId);

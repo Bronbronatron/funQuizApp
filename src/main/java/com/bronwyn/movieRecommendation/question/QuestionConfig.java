@@ -12,10 +12,10 @@ import com.bronwyn.movieRecommendation.questionChoice.ChoiceValue;
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoiceRepository;
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoiceService;
-/*
+
 @Configuration
 public class QuestionConfig {
-	
+	/*
 	@Bean
 	CommandLineRunner commandLineRunner(QuestionService questionService, QuestionChoiceService choiceService) {
 		return args -> {
@@ -29,25 +29,19 @@ public class QuestionConfig {
 			List<QuestionChoice> choicesThree = new ArrayList<>();
 
 			QuestionChoice choiceA = new QuestionChoice("Sushi", ChoiceValue.A);
-		//	choiceA.setQuestion(questionOne);
 			QuestionChoice choiceB = new QuestionChoice("Ramen", ChoiceValue.B);
-		//	choiceB.setQuestion(questionOne);
 			QuestionChoice choiceC = new QuestionChoice("Chinese Food", ChoiceValue.C);
-		//	choiceC.setQuestion(questionOne);
+
 
 			QuestionChoice choiceA2 = new QuestionChoice("Tokyo", ChoiceValue.A);
-		//	choiceA2.setQuestion(questionTwo);
 			QuestionChoice choiceB2 = new QuestionChoice("I'd rather save my money", ChoiceValue.B);
-		//	choiceB2.setQuestion(questionTwo);
 			QuestionChoice choiceC2 = new QuestionChoice("Orlando", ChoiceValue.C);
-		//	choiceC2.setQuestion(questionTwo);
+	
 
 			QuestionChoice choiceA3 = new QuestionChoice("Experience as much as possible", ChoiceValue.A);
-		//	choiceA3.setQuestion(questionThree);
 			QuestionChoice choiceB3 = new QuestionChoice("Don't work more than neccessary", ChoiceValue.B);
-		//	choiceB3.setQuestion(questionThree);
 			QuestionChoice choiceC3 = new QuestionChoice("Have as much fun as possible", ChoiceValue.C);
-		//	choiceC3.setQuestion(questionThree);
+	
 
 			choicesOne.add(choiceA);
 			choicesOne.add(choiceB);
@@ -73,5 +67,5 @@ public class QuestionConfig {
 		};
 		
 	}
+	*/
 }
-*/

@@ -1,9 +1,13 @@
 package com.bronwyn.movieRecommendation.question;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,21 +15,16 @@ import org.springframework.stereotype.Service;
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoiceRepository;
 
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
 @Service
 public class QuestionService {
 
 	private final QuestionRepository questionRepository;
-	// private final QuestionChoiceRepository questionChoiceRepository;
-	// QuestionChoiceRepository questionChoiceRepository
+	private final QuestionChoiceRepository questionChoiceRepository;
 
 	@Autowired
-	public QuestionService(QuestionRepository questionRepository) {
-		// this.questionChoiceRepository = questionChoiceRepository;
+	public QuestionService(QuestionRepository questionRepository, QuestionChoiceRepository questionChoiceRepository) {
 		this.questionRepository = questionRepository;
+		this.questionChoiceRepository = questionChoiceRepository;
 	}
 
 	public List<Question> getQuestion() {
@@ -44,7 +43,6 @@ public class QuestionService {
 		List<QuestionChoice> questionChoices = question.getQuestionChoice();
 		if (questionChoices != null) {
 			for (QuestionChoice choice : questionChoices) {
-				// Set the bidirectional relationship with Question
 				choice.setQuestion(question);
 			}
 		}
@@ -65,19 +63,25 @@ public class QuestionService {
 	}
 
 	@Transactional
-	public void updateQuestion(Long questionId, String prompt, String topic) {
-		Question question = questionRepository.findById(questionId)
-				.orElseThrow(() -> new IllegalStateException("Question with Id " + questionId + " does not exist"));
-		if (prompt != null && prompt.length() > 0 && !Objects.equals(question.getPrompt(), prompt)) {
-			question.setPrompt(prompt);
-			;
-		}
+	public void updateQuestion(Question updatedQuestion, Question existingQuestion) {
+	    Long questionId = existingQuestion.getId();
 
-		if (topic != null && topic.length() > 0 && !Objects.equals(question.getTopic(), topic)) {
-			question.setTopic(topic);
-			;
+	    if (updatedQuestion.getPrompt() != null && !updatedQuestion.getPrompt().isEmpty() &&
+	        !Objects.equals(existingQuestion.getPrompt(), updatedQuestion.getPrompt())) {
+	        existingQuestion.setPrompt(updatedQuestion.getPrompt());
+	    }
 
-		}
+	    if (updatedQuestion.getTopic() != null && !updatedQuestion.getTopic().isEmpty() &&
+	        !Objects.equals(existingQuestion.getTopic(), updatedQuestion.getTopic())) {
+	        existingQuestion.setTopic(updatedQuestion.getTopic());
+	    }
 
+	    List<QuestionChoice> questionChoices = existingQuestion.getQuestionChoice();
+	    for (QuestionChoice choice : questionChoices) {
+	        choice.setQuestion(existingQuestion);
+	    }
+
+	    questionRepository.save(existingQuestion);
 	}
+	
 }

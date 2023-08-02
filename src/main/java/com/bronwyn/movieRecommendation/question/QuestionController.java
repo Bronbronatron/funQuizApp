@@ -1,6 +1,7 @@
 package com.bronwyn.movieRecommendation.question;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,7 +30,6 @@ public class QuestionController {
 		return questionService.getQuestion();
 	}
 
-
 	@PostMapping
 	public void registerNewQuestion(@RequestBody Question question) {
 		questionService.addNewQuestionWithChoice(question);
@@ -39,15 +39,14 @@ public class QuestionController {
 	public void deleteQuestion(@PathVariable("questionId") Long questionId) {
 		questionService.deleteQuestion(questionId);
 	}
-	
 
 	@PutMapping(path = "{questionId}")
 	public void updateQuestion(@PathVariable("questionId") Long questionId,
-			@RequestParam(required = false) String prompt, @RequestParam(required = false) String topic) {
-		questionService.updateQuestion(questionId, prompt, topic);
-	}
-	
+	                           @RequestBody Question updatedQuestion) {
+	    Question question = questionService.findQuestionByID(questionId)
+	            .orElseThrow(() -> new NoSuchElementException("Question with Id " + questionId + " does not exist"));
 
-	
+	    questionService.updateQuestion(updatedQuestion, question);
+	}
 
 }
