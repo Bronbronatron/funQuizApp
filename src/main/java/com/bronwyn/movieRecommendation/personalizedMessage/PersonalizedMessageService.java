@@ -16,12 +16,18 @@ public class PersonalizedMessageService {
 	}
 	
 	@Transactional
-	public void addNewpersonalizedMessage(PersonalizedMessage personalizedMessage) {
+	public void addNewPersonalizedMessage(PersonalizedMessage personalizedMessage) {
 	    	personalizedMessageRepository.save(personalizedMessage);
 	}
 	
-	
-	
+	@Transactional
+	public void deletePersonalizedMessage(Long personalizedMessageId) {
+		boolean exists = personalizedMessageRepository.existsById(personalizedMessageId);
+		if(!exists) {
+			throw new IllegalStateException("Personalized Message" + personalizedMessageId + " does not exist");
+		}
+		personalizedMessageRepository.deleteById(personalizedMessageId);
+		}
 	
 
 }

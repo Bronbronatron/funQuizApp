@@ -17,6 +17,19 @@ import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
 @Entity
 public class Question {
 	
+	public Question(String prompt) {
+		this.prompt = prompt;
+	}
+
+	public Question() {
+	}
+
+	public Question(String prompt, String topic, List<QuestionChoice> questionChoice) {
+		this.prompt = prompt;
+		this.topic = topic;
+		this.questionChoice = questionChoice;
+	}
+
 	@Id
 	@SequenceGenerator(name = "question_sequence", sequenceName = "question_sequence", allocationSize =1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "question_sequence")
@@ -29,23 +42,9 @@ public class Question {
 	@OneToMany(mappedBy = "question", cascade=CascadeType.ALL)
     protected List<QuestionChoice> questionChoice = new ArrayList<QuestionChoice>();
 
-	public Question() {
-	}
-
-	public Question(String prompt) {
-		this.prompt = prompt;
-	}
-
 	public Question(String prompt, String topic) {
 		this.prompt = prompt;
 		this.topic = topic;
-	}
-
-
-	public Question(String prompt, LocalDateTime createdAt, List<QuestionChoice> questionChoice) {
-		this.prompt = prompt;
-		this.createdAt = createdAt;
-		this.questionChoice = questionChoice;
 	}
 
 	public String getTopic() {

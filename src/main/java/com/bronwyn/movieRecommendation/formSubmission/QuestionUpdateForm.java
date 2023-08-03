@@ -4,10 +4,20 @@ import java.util.List;
 
 public class QuestionUpdateForm {
 
+
 	private String prompt;
 	private String topic;
 	private List<QuestionChoiceUpdateForm> questionChoices;
 
+	
+    public QuestionUpdateForm(String prompt, String topic, List<QuestionChoiceUpdateForm> questionChoices) {
+        this.prompt = prompt;
+        this.topic = topic;
+        this.questionChoices = questionChoices;
+    }
+
+
+	
 	@Override
 	public String toString() {
 		return "QuestionUpdateForm{" + "prompt='" + prompt + '\'' + ", topic='" + topic + '\'' + ", questionChoices="

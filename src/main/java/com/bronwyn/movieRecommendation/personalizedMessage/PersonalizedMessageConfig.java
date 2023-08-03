@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class PersonalizedMessageConfig {
 
-	@Bean
+/*	@Bean
 	CommandLineRunner commandLineRunnerMessage(PersonalizedMessageService personalizedMessageService) {
 		return args -> {
 			
@@ -22,4 +22,5 @@ public class PersonalizedMessageConfig {
 		};
 
 	}
+	*/
 }

@@ -4,7 +4,29 @@ import com.bronwyn.movieRecommendation.personalizedMessage.AnswerChoice;
 
 public class QuestionChoiceUpdateForm {
 	
-	 private String choicePrompt;
+	 public QuestionChoiceUpdateForm(String choicePrompt, AnswerChoice answerChoice) {
+		super();
+		this.choicePrompt = choicePrompt;
+		this.answerChoice = answerChoice;
+	}
+
+	public String getChoicePrompt() {
+		return choicePrompt;
+	}
+
+	public void setChoicePrompt(String choicePrompt) {
+		this.choicePrompt = choicePrompt;
+	}
+
+	public AnswerChoice getAnswerChoice() {
+		return answerChoice;
+	}
+
+	public void setAnswerChoice(AnswerChoice answerChoice) {
+		this.answerChoice = answerChoice;
+	}
+
+	private String choicePrompt;
 	 private AnswerChoice answerChoice;
 
 	   @Override

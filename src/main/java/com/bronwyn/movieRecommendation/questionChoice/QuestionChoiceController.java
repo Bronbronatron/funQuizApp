@@ -33,13 +33,14 @@ public class QuestionChoiceController {
 		questionChoiceService.deleteQuestionChoice(questionChoiceId);
 	}
 
+	/*
 	@PutMapping(path = "{questionId}")
 	public void updateQuestionChoice(@PathVariable("questionChoiceId") Long questionChoiceId,
 			@RequestParam(required = false) String choicePrompt, @RequestParam(required = false) ChoiceValue value) {
 		questionChoiceService.updateQuestionChoice(questionChoiceId, choicePrompt, value);
 	}
 	
-
+*/
 }
 
 

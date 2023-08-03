@@ -1,16 +1,14 @@
 package com.bronwyn.movieRecommendation.question;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoiceRepository;
@@ -27,11 +25,6 @@ public class QuestionService {
 		this.questionChoiceRepository = questionChoiceRepository;
 	}
 
-	public List<Question> getQuestion() {
-		return questionRepository.findAll();
-
-	}
-
 	@Transactional
 	public void addNewQuestionWithChoice(Question question) {
 		Optional<Question> questionByPrompt = questionRepository.findQuestionByPrompt(question.getPrompt());
@@ -39,21 +32,37 @@ public class QuestionService {
 			throw new IllegalStateException("Question already exists");
 		}
 		question.setCreatedAt(LocalDateTime.now());
-
 		List<QuestionChoice> questionChoices = question.getQuestionChoice();
-		if (questionChoices != null) {
-			for (QuestionChoice choice : questionChoices) {
-				choice.setQuestion(question);
+		//if (questionChoices != null) {
+			if(questionChoices.isEmpty()) {
+				System.out.println("I AM Empty!");
 			}
-		}
-
+			
+			for (QuestionChoice choice : questionChoices) {
+				System.out.println("Setting choices.." + choice );
+				choice.setQuestion(question);
+				System.out.println("Done setting!!");
+			}
+		
 		questionRepository.save(question);
+		System.out.println("Done all!!!");
 	}
 
+	
+
+	
+	//@Transactional
+	public List<Question> getQuestion() {
+		return questionRepository.findAll();
+
+	}
+
+	//@Transactional
 	public Optional<Question> findQuestionByID(long questionID) {
 		return questionRepository.findById(questionID);
 	}
 
+	//@Transactional
 	public void deleteQuestion(Long questionId) {
 		boolean exists = questionRepository.existsById(questionId);
 		if (!exists) {
@@ -64,28 +73,28 @@ public class QuestionService {
 
 	@Transactional
 	public void updateQuestion(Question updatedQuestion, Question existingQuestion) {
-	    if (updatedQuestion.getPrompt() != null && !updatedQuestion.getPrompt().isEmpty() &&
-	        !Objects.equals(existingQuestion.getPrompt(), updatedQuestion.getPrompt())) {
-	        existingQuestion.setPrompt(updatedQuestion.getPrompt());
-	    }
+		if (updatedQuestion.getPrompt() != null && !updatedQuestion.getPrompt().isEmpty()
+				&& !Objects.equals(existingQuestion.getPrompt(), updatedQuestion.getPrompt())) {
+			existingQuestion.setPrompt(updatedQuestion.getPrompt());
+		}
 
-	    if (updatedQuestion.getTopic() != null && !updatedQuestion.getTopic().isEmpty() &&
-	        !Objects.equals(existingQuestion.getTopic(), updatedQuestion.getTopic())) {
-	        existingQuestion.setTopic(updatedQuestion.getTopic());
-	    }
+		if (updatedQuestion.getTopic() != null && !updatedQuestion.getTopic().isEmpty()
+				&& !Objects.equals(existingQuestion.getTopic(), updatedQuestion.getTopic())) {
+			existingQuestion.setTopic(updatedQuestion.getTopic());
+		}
 
-	    List<QuestionChoice> existingChoices = existingQuestion.getQuestionChoice();
-	    List<QuestionChoice> updatedChoices = updatedQuestion.getQuestionChoice();
+		List<QuestionChoice> existingChoices = existingQuestion.getQuestionChoice();
+		List<QuestionChoice> updatedChoices = updatedQuestion.getQuestionChoice();
+		for (int i = 0; i < existingChoices.size(); i++) {
+			QuestionChoice existingChoice = existingChoices.get(i);
+			QuestionChoice updatedChoice = updatedChoices.get(i);
 
-	    for (int i = 0; i < existingChoices.size(); i++) {
-	        QuestionChoice existingChoice = existingChoices.get(i);
-	        QuestionChoice updatedChoice = updatedChoices.get(i);
+			existingChoice.setChoicePrompt(updatedChoice.getChoicePrompt());
+		//	existingChoice.setChoiceValue(updatedChoice.getChoiceValue());
+			
+		}
 
-	        existingChoice.setChoicePrompt(updatedChoice.getChoicePrompt());
-	        // If you have other properties in QuestionChoice that need to be updated, do the same here
-	    }
-
-	    questionRepository.save(existingQuestion);
+		questionRepository.save(existingQuestion);
 	}
 
 }
