@@ -20,34 +20,28 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "question_choice")
 public class QuestionChoice {
-	/*
-	public QuestionChoice(String choicePrompt, ChoiceValue value, Question question) {
-		this.choicePrompt = choicePrompt;
-		this.value = value;
-		this.question = question;
-	}
-*/
+
 	@Id
 	@SequenceGenerator(name = "question_choice_sequence", sequenceName = "question_choice_sequence", allocationSize =1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "question_choice_sequence")
 	protected long id;
 	String choicePrompt;
 	
-	//@Enumerated(EnumType.STRING)
-	//protected ChoiceValue value;
+	@Enumerated(EnumType.STRING)
+	protected ChoiceValue value;
 	
 	@JsonIgnore 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "question_id", referencedColumnName = "id")
 	protected Question question; 
 	 
-/*
+
 	public QuestionChoice(String choicePrompt, ChoiceValue value) {
 		this.choicePrompt = choicePrompt;
 		this.value = value;
 	}
-	*/
-	 public QuestionChoice(String choicePrompt, Question question) {
+	
+	public QuestionChoice(String choicePrompt, Question question) {
 	        this.choicePrompt = choicePrompt;
 	        this.question = question;
 	    }
@@ -76,7 +70,7 @@ public class QuestionChoice {
 		this.choicePrompt = choicePrompt;
 	}
 
-	/*
+	
 	public ChoiceValue getChoiceValue() {
 		return value;
 	}
@@ -84,5 +78,5 @@ public class QuestionChoice {
 	public void setChoiceValue(ChoiceValue value) {
 		this.value = value;
 	}
-*/
+
 }
