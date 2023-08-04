@@ -33,36 +33,32 @@ public class QuestionService {
 		}
 		question.setCreatedAt(LocalDateTime.now());
 		List<QuestionChoice> questionChoices = question.getQuestionChoice();
-		//if (questionChoices != null) {
-			if(questionChoices.isEmpty()) {
-				System.out.println("I AM Empty!");
-			}
-			
+		if (questionChoices != null) {
+
 			for (QuestionChoice choice : questionChoices) {
-				System.out.println("Setting choices.." + choice );
+				System.out.println("Setting choices.." + choice);
 				choice.setQuestion(question);
-				System.out.println("Done setting!!");
 			}
-		
+		}
+
 		questionRepository.save(question);
-		System.out.println("Done all!!!");
 	}
 
 	
 
 	
-	//@Transactional
+	@Transactional
 	public List<Question> getQuestion() {
 		return questionRepository.findAll();
 
 	}
 
-	//@Transactional
+	@Transactional
 	public Optional<Question> findQuestionByID(long questionID) {
 		return questionRepository.findById(questionID);
 	}
 
-	//@Transactional
+	@Transactional
 	public void deleteQuestion(Long questionId) {
 		boolean exists = questionRepository.existsById(questionId);
 		if (!exists) {
@@ -90,7 +86,7 @@ public class QuestionService {
 			QuestionChoice updatedChoice = updatedChoices.get(i);
 
 			existingChoice.setChoicePrompt(updatedChoice.getChoicePrompt());
-		//	existingChoice.setChoiceValue(updatedChoice.getChoiceValue());
+			existingChoice.setChoiceValue(updatedChoice.getChoiceValue());
 			
 		}
 

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class PersonalizedMessageConfig {
 
-/*	@Bean
+	@Bean
 	CommandLineRunner commandLineRunnerMessage(PersonalizedMessageService personalizedMessageService) {
 		return args -> {
 			
@@ -16,11 +16,11 @@ public class PersonalizedMessageConfig {
 			PersonalizedMessage messageThree = new PersonalizedMessage("Congratulations you're Chris! You're awesome!", AnswerChoice.C);
 
 			
-			personalizedMessageService.addNewpersonalizedMessage(messageOne);
-			personalizedMessageService.addNewpersonalizedMessage(messageTwo);
-			personalizedMessageService.addNewpersonalizedMessage(messageThree);
+			personalizedMessageService.addNewPersonalizedMessage(messageOne);
+			personalizedMessageService.addNewPersonalizedMessage(messageTwo);
+			personalizedMessageService.addNewPersonalizedMessage(messageThree);
 		};
 
 	}
-	*/
+	
 }

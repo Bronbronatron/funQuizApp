@@ -28,17 +28,17 @@ public class QuestionChoice {
 	String choicePrompt;
 	
 	@Enumerated(EnumType.STRING)
-	protected ChoiceValue value;
+	protected ChoiceValue choiceValue;
 	
 	@JsonIgnore 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "question_id", referencedColumnName = "id")
 	protected Question question; 
 	 
 
-	public QuestionChoice(String choicePrompt, ChoiceValue value) {
+	public QuestionChoice(String choicePrompt, ChoiceValue choiceValue) {
 		this.choicePrompt = choicePrompt;
-		this.value = value;
+		this.choiceValue = choiceValue;
 	}
 	
 	public QuestionChoice(String choicePrompt, Question question) {
@@ -69,14 +69,13 @@ public class QuestionChoice {
 	public void setChoicePrompt(String choicePrompt) {
 		this.choicePrompt = choicePrompt;
 	}
-
 	
 	public ChoiceValue getChoiceValue() {
-		return value;
+		return choiceValue;
 	}
 
-	public void setChoiceValue(ChoiceValue value) {
-		this.value = value;
+	public void setChoiceValue(ChoiceValue choiceValue) {
+		this.choiceValue = choiceValue;
 	}
 
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "api/v1/choicevalue")
+@RequestMapping(path = "api/v1/questionChoice")
 public class QuestionChoiceController {
 	
 	
@@ -22,11 +22,12 @@ public class QuestionChoiceController {
 		this.questionChoiceService = questionChoiceService;
 	}
 
-	
-	@PostMapping
-	public void registerNewQuestionChoice(@RequestBody QuestionChoice questionChoice) {
-		questionChoiceService.addNewQuestionChoice(questionChoice);
+
+	@PostMapping("{questionId}")
+	public void addNewQuestionChoice(@PathVariable Long questionId, @RequestBody QuestionChoice questionChoice) {
+	    questionChoiceService.addNewQuestionChoice(questionId, questionChoice);
 	}
+
 
 	@DeleteMapping(path = "{questionChoiceId}")
 	public void deleteQuestionChoice(@PathVariable("questionChoiceId") Long questionChoiceId) {
