@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bronwyn.movieRecommendation.formSubmission.QuestionChoiceUpdateForm;
+import com.bronwyn.movieRecommendation.formSubmission.QuestionUpdateForm;
 import com.bronwyn.movieRecommendation.question.Question;
 import com.bronwyn.movieRecommendation.question.QuestionRepository;
 
@@ -48,24 +50,28 @@ public class QuestionChoiceService {
 		questionChoiceRepository.deleteById(questionChoiceId);
 	}
 	
-	/*
+	
+
 
 	@Transactional
-	public void updateQuestionChoice(Long questionId, String choicePrompt, ChoiceValue choiceValue) {
-		QuestionChoice questionChoice = questionChoiceRepository.findById(questionId)
-				.orElseThrow(() -> new IllegalStateException("Question with Id " + questionId + " does not exist"));
-		if (choicePrompt != null && choicePrompt.length() > 0
-				&& !Objects.equals(questionChoice.getChoicePrompt(), choicePrompt)) {
-			questionChoice.setChoicePrompt(choicePrompt);
-			;
-		}
-
-		if (choiceValue != null && !Objects.equals(questionChoice.getChoiceValue(), choiceValue)) {
-			questionChoice.setChoiceValue(choiceValue);
-			;
-
+	public void updateQuestionChoiceUsingForm(Long questionChoiceId , QuestionChoiceUpdateForm questionChoiceUpdateForm) {
+		QuestionChoice questionChoice = questionChoiceRepository.findById(questionChoiceId)
+				.orElseThrow(() -> new IllegalStateException("Question with Id " + questionChoiceId + " does not exist"));
+		
+	
+	String updatedChoicePrompt = questionChoiceUpdateForm.getChoicePrompt();
+		if (updatedChoicePrompt != null && !updatedChoicePrompt.isEmpty()) {
+			questionChoice.setChoicePrompt(updatedChoicePrompt);
 		}
 		
+		ChoiceValue updatedChoiceValue = questionChoiceUpdateForm.getChoiceValue();
+		if (updatedChoicePrompt != null) {
+			questionChoice.setChoiceValue(updatedChoiceValue);
+		}
+		questionChoiceRepository.save(questionChoice);
+
+		}
+
 	}
-*/
-}
+
+

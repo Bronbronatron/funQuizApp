@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bronwyn.movieRecommendation.formSubmission.QuestionChoiceUpdateForm;
+import com.bronwyn.movieRecommendation.formSubmission.QuestionUpdateForm;
+
 @RestController
 @RequestMapping(path = "api/v1/questionChoice")
 public class QuestionChoiceController {
@@ -34,14 +37,12 @@ public class QuestionChoiceController {
 		questionChoiceService.deleteQuestionChoice(questionChoiceId);
 	}
 
-	/*
-	@PutMapping(path = "{questionId}")
-	public void updateQuestionChoice(@PathVariable("questionChoiceId") Long questionChoiceId,
-			@RequestParam(required = false) String choicePrompt, @RequestParam(required = false) ChoiceValue value) {
-		questionChoiceService.updateQuestionChoice(questionChoiceId, choicePrompt, value);
-	}
 	
-*/
+	 @PutMapping("{questionChoiceId}")
+	    public void updateQuestion(@PathVariable Long questionChoiceId, @RequestBody QuestionChoiceUpdateForm questionChoiceUpdateForm) {
+	        questionChoiceService.updateQuestionChoiceUsingForm(questionChoiceId, questionChoiceUpdateForm);
+	    }
+	
 }
 
 

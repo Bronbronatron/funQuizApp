@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bronwyn.movieRecommendation.formSubmission.QuestionUpdateForm;
+
 @RestController
 @RequestMapping(path = "api/v1/question")
 public class QuestionController {
@@ -40,15 +42,9 @@ public class QuestionController {
 		questionService.deleteQuestion(questionId);
 	}
 	
-	
-/*
-	@PutMapping(path = "{questionId}")
-	public void updateQuestion(@PathVariable("questionId") Long questionId,
-	                           @RequestBody Question updatedQuestion) {
-	    Question question = questionService.findQuestionByID(questionId)
-	            .orElseThrow(() -> new NoSuchElementException("Question with Id " + questionId + " does not exist"));
 
-	    questionService.updateQuestion(updatedQuestion, question);
-	}
-*/
+	 @PutMapping("{questionId}")
+	    public void updateQuestion(@PathVariable Long questionId, @RequestBody QuestionUpdateForm questionUpdateForm) {
+	        questionService.updateQuestionUsingForm(questionId, questionUpdateForm);
+	    }
 }

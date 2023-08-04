@@ -5,15 +5,27 @@ import java.util.List;
 public class QuestionUpdateForm {
 
 
-	private String prompt;
-	private String topic;
-	private List<QuestionChoiceUpdateForm> questionChoices;
+	public QuestionUpdateForm() {
+	
+	}
 
 	
-    public QuestionUpdateForm(String prompt, String topic, List<QuestionChoiceUpdateForm> questionChoices) {
+	private String prompt;
+	private String topic;
+	private List<QuestionChoiceUpdateForm> questionChoiceUpdateForm;
+
+	
+    public QuestionUpdateForm(List<QuestionChoiceUpdateForm> questionChoiceUpdateForm) {
+		
+		this.questionChoiceUpdateForm = questionChoiceUpdateForm;
+	}
+
+
+
+	public QuestionUpdateForm(String prompt, String topic, List<QuestionChoiceUpdateForm> questionChoiceUpdateForm) {
         this.prompt = prompt;
         this.topic = topic;
-        this.questionChoices = questionChoices;
+        this.questionChoiceUpdateForm = questionChoiceUpdateForm;
     }
 
 
@@ -21,7 +33,7 @@ public class QuestionUpdateForm {
 	@Override
 	public String toString() {
 		return "QuestionUpdateForm{" + "prompt='" + prompt + '\'' + ", topic='" + topic + '\'' + ", questionChoices="
-				+ questionChoices + '}';
+				+ questionChoiceUpdateForm + '}';
 
 	}
 
@@ -41,11 +53,11 @@ public class QuestionUpdateForm {
 		this.topic = topic;
 	}
 
-	public List<QuestionChoiceUpdateForm> getQuestionChoices() {
-		return questionChoices;
+	public List<QuestionChoiceUpdateForm> getQuestionChoiceUpdateForm() {
+		return questionChoiceUpdateForm;
 	}
 
-	public void setQuestionChoices(List<QuestionChoiceUpdateForm> questionChoices) {
-		this.questionChoices = questionChoices;
+	public void setQuestionChoiceUpdateForm(List<QuestionChoiceUpdateForm> questionChoiceUpdateForm) {
+		this.questionChoiceUpdateForm = questionChoiceUpdateForm;
 	}
 }

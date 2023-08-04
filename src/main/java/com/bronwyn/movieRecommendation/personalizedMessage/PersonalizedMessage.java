@@ -53,6 +53,7 @@ public class PersonalizedMessage {
 	public AnswerChoice getAnswerChoice() {
 		return answerChoice;
 	}
+	
 
 	public void setAnswerChoice(AnswerChoice answerChoice) {
 		this.answerChoice = answerChoice;

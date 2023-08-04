@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bronwyn.movieRecommendation.formSubmission.QuestionChoiceUpdateForm;
+import com.bronwyn.movieRecommendation.formSubmission.QuestionUpdateForm;
+import com.bronwyn.movieRecommendation.questionChoice.ChoiceValue;
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoiceRepository;
 
@@ -44,9 +46,6 @@ public class QuestionService {
 		questionRepository.save(question);
 	}
 
-	
-
-	
 	@Transactional
 	public List<Question> getQuestion() {
 		return questionRepository.findAll();
@@ -68,29 +67,46 @@ public class QuestionService {
 	}
 
 	@Transactional
-	public void updateQuestion(Question updatedQuestion, Question existingQuestion) {
-		if (updatedQuestion.getPrompt() != null && !updatedQuestion.getPrompt().isEmpty()
-				&& !Objects.equals(existingQuestion.getPrompt(), updatedQuestion.getPrompt())) {
-			existingQuestion.setPrompt(updatedQuestion.getPrompt());
-		}
+	public void updateQuestionUsingForm(Long questionId, QuestionUpdateForm questionUpdateForm) {
+	    Question existingQuestion = questionRepository.findById(questionId)
+	            .orElseThrow(() -> new IllegalStateException("Question with Id " + questionId + " does not exist"));
 
-		if (updatedQuestion.getTopic() != null && !updatedQuestion.getTopic().isEmpty()
-				&& !Objects.equals(existingQuestion.getTopic(), updatedQuestion.getTopic())) {
-			existingQuestion.setTopic(updatedQuestion.getTopic());
-		}
+	    String updatedPrompt = questionUpdateForm.getPrompt();
+	    if (updatedPrompt != null && !updatedPrompt.isEmpty()) {
+	        existingQuestion.setPrompt(updatedPrompt);
+	    }
 
-		List<QuestionChoice> existingChoices = existingQuestion.getQuestionChoice();
-		List<QuestionChoice> updatedChoices = updatedQuestion.getQuestionChoice();
-		for (int i = 0; i < existingChoices.size(); i++) {
-			QuestionChoice existingChoice = existingChoices.get(i);
-			QuestionChoice updatedChoice = updatedChoices.get(i);
 
-			existingChoice.setChoicePrompt(updatedChoice.getChoicePrompt());
-			existingChoice.setChoiceValue(updatedChoice.getChoiceValue());
-			
-		}
+	    // Update topic if provided in the form
+	    String updatedTopic = questionUpdateForm.getTopic();
 
-		questionRepository.save(existingQuestion);
+	    if (updatedTopic != null && !updatedTopic.isEmpty()) {
+	        existingQuestion.setTopic(updatedTopic);
+	    }
+	
+	    List<QuestionChoice> existingChoices = existingQuestion.getQuestionChoice();
+	    List<QuestionChoiceUpdateForm> updatedChoiceForms = questionUpdateForm.getQuestionChoiceUpdateForm();
+
+	    for (int i = 0; i < existingChoices.size() && i < updatedChoiceForms.size(); i++) {
+		
+	        QuestionChoice existingChoice = existingChoices.get(i);
+	        QuestionChoiceUpdateForm updatedChoiceForm = updatedChoiceForms.get(i);
+
+	        // Update choice prompt if provided in the form
+	        String updatedChoicePrompt = updatedChoiceForm.getChoicePrompt();
+	        if (updatedChoicePrompt != null && !updatedChoicePrompt.isEmpty()) {
+	            existingChoice.setChoicePrompt(updatedChoicePrompt);
+	        }
+	        // Update choice value if provided in the form
+	        ChoiceValue updatedChoiceValue = updatedChoiceForm.getChoiceValue();
+	        if (updatedChoiceValue != null) {
+	            existingChoice.setChoiceValue(updatedChoiceValue);
+	        }
+	    }
+
+	    questionRepository.save(existingQuestion);
+	    
 	}
+
 
 }
