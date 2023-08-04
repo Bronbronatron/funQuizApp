@@ -2,7 +2,6 @@ package com.bronwyn.movieRecommendation.question;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +12,17 @@ import com.bronwyn.movieRecommendation.formSubmission.QuestionChoiceUpdateForm;
 import com.bronwyn.movieRecommendation.formSubmission.QuestionUpdateForm;
 import com.bronwyn.movieRecommendation.questionChoice.ChoiceValue;
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
-import com.bronwyn.movieRecommendation.questionChoice.QuestionChoiceRepository;
 
 @Service
 public class QuestionService {
 
 	private final QuestionRepository questionRepository;
-	private final QuestionChoiceRepository questionChoiceRepository;
+
 
 	@Autowired
-	public QuestionService(QuestionRepository questionRepository, QuestionChoiceRepository questionChoiceRepository) {
+	public QuestionService(QuestionRepository questionRepository) {
 		this.questionRepository = questionRepository;
-		this.questionChoiceRepository = questionChoiceRepository;
+		
 	}
 
 	@Transactional
@@ -46,16 +44,22 @@ public class QuestionService {
 		questionRepository.save(question);
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<Question> getQuestion() {
 		return questionRepository.findAll();
-
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Optional<Question> findQuestionByID(long questionID) {
 		return questionRepository.findById(questionID);
 	}
+	
+	
+    @Transactional(readOnly = true)
+    public Optional<Question> findQuestionByTopic(String topic) {
+        return questionRepository.findQuestionByTopic(topic);
+    }
+
 
 	@Transactional
 	public void deleteQuestion(Long questionId) {
@@ -76,23 +80,22 @@ public class QuestionService {
 	        existingQuestion.setPrompt(updatedPrompt);
 	    }
 
+		// Update topic if provided in the form
+		String updatedTopic = questionUpdateForm.getTopic();
 
-	    // Update topic if provided in the form
-	    String updatedTopic = questionUpdateForm.getTopic();
+		if (updatedTopic != null && !updatedTopic.isEmpty()) {
+			existingQuestion.setTopic(updatedTopic);
+		}
 
-	    if (updatedTopic != null && !updatedTopic.isEmpty()) {
-	        existingQuestion.setTopic(updatedTopic);
-	    }
-	
-	    List<QuestionChoice> existingChoices = existingQuestion.getQuestionChoice();
-	    List<QuestionChoiceUpdateForm> updatedChoiceForms = questionUpdateForm.getQuestionChoiceUpdateForm();
+		List<QuestionChoice> existingChoices = existingQuestion.getQuestionChoice();
+		List<QuestionChoiceUpdateForm> updatedChoiceForms = questionUpdateForm.getQuestionChoiceUpdateForm();
 
-	    for (int i = 0; i < existingChoices.size() && i < updatedChoiceForms.size(); i++) {
-		
-	        QuestionChoice existingChoice = existingChoices.get(i);
-	        QuestionChoiceUpdateForm updatedChoiceForm = updatedChoiceForms.get(i);
+		for (int i = 0; i < existingChoices.size() && i < updatedChoiceForms.size(); i++) {
 
-	        // Update choice prompt if provided in the form
+			QuestionChoice existingChoice = existingChoices.get(i);
+			QuestionChoiceUpdateForm updatedChoiceForm = updatedChoiceForms.get(i);
+
+			// Update choice prompt if provided in the form
 	        String updatedChoicePrompt = updatedChoiceForm.getChoicePrompt();
 	        if (updatedChoicePrompt != null && !updatedChoicePrompt.isEmpty()) {
 	            existingChoice.setChoicePrompt(updatedChoicePrompt);

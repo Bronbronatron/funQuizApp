@@ -1,14 +1,12 @@
 package com.bronwyn.movieRecommendation.personalizedMessage;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bronwyn.movieRecommendation.formSubmission.PersonalizedMessageUpdateForm;
-import com.bronwyn.movieRecommendation.formSubmission.QuestionChoiceUpdateForm;
-import com.bronwyn.movieRecommendation.questionChoice.ChoiceValue;
-import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
 
 @Service
 public class PersonalizedMessageService {
@@ -18,6 +16,11 @@ public class PersonalizedMessageService {
 	@Autowired
 	public PersonalizedMessageService(PersonalizedMessageRepository personalizedMessageRepository) {
 		this.personalizedMessageRepository = personalizedMessageRepository;
+	}
+	
+	@Transactional(readOnly = true)
+	public List<PersonalizedMessage> getAllPersonalizedMessage() {
+	    return personalizedMessageRepository.findAll();
 	}
 
 	@Transactional
@@ -53,5 +56,7 @@ public class PersonalizedMessageService {
 		personalizedMessageRepository.save(personalizedMessage);
 
 	}
+
+
 
 }

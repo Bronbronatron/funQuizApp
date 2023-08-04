@@ -14,5 +14,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long>{
 	Optional<Question> findQuestionByPrompt(String prompt);
 	
 	
-	
+	@Query("SELECT q FROM Question q WHERE q.topic =?1")
+	Optional<Question> findQuestionByTopic(String topic);
 }

@@ -2,8 +2,10 @@ package com.bronwyn.movieRecommendation.question;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +33,26 @@ public class QuestionController {
 	public List<Question> getQuestion() {
 		return questionService.getQuestion();
 	}
+	
+	@GetMapping("/{questionId}")
+	public Optional<Question> findQuestionByID(@PathVariable Long questionId) {
+		return questionService.findQuestionByID(questionId);
+	}
+	
+
+	
+	
+	//have to give a more specific mapping- was being confused by @GetMapping("/{questionId}")
+	@GetMapping("/topic/{questionTopic}")
+	public ResponseEntity<?> findQuestionByTopic(@PathVariable String questionTopic) {
+	    Optional<Question> question = questionService.findQuestionByTopic(questionTopic);
+	    if (question.isPresent()) {
+	        return ResponseEntity.ok(question.get());
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
+	}
+
 
 	@PostMapping
 	public void registerNewQuestion(@RequestBody Question question) {
@@ -42,7 +64,7 @@ public class QuestionController {
 		questionService.deleteQuestion(questionId);
 	}
 	
-
+	
 	 @PutMapping("{questionId}")
 	    public void updateQuestion(@PathVariable Long questionId, @RequestBody QuestionUpdateForm questionUpdateForm) {
 	        questionService.updateQuestionUsingForm(questionId, questionUpdateForm);
