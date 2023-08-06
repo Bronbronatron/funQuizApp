@@ -12,26 +12,34 @@ import com.bronwyn.movieRecommendation.formSubmission.QuestionChoiceUpdateForm;
 import com.bronwyn.movieRecommendation.formSubmission.QuestionUpdateForm;
 import com.bronwyn.movieRecommendation.questionChoice.ChoiceValue;
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
+import com.bronwyn.movieRecommendation.quiz.Quiz;
+import com.bronwyn.movieRecommendation.quiz.QuizRepository;
 
 @Service
 public class QuestionService {
 
 	private final QuestionRepository questionRepository;
-
+	private final QuizRepository quizRepository;
 
 	@Autowired
-	public QuestionService(QuestionRepository questionRepository) {
+	public QuestionService(QuestionRepository questionRepository, QuizRepository quizRepository) {
 		this.questionRepository = questionRepository;
+		this.quizRepository = quizRepository;
 		
 	}
 
 	@Transactional
-	public void addNewQuestionWithChoice(Question question) {
+	public void addNewQuestionWithChoice(Long quizId, Question question) {
+		
+		Quiz quiz = quizRepository.findById(quizId)
+				.orElseThrow(() -> new IllegalStateException("Quiz with Id " + quizId + " does not exist"));
+	
 		Optional<Question> questionByPrompt = questionRepository.findQuestionByPrompt(question.getPrompt());
 		if (questionByPrompt.isPresent()) {
 			throw new IllegalStateException("Question already exists");
 		}
 		question.setCreatedAt(LocalDateTime.now());
+		question.setQuiz(quiz);
 		List<QuestionChoice> questionChoices = question.getQuestionChoice();
 		if (questionChoices != null) {
 
@@ -40,10 +48,11 @@ public class QuestionService {
 				choice.setQuestion(question);
 			}
 		}
-
+		
 		questionRepository.save(question);
 	}
 
+	
 	@Transactional(readOnly = true)
 	public List<Question> getQuestion() {
 		return questionRepository.findAll();

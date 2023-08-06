@@ -9,12 +9,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
+import com.bronwyn.movieRecommendation.quiz.Quiz;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Table(name = "question")
 public class Question {
 	
 	public Question(String prompt) {
@@ -42,6 +48,11 @@ public class Question {
 	@OneToMany(mappedBy = "question", cascade=CascadeType.ALL)
     protected List<QuestionChoice> questionChoice = new ArrayList<QuestionChoice>();
 
+	@JsonIgnore 
+	@ManyToOne
+	@JoinColumn(name = "quiz_id", referencedColumnName = "id")
+	protected Quiz quiz;
+	
 	public Question(String prompt, String topic) {
 		this.prompt = prompt;
 		this.topic = topic;
@@ -88,6 +99,14 @@ public class Question {
 
 	public void setQuestionChoice(List<QuestionChoice> questionChoice) {
 		this.questionChoice = questionChoice;
+	}
+
+	public Quiz getQuiz() {
+		return quiz;
+	}
+
+	public void setQuiz(Quiz quiz) {
+		this.quiz = quiz;
 	}
 	
 	

@@ -1,7 +1,6 @@
 package com.bronwyn.movieRecommendation.question;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bronwyn.movieRecommendation.formSubmission.QuestionUpdateForm;
@@ -38,9 +36,7 @@ public class QuestionController {
 	public Optional<Question> findQuestionByID(@PathVariable Long questionId) {
 		return questionService.findQuestionByID(questionId);
 	}
-	
 
-	
 	
 	//have to give a more specific mapping- was being confused by @GetMapping("/{questionId}")
 	@GetMapping("/topic/{questionTopic}")
@@ -54,11 +50,11 @@ public class QuestionController {
 	}
 
 
-	@PostMapping
-	public void registerNewQuestion(@RequestBody Question question) {
-		questionService.addNewQuestionWithChoice(question);
+	@PostMapping("{quizId}")
+	public void registerNewQuestion(@PathVariable Long quizId, @RequestBody Question question) {
+		questionService.addNewQuestionWithChoice(quizId, question);
 	}
-
+	
 	@DeleteMapping(path = "{questionId}")
 	public void deleteQuestion(@PathVariable("questionId") Long questionId) {
 		questionService.deleteQuestion(questionId);
