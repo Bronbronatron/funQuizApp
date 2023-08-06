@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bronwyn.movieRecommendation.personalizedMessage.AnswerChoice;
+import com.bronwyn.movieRecommendation.personalizedMessage.PersonalizedMessage;
 import com.bronwyn.movieRecommendation.question.Question;
 import com.bronwyn.movieRecommendation.questionChoice.ChoiceValue;
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
@@ -24,6 +26,17 @@ public class QuizConfig {
 			
 			Quiz QuizOne = new Quiz("Family Quiz");
 			
+			List<PersonalizedMessage> personalizedMessageOne = new ArrayList<>();
+			
+			PersonalizedMessage messageOne = new PersonalizedMessage("Congratulations you're Bron! You're awesome!", AnswerChoice.A);
+			PersonalizedMessage messageTwo = new PersonalizedMessage("Congratulations you're Phillip! You're awesome!", AnswerChoice.B);
+			PersonalizedMessage messageThree = new PersonalizedMessage("Congratulations you're Chris! You're awesome!", AnswerChoice.C);
+
+			
+			personalizedMessageOne.add(messageOne);
+			personalizedMessageOne.add(messageTwo);
+			personalizedMessageOne.add(messageThree);
+			
 			
 			Question questionOne = new Question("What's your favourite food?", "Food/Drink");
 			Question questionTwo = new Question("What's your favourite holiday destination?", "Free Time");
@@ -34,26 +47,25 @@ public class QuizConfig {
 			List<QuestionChoice> choicesThree = new ArrayList<>();
 
 			QuestionChoice choiceA = new QuestionChoice("Sushi", ChoiceValue.A);
-		//	choiceA.setQuestion(questionOne);
+	
 			QuestionChoice choiceB = new QuestionChoice("Ramen", ChoiceValue.B);
-		//	choiceB.setQuestion(questionOne);
+		
 			QuestionChoice choiceC = new QuestionChoice("Chinese Food", ChoiceValue.C);
-		//	choiceC.setQuestion(questionOne);
+	
 
 			QuestionChoice choiceA2 = new QuestionChoice("Tokyo", ChoiceValue.A);
-		//	choiceA2.setQuestion(questionTwo);
+		
 			QuestionChoice choiceB2 = new QuestionChoice("I'd rather save my money", ChoiceValue.B);
-		//	choiceB2.setQuestion(questionTwo);
+
 			QuestionChoice choiceC2 = new QuestionChoice("Orlando", ChoiceValue.C);
-		//	choiceC2.setQuestion(questionTwo);
+
 
 			QuestionChoice choiceA3 = new QuestionChoice("Experience as much as possible", ChoiceValue.A);
-		//	choiceA3.setQuestion(questionThree);
+		
 			QuestionChoice choiceB3 = new QuestionChoice("Don't work more than neccessary", ChoiceValue.B);
-		//	choiceB3.setQuestion(questionThree);
+		
 			QuestionChoice choiceC3 = new QuestionChoice("Have as much fun as possible", ChoiceValue.C);
-		//	choiceC3.setQuestion(questionThree);
-
+		
 			choicesOne.add(choiceA);
 			choicesOne.add(choiceB);
 			choicesOne.add(choiceC);
@@ -83,6 +95,7 @@ public class QuizConfig {
 			
 			QuizOne.setCreatedAt(LocalDateTime.now());
 			QuizOne.setQuizQuestion(quizListOne);
+			QuizOne.setPersonalizedMessage(personalizedMessageOne);
 			quizService.addNewQuizWithQuestion(QuizOne);
 				
 		};

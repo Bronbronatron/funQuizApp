@@ -25,9 +25,9 @@ public class PersonalizedMessageController {
 	@Autowired
 	private final PersonalizedMessageService personalizedMessageService;
 
-	@PostMapping
-	public void registerNewPersonalizedMessage(@RequestBody PersonalizedMessage personalizedMessage) {
-		personalizedMessageService.addNewPersonalizedMessage(personalizedMessage);
+	@PostMapping("{quizId}")
+	public void registerNewPersonalizedMessage(@PathVariable Long quizId, @RequestBody PersonalizedMessage personalizedMessage) {
+		personalizedMessageService.addNewPersonalizedMessage(quizId, personalizedMessage);
 	}
 
 	@DeleteMapping(path = "{personalizedMessageId}")

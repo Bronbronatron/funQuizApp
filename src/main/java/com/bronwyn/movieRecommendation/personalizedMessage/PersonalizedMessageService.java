@@ -7,15 +7,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bronwyn.movieRecommendation.formSubmission.PersonalizedMessageUpdateForm;
+import com.bronwyn.movieRecommendation.quiz.Quiz;
+import com.bronwyn.movieRecommendation.quiz.QuizRepository;
 
 @Service
 public class PersonalizedMessageService {
 
 	private final PersonalizedMessageRepository personalizedMessageRepository;
+	private final QuizRepository quizRepository;
 
 	@Autowired
-	public PersonalizedMessageService(PersonalizedMessageRepository personalizedMessageRepository) {
+	public PersonalizedMessageService(PersonalizedMessageRepository personalizedMessageRepository, QuizRepository quizRepository) {
 		this.personalizedMessageRepository = personalizedMessageRepository;
+		this.quizRepository = quizRepository;
 	}
 	
 	@Transactional(readOnly = true)
@@ -24,9 +28,13 @@ public class PersonalizedMessageService {
 	}
 
 	@Transactional
-	public void addNewPersonalizedMessage(PersonalizedMessage personalizedMessage) {
+	public void addNewPersonalizedMessage(Long quizId, PersonalizedMessage personalizedMessage) {
+		Quiz quiz = quizRepository.findById(quizId)
+				.orElseThrow(() -> new IllegalStateException("Quiz with Id " + quizId + " does not exist"));
+		personalizedMessage.setQuiz(quiz);
 		personalizedMessageRepository.save(personalizedMessage);
 	}
+	
 
 	@Transactional
 	public void deletePersonalizedMessage(Long personalizedMessageId) {

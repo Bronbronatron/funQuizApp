@@ -8,20 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bronwyn.movieRecommendation.personalizedMessage.PersonalizedMessage;
 import com.bronwyn.movieRecommendation.question.Question;
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
 
 @Service
 public class QuizService {
-	
 
 	private final QuizRepository quizRepository;
-
 
 	@Autowired
 	public QuizService(QuizRepository quizRepository) {
 		this.quizRepository = quizRepository;
-		
+
 	}
 
 	@Transactional
@@ -30,14 +29,22 @@ public class QuizService {
 	    if (quizByQuizTitle.isPresent()) {
 	        throw new IllegalStateException("Quiz already exists");
 	    }
-	    
-	    quiz.setCreatedAt(LocalDateTime.now());
+
+	    LocalDateTime currentTimestamp = LocalDateTime.now();
+	    quiz.setCreatedAt(currentTimestamp);
+
+	    List<PersonalizedMessage> personalizedMessages = quiz.getPersonalizedMessage();
+	    if (personalizedMessages != null) {
+	        for (PersonalizedMessage personalizedMessage : personalizedMessages) {
+	            personalizedMessage.setQuiz(quiz);
+	        }
+	    }
 
 	    List<Question> questions = quiz.getQuizQuestion();
 	    if (questions != null) {
 	        for (Question question : questions) {
 	            question.setQuiz(quiz);
-	            question.setCreatedAt(LocalDateTime.now());
+	            question.setCreatedAt(currentTimestamp);
 
 	            List<QuestionChoice> choices = question.getQuestionChoice();
 	            if (choices != null) {
@@ -47,10 +54,11 @@ public class QuizService {
 	            }
 	        }
 	    }
+
 	    quizRepository.save(quiz);
 	}
-	
-	
+
+
 	@Transactional
 	public void deleteQuiz(Long quizId) {
 		boolean exists = quizRepository.existsById(quizId);
@@ -59,12 +67,10 @@ public class QuizService {
 		}
 		quizRepository.deleteById(quizId);
 	}
-	
+
 	@Transactional(readOnly = true)
 	public Optional<Quiz> findQuizByID(Long quizId) {
 		return quizRepository.findById(quizId);
 	}
-	
-	
-	
+
 }

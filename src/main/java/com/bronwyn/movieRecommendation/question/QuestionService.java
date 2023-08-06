@@ -42,9 +42,7 @@ public class QuestionService {
 		question.setQuiz(quiz);
 		List<QuestionChoice> questionChoices = question.getQuestionChoice();
 		if (questionChoices != null) {
-
 			for (QuestionChoice choice : questionChoices) {
-				System.out.println("Setting choices.." + choice);
 				choice.setQuestion(question);
 			}
 		}
