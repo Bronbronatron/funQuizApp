@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "personalized_message")
 public class PersonalizedMessage {
 
-
 	public PersonalizedMessage(String message, Quiz quiz, AnswerChoice answerChoice) {
 		this.message = message;
 		this.quiz = quiz;
@@ -84,7 +83,6 @@ public class PersonalizedMessage {
 	public void setQuiz(Quiz quiz) {
 		this.quiz = quiz;
 	}
-	
 	
 	
 }

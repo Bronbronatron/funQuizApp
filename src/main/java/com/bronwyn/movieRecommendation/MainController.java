@@ -1,45 +1,41 @@
 package com.bronwyn.movieRecommendation;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.bronwyn.movieRecommendation.question.QuestionService;
+import com.bronwyn.movieRecommendation.quiz.QuizService;
+import com.bronwyn.movieRecommendation.quiz.Quiz;
+
 
 @Controller
 public class MainController {
 	
 	
-	   private final QuestionService questionService;
+	 //  private final QuestionService questionService;
+	   private final QuizService quizService;
 	   
 	    @Autowired
-	    public MainController(QuestionService questionService) {
-	        this.questionService = questionService;
-	    
+	    public MainController(QuizService quizService) {
+	        this.quizService = quizService;
 	    }
 
-	@GetMapping(path = "api/v1/page")
-	String getPage(Model model) {
-	//	 List<Question> questions = questionService.getQuestion();
-	//	 model.addAttribute("formSubmission", new FormSubmission(questions));
-		return "page";
-	}
-	
-	 /*  @PostMapping(path = "api/v1/page")
-	    String processForm(@ModelAttribute("formSubmission") FormSubmission formSubmission) {
-	        List<Question> questions = formSubmission.getQuestions();
-	        ArrayList<ChoiceValue> answers = new  ArrayList<ChoiceValue>();
-	        for (Question question : questions) {
-	        	QuestionChoice selectedChoice = question.getSelectedChoice();
-	        	ChoiceValue answerValue = selectedChoice.getValue();
-	            answers.add(answerValue);
-	       
-	        }
-	        return "result"; 
-	    }
-	    
-	    */
-	}
-	
+        @GetMapping(path = "/api/v1/selection") 
+        public String showQuizList(Model model) {
+            // Retrieve the list of existing Quiz objects from the service or repository
+            List<Quiz> quizzes = quizService.getAllQuizzes();
+            // Add the list of quizzes to the model with the key "quizzes"
+            model.addAttribute("quizzes", quizzes);
+            // Return the name of the Thymeleaf template (quizList.html)
+            return "quizList";
 
+	}
+}
+
+
+	
+	
 

@@ -60,6 +60,11 @@ public class Quiz {
 		this.quizTitle = quizTitle;
 		this.quizQuestion = quizQuestion;
 	}
+	
+	
+	public Long getId() {
+	    return id;
+	}
 
 	public String getQuizTitle() {
 		return quizTitle;

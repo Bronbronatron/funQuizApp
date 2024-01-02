@@ -57,6 +57,12 @@ public class QuizService {
 
 	    quizRepository.save(quiz);
 	}
+	
+	@Transactional(readOnly = true)
+	public List<Quiz> getAllQuizzes() {
+		return quizRepository.findAll();
+	}
+
 
 
 	@Transactional

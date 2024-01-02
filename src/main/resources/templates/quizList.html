@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz List</title>
+</head>
+<body>
+    <h1>Quiz List</h1>
+
+ <ul th:if="${quizzes}">
+        <li th:each="quiz : ${quizzes}">
+            <a th:href="@{'/quiz/' + ${quiz.id}}" th:text="${quiz.quizTitle}"></a>
+        </li>
+    </ul>
+    <p th:unless="${quizzes}">No quizzes available</p>
+    
+    
+</body>
+</html>
