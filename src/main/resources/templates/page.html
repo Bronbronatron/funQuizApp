@@ -13,7 +13,7 @@
       th:object="${formSubmission}" method="post">
     <!-- Loop through the list of questions and create form fields for each question -->
     <div th:each="question, questionStat : ${formSubmission.questions}">
-        <!-- Render the question prompt and choices -->
+        <!-- Render t==question prompt and choices -->
         <h4 th:text="${question.prompt}"></h4>
         <div th:each="choice : ${question.questionChoice}">
             <input type="radio"

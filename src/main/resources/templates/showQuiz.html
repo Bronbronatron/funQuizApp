@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Questions</title>
+</head>
+<body>
+    <h1 th:text="${quiz.quizTitle}"></h1>
+
+    <!-- Iterate over the question list and show each question -->
+    <ul th:if="${questions}">
+        <li th:each="question : ${questions}">
+            <span th:text="${question.prompt}"></span>
+        </li>
+    </ul>
+    <p th:unless="${questions}">No questions available</p>
+</body>
+</html>

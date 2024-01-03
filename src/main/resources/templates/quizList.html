@@ -9,6 +9,10 @@
 
  <ul th:if="${quizzes}">
         <li th:each="quiz : ${quizzes}">
+          <!-- Creating link for a quiz with a URI template that includes {quizId} -->
+          <!-- clicking sends request to the server, and value for {quizId} is extracted from the actual URI. -->
+          <!-- The controller will  use @PathVariable to extract this ID, 
+          <!-- You can use it to retrieve the questions associated with that quiz and show them on another page. -->
             <a th:href="@{'/quiz/' + ${quiz.id}}" th:text="${quiz.quizTitle}"></a>
         </li>
     </ul>
@@ -17,3 +21,4 @@
     
 </body>
 </html>
+

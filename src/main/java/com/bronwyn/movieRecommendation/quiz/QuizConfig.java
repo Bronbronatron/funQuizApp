@@ -17,13 +17,13 @@ import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
 
 @Configuration
 public class QuizConfig {
-	
+		
 	@Bean
 	@Transactional 
 	CommandLineRunner commandLineRunner(QuizService quizService) {
 		return args -> {
 			
-			
+		
 			Quiz QuizOne = new Quiz("Family Quiz");
 			
 			List<PersonalizedMessage> personalizedMessageOne = new ArrayList<>();
@@ -40,7 +40,7 @@ public class QuizConfig {
 			
 			Question questionOne = new Question("What's your favourite food?", "Food/Drink");
 			Question questionTwo = new Question("What's your favourite holiday destination?", "Free Time");
-			Question questionThree = new Question("What life philosophy matches yours best", "Bigger Questions");
+			Question questionThree = new Question("What life philosophy matches yours best?", "Bigger Questions");
 
 			List<QuestionChoice> choicesOne = new ArrayList<>();
 			List<QuestionChoice> choicesTwo = new ArrayList<>();
@@ -118,9 +118,9 @@ Quiz QuizOneAnimal = new Quiz("Animal Quiz");
 			AnimalpersonalizedMessageOne.add(AnimalmessageThree);
 			
 			
-			Question AnimalquestionOne = new Question("What's your favourite food?", "Food/Drink");
-			Question AnimalquestionTwo = new Question("What's your favourite holiday destination?", "Free Time");
-			Question AnimalquestionThree = new Question("What life philosophy matches yours best", "Bigger Questions");
+			Question AnimalquestionOne = new Question("What would you like to find in your bowl?", "Food/Drink");
+			Question AnimalquestionTwo = new Question("What's your favourite kind of place to go?", "Free Time");
+			Question AnimalquestionThree = new Question("How do you think everyone should live their lives?", "Bigger Questions");
 
 			List<QuestionChoice> AnimalchoicesOne = new ArrayList<>();
 			List<QuestionChoice> AnimalchoicesTwo = new ArrayList<>();
@@ -180,8 +180,8 @@ Quiz QuizOneAnimal = new Quiz("Animal Quiz");
 			
 				
 		};
-	
-	}
 
-}
+	}
 			
+}
+	

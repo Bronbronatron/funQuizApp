@@ -10,17 +10,23 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bronwyn.movieRecommendation.personalizedMessage.PersonalizedMessage;
 import com.bronwyn.movieRecommendation.question.Question;
+import com.bronwyn.movieRecommendation.question.QuestionRepository;
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
+
+
 
 @Service
 public class QuizService {
-
 	private final QuizRepository quizRepository;
+	private final QuestionRepository questionRepository;
 
+	
+//The @Autowired automatically injects instances of QuizRepository and QuestionRepository when creating an instance of QuizService.
+//Part of dependency injection, a design pattern where the dependencies of a class are injected from the outside rather than created within the class.
 	@Autowired
-	public QuizService(QuizRepository quizRepository) {
+	public QuizService(QuizRepository quizRepository, QuestionRepository questionRepository) {
 		this.quizRepository = quizRepository;
-
+		this.questionRepository = questionRepository;
 	}
 
 	@Transactional
@@ -78,5 +84,10 @@ public class QuizService {
 	public Optional<Quiz> findQuizByID(Long quizId) {
 		return quizRepository.findById(quizId);
 	}
+	
+	 public List<Question> getQuestionsForQuiz(Long quizId) {
+	        // Logic to retrieve questions for the specified quizId from your repository or service
+	        return questionRepository.findByQuizId(quizId); // Assuming you have a QuestionRepository
+	    }
 
 }
