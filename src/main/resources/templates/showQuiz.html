@@ -7,12 +7,29 @@
 <body>
     <h1 th:text="${quiz.quizTitle}"></h1>
 
-    <!-- Iterate over the question list and show each question -->
-    <ul th:if="${questions}">
-        <li th:each="question : ${questions}">
-            <span th:text="${question.prompt}"></span>
-        </li>
-    </ul>
+    <!-- Iterate over the question list and show each question and its choices -->
+    <form th:action="@{/submitQuiz}" method="post">
+        <ul th:if="${questions}">
+            <li th:each="question : ${questions}">
+                <span th:text="${question.prompt}"></span>
+
+                <!-- Iterate over the choices for the current question -->
+                <ul th:if="${question.questionChoice}">
+                    <li th:each="choice : ${question.questionChoice}">
+                        <label>
+                            <input type="radio" th:name="'choice_' + ${question.id}" th:value="${choice.choiceValue}" />
+                            <span th:text="${choice.choicePrompt}"></span>
+                        </label>
+                    </li>
+                </ul>
+                <p th:unless="${question.questionChoice}">No choices available</p>
+            </li>
+        </ul>
+
+        <button type="submit">Submit Quiz</button>
+    </form>
+
     <p th:unless="${questions}">No questions available</p>
 </body>
 </html>
+

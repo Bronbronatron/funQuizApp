@@ -148,7 +148,7 @@ Quiz QuizOneAnimal = new Quiz("Animal Quiz");
 		
 			AnimalchoicesOne.add(AnimalchoiceA);
 			AnimalchoicesOne.add(AnimalchoiceB);
-			choicesOne.add(choiceC);
+			AnimalchoicesOne.add(AnimalchoiceC);
 
 			AnimalchoicesTwo.add(AnimalchoiceA2);
 			AnimalchoicesTwo.add(AnimalchoiceB2);

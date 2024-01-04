@@ -37,7 +37,7 @@ public class MainController {
             return "quizList";
 
 	}
-        
+        //URI path. Includes a variable placeholder {quizId} enclosed in curly braces. 
         @GetMapping("/quiz/{quizId}")
         public String showQuizById(@PathVariable Long quizId, Model model) {
             // Logic to retrieve questions for the specified quizId
@@ -48,8 +48,15 @@ public class MainController {
             // Check if the Quiz exists, then add it to the model
             quiz.ifPresent(q -> model.addAttribute("quiz", q));
 
-            // Add the questions to the model
+           // Add the questions to the model
+           // When you add an attribute to the model in your controller, you're saying, "In my view, I want to access this data, and I'll refer to it using this key."
             model.addAttribute("questions", questions);
+            
+            // Loop through questions and add their choices to the model
+            // if the first question has an ID of 1, the key will be "questionChoices_1", if the second question has an ID of 2, the key will be "questionChoices_2 etc.
+            for (Question question : questions) {
+                model.addAttribute("questionChoices_" + question.getId(), question.getQuestionChoice());
+            }
             
             // Return the name of the Thymeleaf template (showQuiz.html)
             return "showQuiz";
