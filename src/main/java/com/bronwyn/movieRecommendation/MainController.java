@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bronwyn.movieRecommendation.choiceProcessorService.ChoiceProcessorService;
 import com.bronwyn.movieRecommendation.question.Question;
-import com.bronwyn.movieRecommendation.question.QuestionService;
-import com.bronwyn.movieRecommendation.quiz.QuizService;
-
 import com.bronwyn.movieRecommendation.quiz.Quiz;
+import com.bronwyn.movieRecommendation.quiz.QuizService;
 
 
 @Controller
@@ -26,10 +25,12 @@ public class MainController {
 	
 	 //  private final QuestionService questionService;
 	   private final QuizService quizService;
+	   private final ChoiceProcessorService choiceProcessorService;
 	   
 	    @Autowired
-	    public MainController(QuizService quizService) {
+	    public MainController(QuizService quizService, ChoiceProcessorService choiceProcessorService) {
 	        this.quizService = quizService;
+	        this.choiceProcessorService = choiceProcessorService;
 	    }
 	    
 	    
@@ -77,17 +78,43 @@ public class MainController {
             return "showQuiz";
         }
         
+    	
+        @PostMapping("/submitQuiz")
+        //@RequestParam Map<String, String> formData indicates that it expects form data as key-value pairs. 
+        //f you have multiple radio buttons, formData map will contain entries for each of these selections.
+         public String submitQuiz(@RequestParam Map<String, String> formData) {
+       	// Process the form data
+       	  
+       	  //formData is not directly iterable in the enhanced for loop.
+       	  //This is because formData is of type Map, and a Map is not directly iterable
+       	  //To iterate over a Map, you typically use either keySet() or entrySet() methods.
+        	
+        	String[] mapAsString = new String[formData.size()];
+        	int index = 0;
+        	
+             for (Map.Entry<String, String> entry : formData.entrySet()) {
+           	//For each individual entry in formData:
+                 String fieldName = entry.getKey();
+                 String value = entry.getValue();
+                 mapAsString[index++] = value;
+                 System.out.println("Field: " + fieldName + ", Value: " + value);
+             }
+             
+             
+             String mostCommonChoice = choiceProcessorService.findMostCommonString(mapAsString);
+             System.out.println("Most common Choice: " + mostCommonChoice);
+             
+             return "resultPage";
+         }
+
         
-          @PostMapping("/submitQuiz")
-          public String submitQuiz(@RequestParam Map<String, String> formData) {
-        	// Process the form data
-              for (Map.Entry<String, String> entry : formData.entrySet()) {
-                  String fieldName = entry.getKey();
-                  String value = entry.getValue();
-                  System.out.println("Field: " + fieldName + ", Value: " + value);
-              }
-              return "resultPage";
-          }
+        
+        
+         // Each radio button is associated with a specific question, and it has a name and value set by Thymeleaf attributes. 
+         //When the user submits the form, the browser sends the data to the server as part of the request. 
+        // For radio buttons, only the selected value is sent.
+        
+  
 
 }
 
