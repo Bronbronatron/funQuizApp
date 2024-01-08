@@ -25,6 +25,8 @@ public class QuestionChoice {
 	protected long id;
 	String choicePrompt;
 	
+	
+	//@Enumerated(EnumType.STRING) annotation ensures that the enum values are stored and retrieved as strings in the database
 	@Enumerated(EnumType.STRING)
 	protected ChoiceValue choiceValue;
 	

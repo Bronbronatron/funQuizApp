@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bronwyn.movieRecommendation.formSubmission.PersonalizedMessageUpdateForm;
 
+
+//When a request is sent to a specific URL, the framework looks for a method in the controller that is mapped to that URL. 
+//The mapping is done using annotations like @RequestMapping, @GetMapping, @PostMapping, etc. 
 @RestController
 @RequestMapping(path = "api/v1/message")
 public class PersonalizedMessageController {

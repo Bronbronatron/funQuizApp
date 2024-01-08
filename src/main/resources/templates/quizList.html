@@ -13,7 +13,7 @@
           <!-- clicking sends request to the server, and value for {quizId} is extracted from the actual URI. -->
           <!-- The controller will  use @PathVariable to extract this ID, 
           <!-- You can use it to retrieve the questions associated with that quiz and show them on another page. -->
-            <a th:href="@{'/quiz/' + ${quiz.id}}" th:text="${quiz.quizTitle}"></a>
+            <a th:href="@{'/api/v1/main/quiz/' + ${quiz.id}}" th:text="${quiz.quizTitle}"></a>
         </li>
     </ul>
     <p th:unless="${quizzes}">No quizzes available</p>

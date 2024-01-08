@@ -8,7 +8,13 @@
     <h1 th:text="${quiz.quizTitle}"></h1>
 
     <!-- Iterate over the question list and show each question and its choices -->
-    <form th:action="@{/submitQuiz}" method="post">
+    
+    
+<!--In HTML, a form element is used to collect user input -->
+<!--The action attribute of the <form> tag specifies the URL where the form data will be sent when the user submits the form. -->
+ <!--The server is expected to have an endpoint (a route or handler) that corresponds to this URL (/submitQuiz) -->
+  <!--@{...} is one such expression used for generating URLs. -->
+    <form th:action="@{/api/v1/main/submitQuiz}" method="post">
         <ul th:if="${questions}">
             <li th:each="question : ${questions}">
                 <span th:text="${question.prompt}"></span>
@@ -16,10 +22,23 @@
                 <!-- Iterate over the choices for the current question -->
                 <ul th:if="${question.questionChoice}">
                     <li th:each="choice : ${question.questionChoice}">
-                        <label>
-                            <input type="radio" th:name="'choice_' + ${question.id}" th:value="${choice.choiceValue}" />
-                            <span th:text="${choice.choicePrompt}"></span>
-                        </label>
+                    
+                  <!--  The radio buttons are clickable by default -->
+                  <!-- But the <label> tag provides an additional means to activate them by clicking on the associated text. -->
+                     <label> 
+                        
+                       <!-- The 'value' attribute represents the value that will be sent to the server when the radio button is selected. -->
+                       <!-- Thymeleaf expression dynamically sets the name attribute of the radio button by  creating a unique name for each radio button based on the question.id  -->
+                       <!-- Thymeleaf expression dynamically sets the value attribute of the radio button based on the choice.choiceValue. -->
+                       <!-- 'value' attribute represents the value that will be sent to the server when the radio button is selected. -->
+                        <!--  The default behavior of radio buttons is to be displayed on separate lines. -->
+                            <input type="radio" th:name="'choice_' + ${question.id}" th:value="${choice.choiceValue}"/>
+                            
+                          <!--   When Thymeleaf processes the template, it replaces the content inside the <span> tag with the value of ${choice.choicePrompt}.  --> 
+                          <!--  This is done using the th:text attribute, which is a Thymeleaf-specific attribute. --> 
+                          <!--  If you were to directly place ${choice.choicePrompt} outside a Thymeleaf-specific attribute or tag, it would be treated as plain text and not processed by Thymeleaf.  --> 
+                         <span th:text="${choice.choicePrompt}"></span>       
+                     </label> 
                     </li>
                 </ul>
                 <p th:unless="${question.questionChoice}">No choices available</p>
