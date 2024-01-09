@@ -9,12 +9,16 @@
 
     <!-- Iterate over the question list and show each question and its choices -->
     
-    
+
+
+
 <!--In HTML, a form element is used to collect user input -->
 <!--The action attribute of the <form> tag specifies the URL where the form data will be sent when the user submits the form. -->
  <!--The server is expected to have an endpoint (a route or handler) that corresponds to this URL (/submitQuiz) -->
   <!--@{...} is one such expression used for generating URLs. -->
     <form th:action="@{/api/v1/main/submitQuiz}" method="post">
+     <!-- Add a hidden input field to store the quizId -->
+    <input type="hidden" th:name="quizId" th:value="${quiz.id}" />  
         <ul th:if="${questions}">
             <li th:each="question : ${questions}">
                 <span th:text="${question.prompt}"></span>

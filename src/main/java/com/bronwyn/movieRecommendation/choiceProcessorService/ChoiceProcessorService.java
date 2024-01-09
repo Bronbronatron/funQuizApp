@@ -48,10 +48,11 @@ public class ChoiceProcessorService {
             if (entry.getValue() == maxFrequency) {
                 mostCommonStrings.append(entry.getKey()).append(",");
             }
-            
-            if (mostCommonStrings.length() > 0) {
-                mostCommonStrings.deleteCharAt(mostCommonStrings.length() - 1);
-            }
+           
+        }
+        
+        if (mostCommonStrings.length() > 0) {
+            mostCommonStrings.deleteCharAt(mostCommonStrings.length() - 1);
         }
 
         // If there are multiple most common strings, return a random one

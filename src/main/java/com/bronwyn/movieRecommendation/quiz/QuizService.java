@@ -2,12 +2,15 @@ package com.bronwyn.movieRecommendation.quiz;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bronwyn.movieRecommendation.choiceProcessorService.ChoiceProcessorService;
 import com.bronwyn.movieRecommendation.personalizedMessage.PersonalizedMessage;
 import com.bronwyn.movieRecommendation.question.Question;
 import com.bronwyn.movieRecommendation.question.QuestionRepository;
@@ -19,14 +22,16 @@ import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
 public class QuizService {
 	private final QuizRepository quizRepository;
 	private final QuestionRepository questionRepository;
+	private final ChoiceProcessorService choiceProcessorService;
 
 	
 //The @Autowired automatically injects instances of QuizRepository and QuestionRepository when creating an instance of QuizService.
 //Part of dependency injection, a design pattern where the dependencies of a class are injected from the outside rather than created within the class.
 	@Autowired
-	public QuizService(QuizRepository quizRepository, QuestionRepository questionRepository) {
+	public QuizService(QuizRepository quizRepository, QuestionRepository questionRepository, ChoiceProcessorService choiceProcessorService) {
 		this.quizRepository = quizRepository;
 		this.questionRepository = questionRepository;
+		this.choiceProcessorService = choiceProcessorService;
 	}
 
 	@Transactional
@@ -89,5 +94,31 @@ public class QuizService {
 	        // Logic to retrieve questions for the specified quizId from your repository or service
 	        return questionRepository.findByQuizId(quizId); // Assuming you have a QuestionRepository
 	    }
+	 
+	 
+	 public String findMostCommonChoice(Map<String, String> formData) {
+	       	// Process the form data
+	       	  
+	       	  //formData is not directly iterable in the enhanced for loop.
+	       	  //This is because formData is of type Map, and a Map is not directly iterable
+	       	  //To iterate over a Map, you typically use either keySet() or entrySet() methods.
+	        	
+	        	String[] mapAsString = new String[formData.size()];
+	        	int index = 0;
+	        	
+	             for (Map.Entry<String, String> entry : formData.entrySet()) {
+	           	//For each individual entry in formData:
+	                 String fieldName = entry.getKey();
+	                 String value = entry.getValue();
+	                 mapAsString[index++] = value;
+	                 System.out.println("Field: " + fieldName + ", Value: " + value);
+	             }
+	             
+	             
+	             String mostCommonChoice = choiceProcessorService.findMostCommonString(mapAsString);
+	             System.out.println("Most common Choice: " + mostCommonChoice);
+	             
+	             return mostCommonChoice;
+	         }
 
 }

@@ -1,9 +1,17 @@
+
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Congratulations</title>
+    <!-- Your head content here -->
 </head>
 <body>
-    <h1>Congratulations - Answers Submitted</h1>
+    <div>
+        <!-- Your other result page content here -->
+        
+        <!-- Display the personalized message -->
+       
+           <p th:text="${personalizedMessage.getMessage}"></p> 
+        </div>
+     
 </body>
 </html>

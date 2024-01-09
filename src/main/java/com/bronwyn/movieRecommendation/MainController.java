@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bronwyn.movieRecommendation.choiceProcessorService.ChoiceProcessorService;
+import com.bronwyn.movieRecommendation.personalizedMessage.PersonalizedMessage;
+import com.bronwyn.movieRecommendation.personalizedMessage.PersonalizedMessageService;
 import com.bronwyn.movieRecommendation.question.Question;
 import com.bronwyn.movieRecommendation.quiz.Quiz;
 import com.bronwyn.movieRecommendation.quiz.QuizService;
@@ -25,12 +26,12 @@ public class MainController {
 	
 	 //  private final QuestionService questionService;
 	   private final QuizService quizService;
-	   private final ChoiceProcessorService choiceProcessorService;
+	   private final PersonalizedMessageService personalizedMessageService;
 	   
 	    @Autowired
-	    public MainController(QuizService quizService, ChoiceProcessorService choiceProcessorService) {
+	    public MainController(QuizService quizService, PersonalizedMessageService personalizedMessageService) {
 	        this.quizService = quizService;
-	        this.choiceProcessorService = choiceProcessorService;
+	        this.personalizedMessageService = personalizedMessageService;
 	    }
 	    
 	    
@@ -78,41 +79,27 @@ public class MainController {
             return "showQuiz";
         }
         
-    	
         @PostMapping("/submitQuiz")
-        //@RequestParam Map<String, String> formData indicates that it expects form data as key-value pairs. 
-        //f you have multiple radio buttons, formData map will contain entries for each of these selections.
-         public String submitQuiz(@RequestParam Map<String, String> formData) {
-       	// Process the form data
-       	  
-       	  //formData is not directly iterable in the enhanced for loop.
-       	  //This is because formData is of type Map, and a Map is not directly iterable
-       	  //To iterate over a Map, you typically use either keySet() or entrySet() methods.
-        	
-        	String[] mapAsString = new String[formData.size()];
-        	int index = 0;
-        	
-             for (Map.Entry<String, String> entry : formData.entrySet()) {
-           	//For each individual entry in formData:
-                 String fieldName = entry.getKey();
-                 String value = entry.getValue();
-                 mapAsString[index++] = value;
-                 System.out.println("Field: " + fieldName + ", Value: " + value);
-             }
-             
-             
-             String mostCommonChoice = choiceProcessorService.findMostCommonString(mapAsString);
-             System.out.println("Most common Choice: " + mostCommonChoice);
-             
-             return "resultPage";
-         }
+        public String submitQuiz(Model model, @RequestParam Map<String, String> formData) {
+            String findMostCommonChoice = quizService.findMostCommonChoice(formData);
+            System.out.println("Form Data: " + formData);
+            Long quizId = Long.parseLong(formData.get("quizId"));
+            
+            Optional<PersonalizedMessage> personalizedMessage = personalizedMessageService.getPersonalizedMessage(findMostCommonChoice, quizId);
+            
+            // Check if the personalizedMessage is present before adding it to the model
+            if (personalizedMessage.isPresent()) {
+                model.addAttribute("personalizedMessage", personalizedMessage.get());
+            } else {
+                // Handle the case where no personalized message is found for the mostCommonChoice
+                model.addAttribute("personalizedMessage", "Default Message or handle accordingly");
+            }
+
+            return "resultPage";
+        }
 
         
-        
-        
-         // Each radio button is associated with a specific question, and it has a name and value set by Thymeleaf attributes. 
-         //When the user submits the form, the browser sends the data to the server as part of the request. 
-        // For radio buttons, only the selected value is sent.
+  
         
   
 
