@@ -31,11 +31,13 @@ public class QuizConfig {
 			PersonalizedMessage messageOne = new PersonalizedMessage("Congratulations you're Bron! You're awesome!", AnswerChoice.A);
 			PersonalizedMessage messageTwo = new PersonalizedMessage("Congratulations you're Phillip! You're awesome!", AnswerChoice.B);
 			PersonalizedMessage messageThree = new PersonalizedMessage("Congratulations you're Chris! You're awesome!", AnswerChoice.C);
+			PersonalizedMessage messageFour = new PersonalizedMessage("Congratulations you're Phyllis! You're awesome!",  AnswerChoice.D);
 
 			
 			personalizedMessageOne.add(messageOne);
 			personalizedMessageOne.add(messageTwo);
 			personalizedMessageOne.add(messageThree);
+			personalizedMessageOne.add(messageFour);
 			
 			
 			Question questionOne = new Question("What's your favourite food?", "Food/Drink");
@@ -191,6 +193,6 @@ Quiz QuizOneAnimal = new Quiz("Animal Quiz");
 		};
 
 	}
-			
+	
 }
 	
