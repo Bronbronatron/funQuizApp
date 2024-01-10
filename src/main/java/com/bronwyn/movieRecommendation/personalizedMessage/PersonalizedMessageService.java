@@ -65,28 +65,17 @@ public class PersonalizedMessageService {
 		personalizedMessageRepository.save(personalizedMessage);
 
 	}
-/*
-	public Optional<PersonalizedMessage> getPersonalizedMessage(String mostCommonChoice, ) {
-	    // Your logic to determine personalized message based on mostCommonChoice
-	    AnswerChoice answerChoice = AnswerChoice.valueOf(mostCommonChoice);
-
-	    // Fetch the personalized message from the database based on the mostCommonChoice
-	    Optional<PersonalizedMessage> personalizedMessage = personalizedMessageRepository.findPersonalizedMessageByAnswerChoice(answerChoice);
-	    
-	    // Return the message
-	    return personalizedMessage;
-	}
-*/
 	
 	
 	public Optional<PersonalizedMessage> getPersonalizedMessage(String mostCommonChoice, Long QuizId) {
 	    // Your logic to determine personalized message based on mostCommonChoice
-	    AnswerChoice answerChoice = AnswerChoice.valueOf(mostCommonChoice.toUpperCase());
+	    AnswerChoice answerChoice = AnswerChoice.valueOf(mostCommonChoice);
+	    //.toUpperCase()
 
 	    // Fetch the personalized message from the database based on the mostCommonChoice
 	    Optional<PersonalizedMessage> personalizedMessage = personalizedMessageRepository.findPersonalizedMessageByAnswerChoiceAndQuizId(answerChoice,  QuizId);
 	    System.out.println("--------------answerChoice is ------------------------" + answerChoice);
-	    // Return the message
+	
 	     return personalizedMessage;
 	
 }

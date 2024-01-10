@@ -51,6 +51,8 @@ public class QuizConfig {
 			QuestionChoice choiceB = new QuestionChoice("Ramen", ChoiceValue.B);
 		
 			QuestionChoice choiceC = new QuestionChoice("Chinese Food", ChoiceValue.C);
+			
+			QuestionChoice choiceD = new QuestionChoice("Authentic Italian Pizza", ChoiceValue.D);
 	
 
 			QuestionChoice choiceA2 = new QuestionChoice("Tokyo", ChoiceValue.A);
@@ -58,6 +60,8 @@ public class QuizConfig {
 			QuestionChoice choiceB2 = new QuestionChoice("I'd rather save my money", ChoiceValue.B);
 
 			QuestionChoice choiceC2 = new QuestionChoice("Orlando", ChoiceValue.C);
+			
+			QuestionChoice choiceD2 = new QuestionChoice("Venice", ChoiceValue.D);
 
 
 			QuestionChoice choiceA3 = new QuestionChoice("Experience as much as possible", ChoiceValue.A);
@@ -65,18 +69,23 @@ public class QuizConfig {
 			QuestionChoice choiceB3 = new QuestionChoice("Don't work more than neccessary", ChoiceValue.B);
 		
 			QuestionChoice choiceC3 = new QuestionChoice("Have as much fun as possible", ChoiceValue.C);
+			
+			QuestionChoice choiceD3 = new QuestionChoice("Use your talents to do little things to make the world a better place", ChoiceValue.D);
 		
 			choicesOne.add(choiceA);
 			choicesOne.add(choiceB);
 			choicesOne.add(choiceC);
+			choicesOne.add(choiceD);
 
 			choicesTwo.add(choiceA2);
 			choicesTwo.add(choiceB2);
 			choicesTwo.add(choiceC2);
-
+			choicesTwo.add(choiceD2);
+			
 			choicesThree.add(choiceA3);
 			choicesThree.add(choiceB3);
 			choicesThree.add(choiceC3);
+			choicesThree.add(choiceD3);
 
 			questionOne.setCreatedAt(LocalDateTime.now());
 			questionTwo.setCreatedAt(LocalDateTime.now());

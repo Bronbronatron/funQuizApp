@@ -2,16 +2,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!-- Your head content here -->
+<!-- Your head content here -->
 </head>
 <body>
-    <div>
-        <!-- Your other result page content here -->
-        
-        <!-- Display the personalized message -->
-       
-           <p th:text="${personalizedMessage.getMessage}"></p> 
-        </div>
-     
+	<div>
+		<!-- Your other result page content here -->
+
+		<!-- Display the personalized message -->
+
+		<!--      <p th:text="${personalizedMessage.getMessage}"></p>  -->
+
+	<!-- Thymeleaf isn't designed to handle Optional types. So ${personalizedMessage.isPresent()} doesn't work-->
+	<!-- The Elvis operator (?:) is useful in scenarios where you want to provide a default value when a particular expression evaluates to null or, in the case of Optional types, when the value is not present. -->
+	<!-- Without the Elvis operator, possible need to write explicit conditional checks e.g.  if (personalizedMessage.isPresent()) etc. -->
+		<!-- Check if personalizedMessage is present -->
+			<!-- Display the personalized message -->
+			<p th:text="${personalizedMessage?.getMessage} ?: ('No message for Quiz: ' + ${quiz.quizTitle} + ' found')"></p>
+	</div>
+
 </body>
 </html>
