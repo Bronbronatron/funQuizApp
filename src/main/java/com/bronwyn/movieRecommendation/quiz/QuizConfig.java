@@ -40,9 +40,9 @@ public class QuizConfig {
 			personalizedMessageOne.add(messageFour);
 			
 			
-			Question questionOne = new Question("What's your favourite food?", "Food/Drink");
-			Question questionTwo = new Question("What's your favourite holiday destination?", "Free Time");
-			Question questionThree = new Question("What life philosophy matches yours best?", "Bigger Questions");
+			Question questionOne = new Question("What's your favourite food?");
+			Question questionTwo = new Question("What's your favourite holiday destination?");
+			Question questionThree = new Question("What life philosophy matches yours best?");
 
 			List<QuestionChoice> choicesOne = new ArrayList<>();
 			List<QuestionChoice> choicesTwo = new ArrayList<>();
@@ -129,9 +129,9 @@ Quiz QuizOneAnimal = new Quiz("Animal Quiz");
 			AnimalpersonalizedMessageOne.add(AnimalmessageThree);
 			
 			
-			Question AnimalquestionOne = new Question("What would you like to find in your bowl?", "Food/Drink");
-			Question AnimalquestionTwo = new Question("What's your favourite kind of place to go?", "Free Time");
-			Question AnimalquestionThree = new Question("How do you think everyone should live their lives?", "Bigger Questions");
+			Question AnimalquestionOne = new Question("What would you like to find in your bowl?");
+			Question AnimalquestionTwo = new Question("What's your favourite kind of place to go?");
+			Question AnimalquestionThree = new Question("How do you think everyone should live their lives?");
 
 			List<QuestionChoice> AnimalchoicesOne = new ArrayList<>();
 			List<QuestionChoice> AnimalchoicesTwo = new ArrayList<>();

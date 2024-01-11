@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,17 +36,6 @@ public class QuestionController {
 		return questionService.findQuestionByID(questionId);
 	}
 
-	
-	//have to give a more specific mapping- was being confused by @GetMapping("/{questionId}")
-	@GetMapping("/topic/{questionTopic}")
-	public ResponseEntity<?> findQuestionByTopic(@PathVariable String questionTopic) {
-	    Optional<Question> question = questionService.findQuestionByTopic(questionTopic);
-	    if (question.isPresent()) {
-	        return ResponseEntity.ok(question.get());
-	    } else {
-	        return ResponseEntity.notFound().build();
-	    }
-	}
 
 
 	@PostMapping("{quizId}")

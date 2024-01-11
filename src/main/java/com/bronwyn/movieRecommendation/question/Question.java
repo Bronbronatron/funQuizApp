@@ -30,9 +30,8 @@ public class Question {
 	public Question() {
 	}
 
-	public Question(String prompt, String topic, List<QuestionChoice> questionChoice) {
+	public Question(String prompt, List<QuestionChoice> questionChoice) {
 		this.prompt = prompt;
-		this.topic = topic;
 		this.questionChoice = questionChoice;
 	}
 
@@ -41,7 +40,6 @@ public class Question {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "question_sequence")
 	protected long id;
 	protected String prompt;
-	protected String topic;
 	protected LocalDateTime createdAt; 
 	
 	
@@ -53,19 +51,6 @@ public class Question {
 	@JoinColumn(name = "quiz_id", referencedColumnName = "id")
 	protected Quiz quiz;
 	
-	public Question(String prompt, String topic) {
-		this.prompt = prompt;
-		this.topic = topic;
-	}
-
-	public String getTopic() {
-		return topic;
-	}
-
-
-	public void setTopic(String topic) {
-		this.topic = topic;
-	}
 
 
 	public String getPrompt() {

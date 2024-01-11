@@ -14,10 +14,19 @@
 		</div>
 
 		<div align="center">
-			<input type="text" th:field="*{quizTitle}" />
+			<Label>Quiz Title:</Label> <input type="text" th:field="*{quizTitle}" />
 		</div>
-	
-		<div align="center">
+
+
+		<div align="center" style="margin-top: 20px;">
+			<label>Question 1:</label> <input type="text"
+				th:field="*{quizQuestion[0].prompt}" />
+		</div>
+		
+		
+		
+		<!--  When you set margin-top to a certain value, you are defining how much empty space should be added above the element -->
+		<div align="center" style="margin-top: 20px;">
 			<button type="submit">Submit Quiz</button>
 
 		</div>

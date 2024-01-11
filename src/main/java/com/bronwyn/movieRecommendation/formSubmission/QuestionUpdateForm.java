@@ -11,7 +11,6 @@ public class QuestionUpdateForm {
 
 	
 	private String prompt;
-	private String topic;
 	private List<QuestionChoiceUpdateForm> questionChoiceUpdateForm;
 
 	
@@ -22,9 +21,8 @@ public class QuestionUpdateForm {
 
 
 
-	public QuestionUpdateForm(String prompt, String topic, List<QuestionChoiceUpdateForm> questionChoiceUpdateForm) {
+	public QuestionUpdateForm(String prompt, List<QuestionChoiceUpdateForm> questionChoiceUpdateForm) {
         this.prompt = prompt;
-        this.topic = topic;
         this.questionChoiceUpdateForm = questionChoiceUpdateForm;
     }
 
@@ -32,7 +30,7 @@ public class QuestionUpdateForm {
 	
 	@Override
 	public String toString() {
-		return "QuestionUpdateForm{" + "prompt='" + prompt + '\'' + ", topic='" + topic + '\'' + ", questionChoices="
+		return "QuestionUpdateForm{" + "prompt='" + prompt + '\'' + '\'' + ", questionChoices="
 				+ questionChoiceUpdateForm + '}';
 
 	}
@@ -45,13 +43,6 @@ public class QuestionUpdateForm {
 		this.prompt = prompt;
 	}
 
-	public String getTopic() {
-		return topic;
-	}
-
-	public void setTopic(String topic) {
-		this.topic = topic;
-	}
 
 	public List<QuestionChoiceUpdateForm> getQuestionChoiceUpdateForm() {
 		return questionChoiceUpdateForm;

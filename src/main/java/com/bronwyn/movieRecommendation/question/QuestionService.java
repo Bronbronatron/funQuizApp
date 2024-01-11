@@ -60,12 +60,6 @@ public class QuestionService {
 	public Optional<Question> findQuestionByID(long questionID) {
 		return questionRepository.findById(questionID);
 	}
-	
-	
-    @Transactional(readOnly = true)
-    public Optional<Question> findQuestionByTopic(String topic) {
-        return questionRepository.findQuestionByTopic(topic);
-    }
 
 
 	@Transactional
@@ -86,13 +80,6 @@ public class QuestionService {
 	    if (updatedPrompt != null && !updatedPrompt.isEmpty()) {
 	        existingQuestion.setPrompt(updatedPrompt);
 	    }
-
-		// Update topic if provided in the form
-		String updatedTopic = questionUpdateForm.getTopic();
-
-		if (updatedTopic != null && !updatedTopic.isEmpty()) {
-			existingQuestion.setTopic(updatedTopic);
-		}
 
 		List<QuestionChoice> existingChoices = existingQuestion.getQuestionChoice();
 		List<QuestionChoiceUpdateForm> updatedChoiceForms = questionUpdateForm.getQuestionChoiceUpdateForm();
