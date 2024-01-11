@@ -8,9 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -19,7 +19,7 @@ import com.bronwyn.movieRecommendation.personalizedMessage.PersonalizedMessageSe
 import com.bronwyn.movieRecommendation.question.Question;
 
 
-
+//Use @Controller for traditional web applications, that render html webpages
 @Controller
 @RequestMapping(path = "api/v1/quiz")
 public class QuizController {
@@ -37,10 +37,20 @@ public class QuizController {
 	public Optional<Quiz> findQuestionByID(@PathVariable Long quizId) {
 		return quizService.findQuizByID(quizId);
 	}
+	
+	
+    @GetMapping(path = "/createQuiz")
+    //The Model object is provided by Spring and is used to pass data to the view.
+    public String showQuizFrom(Model model) {
+    	Quiz quiz = new Quiz();
+    	model.addAttribute("quiz", quiz);
+    	return "quizForm";
+    }
 
-	@PostMapping
-	public void registerNewQuiz(@RequestBody Quiz quiz) {
+	@PostMapping("/registerQuiz")
+	public String registerNewQuiz(@ModelAttribute("quiz") Quiz quiz) {
 		quizService.addNewQuizWithQuestion(quiz);
+		return "homeScreen";
 	}
 
 	@DeleteMapping(path = "{quizId}")
@@ -108,14 +118,5 @@ public class QuizController {
 
        return "resultPage";
     }
-
-    
-    
-    
-
-	
-	
-	
-	
 
 }

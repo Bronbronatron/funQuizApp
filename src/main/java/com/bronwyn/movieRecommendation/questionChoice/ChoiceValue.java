@@ -6,5 +6,5 @@ public enum ChoiceValue {
 	C, 
 	D,
 	E,
-	G;
+	F;
 }

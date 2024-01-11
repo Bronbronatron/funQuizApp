@@ -6,21 +6,23 @@
 </head>
 <body>
 
-
-
-	<form th:action="@{/api/v1/quiz/RegisterQuiz}" method="post">
+	<form th:action="@{/api/v1/quiz/registerQuiz}" method="post"
+		th:object="${quiz}">
 
 		<div align="center">
 			<h1>New Quiz</h1>
-			
-			
-			<a href="main/home">Click Here to Submit your quiz!</a>
-
-
 		</div>
 
+		<div align="center">
+			<input type="text" th:field="*{quizTitle}" />
+		</div>
+	
+		<div align="center">
+			<button type="submit">Submit Quiz</button>
 
+		</div>
 	</form>
+
 </body>
 
 

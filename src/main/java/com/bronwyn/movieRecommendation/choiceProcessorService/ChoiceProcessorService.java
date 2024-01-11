@@ -63,6 +63,8 @@ public class ChoiceProcessorService {
         
        //Generates a random index within the bounds of the array, and the corresponding element is then returned.
         //Useful if there are 2 maxFrequency values (One is selected at random)
+        //If a array of one String is passed below-> there is only 1 index therefore that index will be 'randomly' selected, so not a problem here
+        //Returns a string
         return mostCommonArray[new Random().nextInt(mostCommonArray.length)];
     }
 
