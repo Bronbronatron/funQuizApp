@@ -19,20 +19,51 @@
 			<label for="quizTitle">Quiz Title:</label> <input type="text"
 				id="quizTitle" th:field="*{quiz.quizTitle}">
 		</div>
-		
+
+
+		<!--  	<div id="questionsContainer"> -->
+		<!-- New question template (hidden by default) -->
+		<div id="questionContainer">
+			<label
+				th:text="'Question ' + (${#lists.size(quiz.quizQuestion) + 1})" > </label>
+			<!-- #lists.size(quiz.quizQuestion): Calculates the size (number of elements) in the quizQuestion list. -->
+			<!-- _${#lists.size(quiz.quizQuestion)}__: Inserts the calculated size/index into the Thymeleaf expression. -->
+			<!--  indicates that the prompt property of the new question at the calculated index should be bound to the input field. -->
+			<input type="text"
+				th:field="*{quiz.quizQuestion[__${#lists.size(quiz.quizQuestion)}__].prompt}" />
+		</div>
+		<!-- </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
 		<!--
+	
+	--------------------------This works --------------------------------	
 		<div>
 			<label for="questionPrompt">Question Prompt :</label> <input
-				type="text" id="questionPrompt" th:field = "*{quiz.quizQuestion.prompt}">
+				type="text" th:field = "*{quiz.quizQuestion[0].prompt}">
 		</div>
+		
+	---------------------------------------------------------------------------
+	
+	
 		
 		 
 		 <div>
 			<label for="choicePrompt">Choice Prompt:</label> <input type="text"
 				id="choicePrompt"
-				th:name="quiz.quizQuestion.questionChoice.choicePrompt">
+				th:field="quiz.quizQuestion.questionChoice.choicePrompt[">
 		</div>
-
+<!--
 		<div>
 			<label for="quizTitle">Choice Value:</label> <input type="text"
 				id="choiceValue"
@@ -42,7 +73,7 @@
 		<div>
 			<input type="submit" value="Submit">
 		</div>
-		
+
 	</form>
 
 </body>
