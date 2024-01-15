@@ -40,7 +40,7 @@ public class QuizService {
 	    if (quizByQuizTitle.isPresent()) {
 	        throw new IllegalStateException("Quiz already exists");
 	    }
-
+	
 	    LocalDateTime currentTimestamp = LocalDateTime.now();
 	    quiz.setCreatedAt(currentTimestamp);
 

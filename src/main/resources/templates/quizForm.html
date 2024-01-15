@@ -3,37 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <title>Create Quiz</title>
+
+<script>
+	
+</script>
+
 </head>
 <body>
+	<form th:action="@{/api/v1/quiz/registerQuiz}" method="post">
 
-	<form th:action="@{/api/v1/quiz/registerQuiz}" method="post"
-		th:object="${quiz}">
-
-		<div align="center">
-			<h1>New Quiz</h1>
-		</div>
-
-		<div align="center">
-			<Label>Quiz Title:</Label> <input type="text" th:field="*{quizTitle}" />
-		</div>
-
-
-		<div align="center" style="margin-top: 20px;">
-			<label>Question 1:</label> <input type="text"
-				th:field="*{quizQuestion[0].prompt}" />
+		<!-- When you use th:field, Thymeleaf automatically handles the form binding . 
+		Sets the name of the form field but also pre-fills the field with the initial value from the model
+		ensures that when the form is submitted, the values are bound back to the model object in your controller.  -->
+		<div>
+			<label for="quizTitle">Quiz Title:</label> <input type="text"
+				id="quizTitle" th:field="*{quiz.quizTitle}">
 		</div>
 		
-		
-		
-		<!--  When you set margin-top to a certain value, you are defining how much empty space should be added above the element -->
-		<div align="center" style="margin-top: 20px;">
-			<button type="submit">Submit Quiz</button>
-
+		<!--
+		<div>
+			<label for="questionPrompt">Question Prompt :</label> <input
+				type="text" id="questionPrompt" th:field = "*{quiz.quizQuestion.prompt}">
 		</div>
+		
+		 
+		 <div>
+			<label for="choicePrompt">Choice Prompt:</label> <input type="text"
+				id="choicePrompt"
+				th:name="quiz.quizQuestion.questionChoice.choicePrompt">
+		</div>
+
+		<div>
+			<label for="quizTitle">Choice Value:</label> <input type="text"
+				id="choiceValue"
+				th:name="quiz.quizQuestion.questionChoice.choiceValue">
+		</div>
+-->
+		<div>
+			<input type="submit" value="Submit">
+		</div>
+		
 	</form>
 
 </body>
-
-
-
 </html>
