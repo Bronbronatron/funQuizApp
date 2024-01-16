@@ -4,72 +4,53 @@
 <meta charset="UTF-8">
 <title>Create Quiz</title>
 
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-	
+
+$(document).ready(function() {
+    // When the document is ready, execute the following code
+    $("#cloneButton").click(function() {
+        // When the button with id "cloneButton" is clicked, execute the following code
+        var originalDiv = $("#questionContainer");
+        //.clone() clones the contents of #cloneContainer instead of the container itself. 
+        var clonedDiv = $("#cloneContainer").clone(); 
+       
+
+        // Append the clone to itself
+        originalDiv.append(clonedDiv);
+    });
+});
 </script>
+	
 
 </head>
+
 <body>
 	<form th:action="@{/api/v1/quiz/registerQuiz}" method="post">
-
-		<!-- When you use th:field, Thymeleaf automatically handles the form binding . 
-		Sets the name of the form field but also pre-fills the field with the initial value from the model
-		ensures that when the form is submitted, the values are bound back to the model object in your controller.  -->
-		<div>
+		<div id = "quizTitle">
 			<label for="quizTitle">Quiz Title:</label> <input type="text"
 				id="quizTitle" th:field="*{quiz.quizTitle}">
 		</div>
 
-
-		<!--  	<div id="questionsContainer"> -->
-		<!-- New question template (hidden by default) -->
 		<div id="questionContainer">
 			<label
-				th:text="'Question ' + (${#lists.size(quiz.quizQuestion) + 1})" > </label>
-			<!-- #lists.size(quiz.quizQuestion): Calculates the size (number of elements) in the quizQuestion list. -->
-			<!-- _${#lists.size(quiz.quizQuestion)}__: Inserts the calculated size/index into the Thymeleaf expression. -->
-			<!--  indicates that the prompt property of the new question at the calculated index should be bound to the input field. -->
-			<input type="text"
-				th:field="*{quiz.quizQuestion[__${#lists.size(quiz.quizQuestion)}__].prompt}" />
-		</div>
-		<!-- </div> -->
-
-
-
-
-
-
-
-
-
-
-
-
-		<!--
-	
-	--------------------------This works --------------------------------	
-		<div>
-			<label for="questionPrompt">Question Prompt :</label> <input
-				type="text" th:field = "*{quiz.quizQuestion[0].prompt}">
-		</div>
+				th:text="'Question 1' + (${#lists.size(quiz.quizQuestion) + 1})">
+			</label> <input type="text" th:field="*{quiz.quizQuestion[0].prompt}" />
+			</div>
+			
+			
+				<div id="cloneContainer">
+			<label
+				th:text="'Question 1' + (${#lists.size(quiz.quizQuestion) + 1})">
+			</label> <input type="text" th:field="*{quiz.quizQuestion[1].prompt}" />
+			</div>
 		
-	---------------------------------------------------------------------------
-	
-	
-		
-		 
-		 <div>
-			<label for="choicePrompt">Choice Prompt:</label> <input type="text"
-				id="choicePrompt"
-				th:field="quiz.quizQuestion.questionChoice.choicePrompt[">
-		</div>
-<!--
+
 		<div>
-			<label for="quizTitle">Choice Value:</label> <input type="text"
-				id="choiceValue"
-				th:name="quiz.quizQuestion.questionChoice.choiceValue">
+			 <button type="button" id="cloneButton">Clone and Append</button>
+
 		</div>
--->
 		<div>
 			<input type="submit" value="Submit">
 		</div>
