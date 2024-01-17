@@ -1,61 +1,65 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Create Quiz</title>
+    <meta charset="UTF-8">
+    <title>Create Quiz</title>
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var questionCounter = 1;
+        
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-
-$(document).ready(function() {
-    // When the document is ready, execute the following code
-    $("#cloneButton").click(function() {
-        // When the button with id "cloneButton" is clicked, execute the following code
-        var originalDiv = $("#questionContainer");
-        //.clone() clones the contents of #cloneContainer instead of the container itself. 
-        var clonedDiv = $("#cloneContainer").clone(); 
-       
-
-        // Append the clone to itself
-        originalDiv.append(clonedDiv);
-    });
-});
-</script>
-	
-
+            // When the document is ready, execute the following code
+            $("#cloneButton").click(function () {
+            	
+                // When the button with id "cloneButton" is clicked, execute the following code
+                var originalDiv = $("#questionContainer");
+                
+                // .clone() clones the contents of #cloneContainer instead of the container itself.
+                var clonedDiv = $("#cloneContainer").clone();
+                
+                //Upate name and Id fields for each clone
+                var newId = "cloneContainer" + questionCounter;
+                
+                
+             
+ 
+               clonedDiv.attr("id", newId);
+          
+                
+                //Upate label fields for each clone
+          
+               var newLabel = "Question: " + (questionCounter + 1);
+               clonedDiv.find("label").text(newLabel);
+               
+                clonedDiv.find('input').prop('name', `quizQuestion[${questionCounter}].prompt`);
+				
+                originalDiv.append(clonedDiv);
+                questionCounter++;
+            });
+        });
+    </script>
 </head>
 
 <body>
-	<form th:action="@{/api/v1/quiz/registerQuiz}" method="post">
-		<div id = "quizTitle">
-			<label for="quizTitle">Quiz Title:</label> <input type="text"
-				id="quizTitle" th:field="*{quiz.quizTitle}">
-		</div>
+<form th:action="@{/api/v1/quiz/registerQuiz}" method="post" th:object = ${quiz}>
 
-		<div id="questionContainer">
-			<label
-				th:text="'Question 1' + (${#lists.size(quiz.quizQuestion) + 1})">
-			</label> <input type="text" th:field="*{quiz.quizQuestion[0].prompt}" />
-			</div>
-			
-			
-				<div id="cloneContainer">
-			<label
-				th:text="'Question 1' + (${#lists.size(quiz.quizQuestion) + 1})">
-			</label> <input type="text" th:field="*{quiz.quizQuestion[1].prompt}" />
-			</div>
-		
+	 <div>
+        <label> Title </label> <input type="text" th:field="*{quizTitle}" />
+	</div>
+	
+    <div id="cloneContainer">
+        <label> Question: 1 </label> <input type="text" name = "quizQuestion[0].prompt" />
+    </div>
+    <div id="questionContainer"></div>
 
-		<div>
-			 <button type="button" id="cloneButton">Clone and Append</button>
-
-		</div>
-		<div>
-			<input type="submit" value="Submit">
-		</div>
-
-	</form>
-
+    <div>
+        <button type="button" id="cloneButton">Clone and Append</button>
+    </div>
+    <div>
+        <input type="submit" value="Submit">
+    </div>
+</form>
 </body>
 </html>
