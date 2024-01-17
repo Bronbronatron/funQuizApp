@@ -9,21 +9,19 @@
         $(document).ready(function () {
             var questionCounter = 1;
         
-
             // When the document is ready, execute the following code
             $("#cloneButton").click(function () {
             	
                 // When the button with id "cloneButton" is clicked, execute the following code
                 var originalDiv = $("#questionContainer");
-                
+          
                 // .clone() clones the contents of #cloneContainer instead of the container itself.
                 var clonedDiv = $("#cloneContainer").clone();
-                
+         
                 //Upate name and Id fields for each clone
                 var newId = "cloneContainer" + questionCounter;
+                   
                clonedDiv.attr("id", newId);
-          
-                
                 //Upate label fields for each clone
           
                var newLabel = "Question: " + (questionCounter + 1);
@@ -31,8 +29,12 @@
                
                 clonedDiv.find('input[type="text"]').val('');
                
+                //Setting the name for each clone
+                // The server uses the names to map the values to corresponding fields in the data model.
+                //the value entered in that text field will be associated with the prompt field in the quizQuestion list when the form is submitted.
+
                 clonedDiv.find('input').prop('name', `quizQuestion[${questionCounter}].prompt`);
-              
+               // clonedDiv.choiceContainer.find('input').prop('name', `quizQuestion[${questionCounter}].questionChoice[${questionCounter}].choicePrompt`);    
 
                 originalDiv.append(clonedDiv);
                
@@ -48,12 +50,23 @@
 	 <div>
         <label> Title </label> <input type="text" th:field="*{quizTitle}" />
 	</div>
-	
-    <div id="cloneContainer">
-        <label> Question: 1 </label> <input type="text" name = "quizQuestion[0].prompt" />
-        
-    </div>
-    <div id="questionContainer"></div>
+
+		<div id="cloneContainer">
+			<label> Question: 1 </label> <input type="text"
+				name="quizQuestion[0].prompt" />
+		</div>
+		
+		
+		<!--  Maybe code the delete button for question first? -->
+			<!--  
+			<div id ="choiceContainer">
+				<label> Choice: 1 </label> <input type="text"
+					name="quizQuestion[0].questionChoice[0].choicePrompt" />
+			</div>
+		
+-->
+
+		<div id="questionContainer"></div>
 
     <div>
         <button type="button" id="cloneButton">Clone and Append</button>
