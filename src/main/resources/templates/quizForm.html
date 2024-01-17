@@ -21,10 +21,6 @@
                 
                 //Upate name and Id fields for each clone
                 var newId = "cloneContainer" + questionCounter;
-                
-                
-             
- 
                clonedDiv.attr("id", newId);
           
                 
@@ -33,9 +29,13 @@
                var newLabel = "Question: " + (questionCounter + 1);
                clonedDiv.find("label").text(newLabel);
                
+                clonedDiv.find('input[type="text"]').val('');
+               
                 clonedDiv.find('input').prop('name', `quizQuestion[${questionCounter}].prompt`);
-				
+              
+
                 originalDiv.append(clonedDiv);
+               
                 questionCounter++;
             });
         });
@@ -51,6 +51,7 @@
 	
     <div id="cloneContainer">
         <label> Question: 1 </label> <input type="text" name = "quizQuestion[0].prompt" />
+        
     </div>
     <div id="questionContainer"></div>
 
