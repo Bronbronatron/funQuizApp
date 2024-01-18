@@ -47,10 +47,20 @@
             });
             
             
-            $(document).ready(function () {
-                $("#deleteButton").click(function () {
+       //     $(document).ready(function () {
+               // $("#deleteButton").click(function () {
                     // Find the last cloneContainer and remove it
-                    $(".questionList:last").remove();
+                   // $(".questionList:last").remove();
+                   
+                   
+      $(document).ready(function () {
+    // Attach click event to the document and filter for elements with class 'deleteButton' inside '.cloneContainer'
+    $(document).on("click", ".deleteButton", function () {
+        // Find the closest '.cloneContainer' and remove it
+        $(this).closest('.questionList').remove();             
+                   
+                  
+                   
                 });
             });
             
@@ -71,6 +81,7 @@
 		<div id="cloneContainer" class = "questionList">
 			<label> Question: 1 </label> <input type="text"
 				name="quizQuestion[0].prompt" />
+		<button type="button" class="deleteButton">Delete Question</button>
 		</div>
 		
 
@@ -90,7 +101,7 @@
     
 
         <button type="button" id="cloneButton">Add Question</button>
-        <button type="button" id="deleteButton">Delete Question</button>
+    <!--      <button type="button" id="deleteButton">Delete Question</button>-->
     </div>
     <div>
         <input type="submit" value="Submit">
