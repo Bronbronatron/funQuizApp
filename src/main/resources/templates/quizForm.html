@@ -18,10 +18,14 @@
                 // .clone() clones the contents of #cloneContainer instead of the container itself.
                 var clonedDiv = $("#cloneContainer").clone();
          
-                //Upate name and Id fields for each clone
+                //Upate name and Id fields for each clone div
                 var newId = "cloneContainer" + questionCounter;
-                   
-               clonedDiv.attr("id", newId);
+                clonedDiv.attr("id", newId);
+                
+                //Upate name and Id fields for each clone delete button
+                var newDeleteId = "deleteButton" + questionCounter;
+                clonedDiv.find("button[type='button']").attr("id", newDeleteId);
+             
                 //Upate label fields for each clone
           
                var newLabel = "Question: " + (questionCounter + 1);
@@ -36,11 +40,23 @@
                 clonedDiv.find('input').prop('name', `quizQuestion[${questionCounter}].prompt`);
                // clonedDiv.choiceContainer.find('input').prop('name', `quizQuestion[${questionCounter}].questionChoice[${questionCounter}].choicePrompt`);    
 
+         	   
                 originalDiv.append(clonedDiv);
                
                 questionCounter++;
             });
+            
+            
+            $(document).ready(function () {
+                $("#deleteButton").click(function () {
+                    // Find the last cloneContainer and remove it
+                    $(".questionList:last").remove();
+                });
+            });
+            
         });
+        
+        
     </script>
 </head>
 
@@ -50,14 +66,18 @@
 	 <div>
         <label> Title </label> <input type="text" th:field="*{quizTitle}" />
 	</div>
-
-		<div id="cloneContainer">
+	
+	
+		<div id="cloneContainer" class = "questionList">
 			<label> Question: 1 </label> <input type="text"
 				name="quizQuestion[0].prompt" />
 		</div>
 		
+
+		<div id="questionContainer"></div>
 		
-		<!--  Maybe code the delete button for question first? -->
+		
+				<!--  Maybe code the delete button for question first? -->
 			<!--  
 			<div id ="choiceContainer">
 				<label> Choice: 1 </label> <input type="text"
@@ -66,10 +86,11 @@
 		
 -->
 
-		<div id="questionContainer"></div>
-
     <div>
-        <button type="button" id="cloneButton">Clone and Append</button>
+    
+
+        <button type="button" id="cloneButton">Add Question</button>
+        <button type="button" id="deleteButton">Delete Question</button>
     </div>
     <div>
         <input type="submit" value="Submit">
