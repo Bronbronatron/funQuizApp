@@ -21,19 +21,15 @@
                 var clonedDiv = $("#cloneContainer").clone();
                 
                 //Upate name and Id fields for each clone div
+                
                 var newId = "container" + (questionCounter +1) ;
                 clonedDiv.attr("id", newId);
                 
                 var newClass = "questionList";
                 clonedDiv.attr("class", newClass);
                 
-                //Upate name and Id fields for each clone delete button
-             //   var newDeleteId = "deleteButton" + (questionCounter +1);
-             //   clonedDiv.find("button[type='button']").attr("id", newDeleteId);
-             
-                //Upate label fields for each clone
-          
-               var newLabel = "Question: " + (questionCounter + 2);
+                
+               var newLabel = "Question: " + (questionCounter + 1);
                clonedDiv.find("label").text(newLabel);
                
                 clonedDiv.find('input[type="text"]').val('');
@@ -55,7 +51,7 @@
         var newId = "container" + (index);
         $(this).attr("id", newId);
 
-        var newLabel = "Question: " + (index + 1);
+        var newLabel = "Question: " + (index +1);
         $(this).find("label").text(newLabel);
 
         $(this).find('input').prop('name', `quizQuestion[${index}].prompt`);
@@ -70,7 +66,7 @@
     $(document).on("click", ".deleteButton", function () {
         // Find the closest '.cloneContainer' and remove it
         $(this).closest('.questionList').remove();   
-     // renumberQuestions();
+         renumberQuestions();
 
                 });
             });
@@ -89,13 +85,13 @@
         <label> Title </label> <input type="text" th:field="*{quizTitle}" />
 	</div>
 	
-	
+	<!--  
 		<div id="container" class = "questionList">
 			<label> Question: 1 </label> <input type="text"
 				name="quizQuestion[0].prompt" />
 		<button type="button" class="deleteButton">Delete Question</button>
 		</div>
-		
+-->		
 		
 		<div id="cloneContainer" style="display: none;" class="cloneClass">
   	   <label> Question: </label> <input type="text" name="clone" />
