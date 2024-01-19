@@ -51,13 +51,34 @@
                // $("#deleteButton").click(function () {
                     // Find the last cloneContainer and remove it
                    // $(".questionList:last").remove();
+                    
+                    
+      function renumberQuestions() {
+    $(".questionList").each(function (index) {
+        // Create a new ID for the cloneContainer
+        var newId = "cloneContainer" + (index);
+        $(this).attr("id", newId);
+
+        // Create a new ID for the delete button inside the cloneContainer
+        var newDeleteId = "deleteButton" + (index);
+        $(this).find("button[type='button']").attr("id", newDeleteId);
+
+        // Create a new label text for the cloneContainer
+        var newLabel = "Question: " + (index + 1);
+        $(this).find("label").text(newLabel);
+
+        // Update the name attribute of the input inside the cloneContainer
+        $(this).find('input').prop('name', `quizQuestion[${index}].prompt`);
+    });
+}
                    
                    
       $(document).ready(function () {
     // Attach click event to the document and filter for elements with class 'deleteButton' inside '.cloneContainer'
     $(document).on("click", ".deleteButton", function () {
         // Find the closest '.cloneContainer' and remove it
-        $(this).closest('.questionList').remove();             
+        $(this).closest('.questionList').remove();   
+        renumberQuestions()
                    
                   
                    
