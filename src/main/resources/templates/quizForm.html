@@ -6,9 +6,11 @@
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
+    
+ 
         $(document).ready(function () {
-            var questionCounter = 1;
-        
+        	   var questionCounter = 0;
+
             // When the document is ready, execute the following code
             $("#cloneButton").click(function () {
             	
@@ -17,18 +19,21 @@
           
                 // .clone() clones the contents of #cloneContainer instead of the container itself.
                 var clonedDiv = $("#cloneContainer").clone();
-         
+                
                 //Upate name and Id fields for each clone div
-                var newId = "cloneContainer" + questionCounter;
+                var newId = "container" + (questionCounter +1) ;
                 clonedDiv.attr("id", newId);
                 
+                var newClass = "questionList";
+                clonedDiv.attr("class", newClass);
+                
                 //Upate name and Id fields for each clone delete button
-                var newDeleteId = "deleteButton" + questionCounter;
-                clonedDiv.find("button[type='button']").attr("id", newDeleteId);
+             //   var newDeleteId = "deleteButton" + (questionCounter +1);
+             //   clonedDiv.find("button[type='button']").attr("id", newDeleteId);
              
                 //Upate label fields for each clone
           
-               var newLabel = "Question: " + (questionCounter + 1);
+               var newLabel = "Question: " + (questionCounter + 2);
                clonedDiv.find("label").text(newLabel);
                
                 clonedDiv.find('input[type="text"]').val('');
@@ -36,39 +41,26 @@
                 //Setting the name for each clone
                 // The server uses the names to map the values to corresponding fields in the data model.
                 //the value entered in that text field will be associated with the prompt field in the quizQuestion list when the form is submitted.
-
+				
                 clonedDiv.find('input').prop('name', `quizQuestion[${questionCounter}].prompt`);
-               // clonedDiv.choiceContainer.find('input').prop('name', `quizQuestion[${questionCounter}].questionChoice[${questionCounter}].choicePrompt`);    
-
-         	   
+                clonedDiv.show();
                 originalDiv.append(clonedDiv);
-               
                 questionCounter++;
+               
             });
             
-            
-       //     $(document).ready(function () {
-               // $("#deleteButton").click(function () {
-                    // Find the last cloneContainer and remove it
-                   // $(".questionList:last").remove();
-                    
                     
       function renumberQuestions() {
-    $(".questionList").each(function (index) {
-        // Create a new ID for the cloneContainer
-        var newId = "cloneContainer" + (index);
+   		 $(".questionList").each(function (index) {
+        var newId = "container" + (index);
         $(this).attr("id", newId);
 
-        // Create a new ID for the delete button inside the cloneContainer
-        var newDeleteId = "deleteButton" + (index);
-        $(this).find("button[type='button']").attr("id", newDeleteId);
-
-        // Create a new label text for the cloneContainer
         var newLabel = "Question: " + (index + 1);
         $(this).find("label").text(newLabel);
 
-        // Update the name attribute of the input inside the cloneContainer
         $(this).find('input').prop('name', `quizQuestion[${index}].prompt`);
+        questionCounter = $(".questionList").length;
+     
     });
 }
                    
@@ -78,13 +70,12 @@
     $(document).on("click", ".deleteButton", function () {
         // Find the closest '.cloneContainer' and remove it
         $(this).closest('.questionList').remove();   
-        renumberQuestions()
-                   
-                  
-                   
+     // renumberQuestions();
+
                 });
             });
-            
+
+        
         });
         
         
@@ -99,12 +90,17 @@
 	</div>
 	
 	
-		<div id="cloneContainer" class = "questionList">
+		<div id="container" class = "questionList">
 			<label> Question: 1 </label> <input type="text"
 				name="quizQuestion[0].prompt" />
 		<button type="button" class="deleteButton">Delete Question</button>
 		</div>
 		
+		
+		<div id="cloneContainer" style="display: none;" class="cloneClass">
+  	   <label> Question: </label> <input type="text" name="clone" />
+    	 <button type="button" class="deleteButton">Delete Question</button>
+		</div>
 
 		<div id="questionContainer"></div>
 		
