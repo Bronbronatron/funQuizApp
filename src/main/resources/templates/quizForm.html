@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Create Quiz</title>
+<meta charset="UTF-8">
+<title>Create Quiz</title>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
     
  
         $(document).ready(function () {
         	   var questionCounter = 0;
-
             // When the document is ready, execute the following code
-            $("#cloneButton").click(function () {
-            	
-                // When the button with id "cloneButton" is clicked, execute the following code
+                 $("#cloneButton").click(function () {	
+                	
                 var originalDiv = $("#questionContainer");
           
                 // .clone() clones the contents of #cloneContainer instead of the container itself.
@@ -22,15 +20,14 @@
                 
                 //Upate name and Id fields for each clone div
                 
-                var newId = "container" + (questionCounter +1) ;
+                var newId = "container" + (questionCounter) ;
                 clonedDiv.attr("id", newId);
                 
                 var newClass = "questionList";
                 clonedDiv.attr("class", newClass);
                 
-                
-               var newLabel = "Question: " + (questionCounter + 1);
-               clonedDiv.find("label").text(newLabel);
+                var newLabel = "Question: " + (questionCounter + 1);
+                clonedDiv.find("label").text(newLabel);
                
                 clonedDiv.find('input[type="text"]').val('');
                
@@ -47,6 +44,16 @@
             
                     
       function renumberQuestions() {
+    	  
+    	 var questionContainers = $(".questionList").length;
+
+    	 if (questionContainers === 0) {
+    	        // No question containers found, reset questionCounter
+    	        questionCounter = 0;
+    	        alert(questionCounter);
+    	        return;
+    	 }
+    	  
    		 $(".questionList").each(function (index) {
         var newId = "container" + (index);
         $(this).attr("id", newId);
@@ -56,7 +63,7 @@
 
         $(this).find('input').prop('name', `quizQuestion[${index}].prompt`);
         questionCounter = $(".questionList").length;
-     
+     	alert(questionCounter);
     });
 }
                    
@@ -79,46 +86,44 @@
 </head>
 
 <body>
-<form th:action="@{/api/v1/quiz/registerQuiz}" method="post" th:object = ${quiz}>
+	<form th:action="@{/api/v1/quiz/registerQuiz}" method="post"
+		th:object=${quiz}>
 
-	 <div>
-        <label> Title </label> <input type="text" th:field="*{quizTitle}" />
-	</div>
-	
-	<!--  
-		<div id="container" class = "questionList">
-			<label> Question: 1 </label> <input type="text"
-				name="quizQuestion[0].prompt" />
-		<button type="button" class="deleteButton">Delete Question</button>
+		<div>
+			<label> Title </label> <input type="text" th:field="*{quizTitle}" />
 		</div>
--->		
-		
+
+
 		<div id="cloneContainer" style="display: none;" class="cloneClass">
-  	   <label> Question: </label> <input type="text" name="clone" />
-    	 <button type="button" class="deleteButton">Delete Question</button>
+			<label> Question: </label> <input type="text" name="clone" />
+			<button type="button" class="deleteButton">Delete Question</button>
+			
+		<!-- 	<button type="button" id="choiceButton">Add Choice</button>  -->
 		</div>
 
 		<div id="questionContainer"></div>
-		
-		
-				<!--  Maybe code the delete button for question first? -->
-			<!--  
-			<div id ="choiceContainer">
-				<label> Choice: 1 </label> <input type="text"
-					name="quizQuestion[0].questionChoice[0].choicePrompt" />
-			</div>
-		
--->
 
-    <div>
-    
 
-        <button type="button" id="cloneButton">Add Question</button>
-    <!--      <button type="button" id="deleteButton">Delete Question</button>-->
-    </div>
-    <div>
-        <input type="submit" value="Submit">
-    </div>
-</form>
+		<!--  Maybe code the delete button for question first? -->
+
+
+<!--
+		<div id="choiceContainer" style="display: none;"
+			class="cloneContainerClass">
+			<label> Choice: </label> <input type="text" name="cloneChoice" />
+		</div>
+
+ -->
+
+		<div>
+
+
+			<button type="button" id="cloneButton">Add Question</button>
+			<!--      <button type="button" id="deleteButton">Delete Question</button>-->
+		</div>
+		<div>
+			<input type="submit" value="Submit">
+		</div>
+	</form>
 </body>
 </html>
