@@ -6,83 +6,77 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    
- 
-        $(document).ready(function () {
-        	   var questionCounter = 0;
-            // When the document is ready, execute the following code
-                 $("#cloneButton").click(function () {	
-                	
-                var originalDiv = $("#questionContainer");
-          
-                // .clone() clones the contents of #cloneContainer instead of the container itself.
-                var clonedDiv = $("#cloneContainer").clone();
-                
-                //Upate name and Id fields for each clone div
-                
-                var newId = "container" + (questionCounter) ;
-                clonedDiv.attr("id", newId);
-                
-                var newClass = "questionList";
-                clonedDiv.attr("class", newClass);
-                
-                var newLabel = "Question: " + (questionCounter + 1);
-                clonedDiv.find("label").text(newLabel);
-               
-                clonedDiv.find('input[type="text"]').val('');
-               
-                //Setting the name for each clone
-                // The server uses the names to map the values to corresponding fields in the data model.
-                //the value entered in that text field will be associated with the prompt field in the quizQuestion list when the form is submitted.
-				
-                clonedDiv.find('input').prop('name', `quizQuestion[${questionCounter}].prompt`);
-                clonedDiv.show();
-                originalDiv.append(clonedDiv);
-                questionCounter++;
-               
-            });
-            
-                    
-      function renumberQuestions() {
-    	  
-    	 var questionContainers = $(".questionList").length;
+$(document).ready(function () {
+    var questionCounter = 0;
+    var choiceCounter = 0;
 
-    	 if (questionContainers === 0) {
-    	        // No question containers found, reset questionCounter
-    	        questionCounter = 0;
-    	        alert(questionCounter);
-    	        return;
-    	 }
-    	  
-   		 $(".questionList").each(function (index) {
-        var newId = "container" + (index);
-        $(this).attr("id", newId);
+    $("#cloneButton").click(function () {
+        var originalDiv = $("#questionContainer");
 
-        var newLabel = "Question: " + (index +1);
-        $(this).find("label").text(newLabel);
+        // .clone() clones the contents of #cloneContainer instead of the container itself.
+        var clonedDiv = $("#cloneContainer").clone();
 
-        $(this).find('input').prop('name', `quizQuestion[${index}].prompt`);
-        questionCounter = $(".questionList").length;
-     	alert(questionCounter);
+        // Update name and Id fields for each clone div
+        var newId = "container" + (questionCounter);
+        clonedDiv.attr("id", newId);
+
+        var newClass = "questionList";
+        clonedDiv.attr("class", newClass);
+
+        var newLabel = "Question: " + (questionCounter + 1);
+        clonedDiv.find("label").text(newLabel);
+
+        clonedDiv.find('input[type="text"]').val('');
+
+        // Setting the name for each clone
+        // The server uses the names to map the values to corresponding fields in the data model.
+        // The value entered in that text field will be associated with the prompt field in the quizQuestion list when the form is submitted.
+        clonedDiv.find('input').prop('name', `quizQuestion[${questionCounter}].prompt`);
+        clonedDiv.show();
+        originalDiv.append(clonedDiv);
+        questionCounter++;
     });
-}
-                   
-                   
-      $(document).ready(function () {
+
+    function renumberQuestions() {
+        // If no question containers of class "questionList" exist, set questionCounter to 0 
+        // Otherwise run the method as normal
+        var questionContainers = $(".questionList").length;
+
+        if (questionContainers === 0) {
+            // No question containers found, reset questionCounter
+            questionCounter = 0;
+            return;
+        }
+
+        $(".questionList").each(function (index) {
+            var newId = "container" + (index);
+            $(this).attr("id", newId);
+
+            var newLabel = "Question: " + (index + 1);
+            $(this).find("label").text(newLabel);
+
+            $(this).find('input').prop('name', `quizQuestion[${index}].prompt`);
+            questionCounter = $(".questionList").length;
+        });
+    }
+
     // Attach click event to the document and filter for elements with class 'deleteButton' inside '.cloneContainer'
     $(document).on("click", ".deleteButton", function () {
         // Find the closest '.cloneContainer' and remove it
-        $(this).closest('.questionList').remove();   
-         renumberQuestions();
+        $(this).closest('.questionList').remove();
+        renumberQuestions();
+    });
+    //Even if the elements didn't exist when the event handler was initially attached, the handler will still catch the event 
+    $(document).on("click", ".choiceButton", function () {
+        // Find the closest '.cloneContainer' and remove it
+    	   alert("Working!");
+    });
+});
 
-                });
-            });
 
-        
-        });
-        
-        
-    </script>
+
+
+</script>
 </head>
 
 <body>
@@ -96,30 +90,23 @@
 
 		<div id="cloneContainer" style="display: none;" class="cloneClass">
 			<label> Question: </label> <input type="text" name="clone" />
-			<button type="button" class="deleteButton">Delete Question</button>
-			
-		<!-- 	<button type="button" id="choiceButton">Add Choice</button>  -->
+			<button type="button" class="deleteButton">Delete Question</button>			
+			<button type="button" class="choiceButton">Add Choice</button> 
 		</div>
 
 		<div id="questionContainer"></div>
 
 
-		<!--  Maybe code the delete button for question first? -->
-
-
-<!--
 		<div id="choiceContainer" style="display: none;"
 			class="cloneContainerClass">
 			<label> Choice: </label> <input type="text" name="cloneChoice" />
 		</div>
 
- -->
-
 		<div>
 
-
+		<!-- Match the selector at the time when this code runs so it won't work for elements dynamically added to the DOM after the initial page load -->
 			<button type="button" id="cloneButton">Add Question</button>
-			<!--      <button type="button" id="deleteButton">Delete Question</button>-->
+			
 		</div>
 		<div>
 			<input type="submit" value="Submit">
