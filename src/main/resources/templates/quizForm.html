@@ -82,14 +82,15 @@ $(document).ready(function () {
             $(this).find("label").text(newLabel);
 
             $(this).find('input').prop('name', `quizQuestion[${index}].prompt`);
-            questionCounter = $(".questionList").length;
+      //      questionCounter = $(".questionList").length;
  
             
             var choiceList = $(this).find('.choiceList')
-            choiceList.each(function (index){
-            	  var choiceLabel = "Choice: " + (index + 1);
+            choiceList.each(function (choiceIndex){
+            	  var choiceLabel = "Choice: " + (choiceIndex + 1);
                  $(this).find("label").text(choiceLabel);
-            	 $(this).find('input').prop('name', `quizQuestion[${index}].questionChoice[${index}].choicePrompt`);
+            	 $(this).find('input').prop('name', `quizQuestion[${index}].questionChoice[${choiceIndex}].choicePrompt`);
+  
 
         }); 
         }); 
