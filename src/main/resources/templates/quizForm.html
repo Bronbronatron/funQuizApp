@@ -8,7 +8,7 @@
 <script>
 $(document).ready(function () {
     var questionCounter = 0;
-  //  var choiceCounter = 0;
+  // var choiceCounter = 0;
 
     $("#cloneButton").click(function () {
         var originalDiv = $("#questionContainer");
@@ -37,31 +37,27 @@ $(document).ready(function () {
         questionCounter++;
     });
 
-    /*
-    function renumberQuestions () {
-        // If no question containers of class "questionList" exist, set questionCounter to 0 
-        // Otherwise run the method as normal
-        var questionContainers = $(".questionList").length;
-
-        if (questionContainers === 0) {
-            // No question containers found, reset questionCounter
-            questionCounter = 0;
-            return;
-        }
-
-        $(".questionList").each(function (index) {
-        	
-            var newId = "container" + (index);
+    
+    function renumberQuestionChoices(questionDiv) {
+    		
+    	var choiceList = questionDiv.find('.choiceList');
+    	//	var choiceCounter = questionDiv.find('.choiceList').length;
+    	//	alert(choiceCounter);
+    	var questionIndex = questionDiv.index();
+    		
+    	    choiceList.each(function(index){
+    		   
+            var newId = "choice" + (index);
             $(this).attr("id", newId);
-
-            var newLabel = "Question: " + (index + 1);
+            
+            var newLabel = "Choice: " + (index + 1);
             $(this).find("label").text(newLabel);
-
-            $(this).find('input').prop('name', `quizQuestion[${index}].prompt`);
-            questionCounter = $(".questionList").length;
-        }); 
+            $(this).find('input').prop('name', `quizQuestion[${questionIndex}].questionChoice[${index}].prompt`);
+            
+       });
     }
-*/
+
+
     function renumberQuestionsAndChoices () {
         // If no question containers of class "questionList" exist, set questionCounter to 0 
         // Otherwise run the method as normal
@@ -74,7 +70,6 @@ $(document).ready(function () {
         }
         
         $(".questionList").each(function (index) {
-        	
             var newId = "container" + (index);
             $(this).attr("id", newId);
 
@@ -82,18 +77,17 @@ $(document).ready(function () {
             $(this).find("label").text(newLabel);
 
             $(this).find('input').prop('name', `quizQuestion[${index}].prompt`);
-      //      questionCounter = $(".questionList").length;
- 
             
             var choiceList = $(this).find('.choiceList')
             choiceList.each(function (choiceIndex){
-            	  var choiceLabel = "Choice: " + (choiceIndex + 1);
+            	 var choiceLabel = "Choice: " + (choiceIndex + 1);
                  $(this).find("label").text(choiceLabel);
+                 
             	 $(this).find('input').prop('name', `quizQuestion[${index}].questionChoice[${choiceIndex}].choicePrompt`);
-  
 
         }); 
         }); 
+     			   questionCounter = questionContainers;
         }
    
     
@@ -103,11 +97,9 @@ $(document).ready(function () {
 
     // Attach click event to the document and filter for elements with class 'deleteButton' inside '.cloneContainer'
     $(document).on("click", ".deleteButton", function () {
-        // Find the closest '.cloneContainer' and remove it
-     //  $(this).closest('.questionList').remove();
-        
-        
+ 
     var questionDiv = $(this).closest('.questionList');
+    alert(questionDiv.index());
     
     // Find and remove question choices associated with the question
     questionDiv.find('.choiceList').remove();
@@ -118,6 +110,16 @@ $(document).ready(function () {
         renumberQuestionsAndChoices();
     });
     
+    
+    
+   $(document).on("click", ".choiceDeleteButton", function () {	
+	var choiceDiv = $(this).closest('.choiceList');
+	var questionDiv = $(this).closest('.questionList');
+	choiceDiv.remove();
+    renumberQuestionChoices(questionDiv);
+   });
+   
+   
     
     //Even if the elements didn't exist when the event handler was initially attached, the handler will still catch the event 
     $(document).on("click", ".choiceButton", function () {
@@ -132,7 +134,7 @@ $(document).ready(function () {
      
      
      var choiceCounter = questionDiv.find('.choiceList').length;
-     
+
      var choiceId = "choice" + choiceCounter;
      clonedChoiceDiv.attr("id", choiceId);
      
@@ -174,6 +176,7 @@ $(document).ready(function () {
 		<div id="choiceTemplate" style="display: none;"
 			class="cloneContainerClass">
 			<label> Choice: </label> <input type="text" name="cloneChoice" />
+			<button type="button" class="choiceDeleteButton">Delete Choice</button>		
 		</div>
 
 		<div>

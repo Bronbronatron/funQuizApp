@@ -2,6 +2,7 @@ package com.bronwyn.movieRecommendation.quiz;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.bronwyn.movieRecommendation.personalizedMessage.PersonalizedMessage;
 import com.bronwyn.movieRecommendation.personalizedMessage.PersonalizedMessageService;
 import com.bronwyn.movieRecommendation.question.Question;
+import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
 
 
 //Use @Controller for traditional web applications, that render html webpages
@@ -100,23 +102,38 @@ public class QuizController {
            return "showQuiz";
        }
 	
-    @PostMapping("/submitQuiz")
-    public String submitQuiz(Model model, @RequestParam Map<String, String> formData) {
-        String findMostCommonChoice = quizService.findMostCommonChoice(formData);
-        System.out.println("Form Data: " + formData);
-        Long quizId = Long.parseLong(formData.get("quizId"));
-        
-        Optional<PersonalizedMessage> personalizedMessage = personalizedMessageService.getPersonalizedMessage(findMostCommonChoice, quizId);
-        
-        // Check if the personalizedMessage is present before adding it to the model
-        if (personalizedMessage.isPresent()) {
-            model.addAttribute("personalizedMessage", personalizedMessage.get());
-        } else {
-            // Handle the case where no personalized message is found for the mostCommonChoice
-            model.addAttribute("personalizedMessage", "Default Message or handle accordingly");
-        }
+	   @PostMapping("/submitQuiz")
+	   public String submitQuiz(Model model, @RequestParam Map<String, String> formData) {
+	       // Extract answer choices from formData
+	       Map<String, String> answerChoices = formData.entrySet().stream()
+	               .filter(entry -> entry.getKey().startsWith("choice_"))  // Assuming your answer choices start with "choice_"
+	               .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-       return "resultPage";
-    }
+	       // Extract quizId from formData
+	       Long quizId = Long.parseLong(formData.get("quizId"));
+
+	       // Proceed with processing answer choices and quizId
+	       
+	       
+	     //  String findMostCommonChoice = quizService.findMostCommonChoice(formData);
+	       
+	       
+	       
+	       String findMostCommonChoice = quizService.findMostCommonChoice(answerChoices);
+	       System.out.println("Answer Choices: " + answerChoices);
+	       System.out.println("Quiz ID: " + quizId);
+
+	       Optional<PersonalizedMessage> personalizedMessage = personalizedMessageService.getPersonalizedMessage(findMostCommonChoice, quizId);
+
+	       // Check if the personalizedMessage is present before adding it to the model
+	       if (personalizedMessage.isPresent()) {
+	           model.addAttribute("personalizedMessage", personalizedMessage.get());
+	       } else {
+	           // Handle the case where no personalized message is found for the mostCommonChoice
+	           model.addAttribute("personalizedMessage", "Default Message or handle accordingly");
+	       }
+
+	       return "resultPage";
+	   }
 
 }
