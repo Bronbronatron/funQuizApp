@@ -8,8 +8,7 @@
 <script>
 $(document).ready(function () {
     var questionCounter = 0;
-  // var choiceCounter = 0;
-
+  
     $("#cloneButton").click(function () {
         var originalDiv = $("#questionContainer");
 
@@ -39,20 +38,19 @@ $(document).ready(function () {
 
     
     function renumberQuestionChoices(questionDiv) {
-    		
+    	 
     	var choiceList = questionDiv.find('.choiceList');
-    	//	var choiceCounter = questionDiv.find('.choiceList').length;
-    	//	alert(choiceCounter);
     	var questionIndex = questionDiv.index();
-    		
-    	    choiceList.each(function(index){
+    	
+    	choiceList.each(function(index){
     		   
             var newId = "choice" + (index);
             $(this).attr("id", newId);
             
             var newLabel = "Choice: " + (index + 1);
             $(this).find("label").text(newLabel);
-            $(this).find('input').prop('name', `quizQuestion[${questionIndex}].questionChoice[${index}].prompt`);
+            $(this).find('input').prop('name', `quizQuestion[${questionIndex}].questionChoice[${index}].choicePrompt`);
+            alert(questionIndex + ", " + index);
             
        });
     }
@@ -82,7 +80,7 @@ $(document).ready(function () {
             choiceList.each(function (choiceIndex){
             	 var choiceLabel = "Choice: " + (choiceIndex + 1);
                  $(this).find("label").text(choiceLabel);
-                 
+          
             	 $(this).find('input').prop('name', `quizQuestion[${index}].questionChoice[${choiceIndex}].choicePrompt`);
 
         }); 
@@ -133,18 +131,18 @@ $(document).ready(function () {
      var questionIndex = questionDiv.index();
      
      
-     var choiceCounter = questionDiv.find('.choiceList').length;
+     var choiceCounter = questionDiv.find('.choiceList').length; 
 
      var choiceId = "choice" + choiceCounter;
      clonedChoiceDiv.attr("id", choiceId);
      
-     var choiceLabel = "choice" + (choiceCounter + 1);
+     var choiceLabel = "Choice " + (choiceCounter + 1);
      clonedChoiceDiv.find("label").text(choiceLabel);
 
      clonedChoiceDiv.find('input').prop('name', `quizQuestion[${questionIndex}].questionChoice[${choiceCounter}].choicePrompt`);
      clonedChoiceDiv.show();
-     questionDiv.append(clonedChoiceDiv)
-     choiceCounter++;
+     questionDiv.append(clonedChoiceDiv);
+     alert(questionIndex + ", " + choiceCounter);
     	 
     });
 });
