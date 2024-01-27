@@ -50,8 +50,7 @@ $(document).ready(function () {
             var newLabel = "Choice: " + (index + 1);
             $(this).find("label").text(newLabel);
             $(this).find('input').prop('name', `quizQuestion[${questionIndex}].questionChoice[${index}].choicePrompt`);
-            alert(questionIndex + ", " + index);
-            
+           
        });
     }
 
@@ -139,13 +138,26 @@ $(document).ready(function () {
      var choiceLabel = "Choice " + (choiceCounter + 1);
      clonedChoiceDiv.find("label").text(choiceLabel);
 
-     clonedChoiceDiv.find('input').prop('name', `quizQuestion[${questionIndex}].questionChoice[${choiceCounter}].choicePrompt`);
+     
+     
+ //    var cloneValueChoice = document.getElementById('choiceTemplate').cloneNode(true);
+ //    var select = cloneValueChoice.querySelector('select[name="cloneValueChoice"]');
+ //    var options = select.querySelectorAll('option');
+ //    options[0].value = 'A';
+ //    options[1].value = 'B';
+ //    options[2].value = 'C';
+ //    options[3].value = 'D';
+ //  options[4].value = 'E';
+  //   options[5].value = 'F';
+
+     
+     clonedChoiceDiv.find('input[name="cloneChoice"]').prop('name', `quizQuestion[${questionIndex}].questionChoice[${choiceCounter}].choicePrompt`);
+     clonedChoiceDiv.find('select[name = "cloneValueChoice"]').prop('name', `quizQuestion[${questionIndex}].questionChoice[${choiceCounter}].choiceValue`);
      clonedChoiceDiv.show();
      questionDiv.append(clonedChoiceDiv);
-     alert(questionIndex + ", " + choiceCounter);
     	 
     });
-});
+})
 
 
 
@@ -174,6 +186,15 @@ $(document).ready(function () {
 		<div id="choiceTemplate" style="display: none;"
 			class="cloneContainerClass">
 			<label> Choice: </label> <input type="text" name="cloneChoice" />
+			<label for="cloneValueChoice">Choice:</label>
+			<select id="cloneValueChoice" name="cloneValueChoice">
+		  	 <option value="A">A</option>
+  		     <option value="B">B</option>
+  		     <option value="C">C</option>
+  		     <option value="D">D</option>
+  		     <option value="E">E</option>
+  		     <option value="F">F</option>    
+  		     </select>
 			<button type="button" class="choiceDeleteButton">Delete Choice</button>		
 		</div>
 
