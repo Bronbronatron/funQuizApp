@@ -54,7 +54,7 @@ $(document).ready(function () {
     }
 
 
-    function renumberQuestionsAndChoices () {
+    function renumberQuestionsAndChoices() {
   
         
 		var questionCounter = $(".questionList").length;
@@ -84,7 +84,7 @@ $(document).ready(function () {
         }
     
     
-    function renumberMessages () {
+    function renumberMessages() {
         // If no question containers of class "questionList" exist, set questionCounter to 0 
         // Otherwise run the method as normal
         var messageCounter = $(".messageList").length;
@@ -100,8 +100,9 @@ $(document).ready(function () {
             var newLabel = "Message: " + (index + 1);
             $(this).find("label").text(newLabel);
 
-            $(this).find('input').prop('name', `personalizedMessage[${messageCounter}].message`);
-            
+            $(this).find('input[name = "cloneMessageText"]').prop('name', `personalizedMessage[${messageCounter}].message`);
+            $(this).find('select[name = "cloneMessageChoice"]').prop('name', `personalizedMessage[${messageCounter}].answerChoice`); 
+       
         }); 
      			  
         }
@@ -178,10 +179,7 @@ $(document).ready(function () {
     $("#addMessageButton").click(function () {
         var originalDiv = $("#messageContainer");
 
-        
         var messageCounter =  originalDiv.find('.messageList').length
-        
-        
         if (messageCounter >=6) {
         	
         	alert("The maximum number of message options is 6")
@@ -203,7 +201,8 @@ $(document).ready(function () {
 
         clonedDiv.find('input[type="text"]').val('');
 
-        clonedDiv.find('input').prop('name', `personalizedMessage[${messageCounter}].message`);
+        clonedDiv.find('input[name = "cloneMessageText"]').prop('name', `personalizedMessage[${messageCounter}].message`);
+        clonedDiv.find('select[name = "cloneMessageChoice"]').prop('name', `personalizedMessage[${messageCounter}].answerChoice`);
         clonedDiv.show();
         originalDiv.append(clonedDiv);
     });
@@ -222,12 +221,12 @@ $(document).ready(function () {
 		th:object=${quiz}>
 
 		<div>
-			<label> Title </label> <input type="text" th:field="*{quizTitle}" />
+			<label> Title </label> <input type="text" th:field="*{quizTitle}" required/>
 		</div>
 
 
 		<div id="cloneContainer" style="display: none;" class="cloneClass">
-			<label> Question: </label> <input type="text" name="clone" />
+			<label> Question: </label> <input type="text" name="clone" required/>
 			<button type="button" class="deleteButton">Delete Question</button>			
 			<button type="button" class="choiceButton">Add Choice</button> 
 		</div>
@@ -254,7 +253,16 @@ $(document).ready(function () {
 		
 		<div id="cloneMessageContainer" style="display: none;"
 			class="cloneMessageClass">
-			<label> Message: </label> <input type="text" name="clone" />
+			<label> Message: </label> <input type="text" name="cloneMessageText" />
+			<label for = "cloneMessage">Corresponds to: </label>
+			<select id = "cloneMessage" name = "cloneMessageChoice">
+			 <option value="A">A</option>
+  		     <option value="B">B</option>
+  		     <option value="C">C</option>
+  		     <option value="D">D</option>
+  		     <option value="E">E</option>
+  		     <option value="F">F</option>    
+  		     </select>
 			<button type="button" class="deleteMessageButton">Delete Question</button>	
 		</div>
 
