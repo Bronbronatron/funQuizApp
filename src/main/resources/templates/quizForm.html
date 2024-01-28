@@ -36,9 +36,6 @@ $(document).ready(function () {
     });
     
     
-    
-
-    
     function renumberQuestionChoices(questionDiv) {
     	 
     	var choiceList = questionDiv.find('.choiceList');
@@ -58,11 +55,7 @@ $(document).ready(function () {
 
 
     function renumberQuestionsAndChoices () {
-    	
-        // If no question containers of class "questionList" exist, set questionCounter to 0 
-        // Otherwise run the method as normal
-       //   var questionContainers = $(".questionList").length;
-        
+  
         
 		var questionCounter = $(".questionList").length;
         if (questionCounter === 0) {
@@ -96,20 +89,18 @@ $(document).ready(function () {
         // Otherwise run the method as normal
         var messageCounter = $(".messageList").length;
 
-        if (questionContainers === 0) {
-            // No question containers found, reset questionCounter
-            questionCounter = 0;
+        if (messageCounter === 0) {
             return;
         }
         
-        $(".questionList").each(function (index) {
-            var newId = "container" + (index);
+        $(".messageList").each(function (index) {
+            var newId = "message" + (index);
             $(this).attr("id", newId);
 
-            var newLabel = "Question: " + (index + 1);
+            var newLabel = "Message: " + (index + 1);
             $(this).find("label").text(newLabel);
 
-            $(this).find('input').prop('name', `quizQuestion[${index}].prompt`);
+            $(this).find('input').prop('name', `personalizedMessage[${messageCounter}].message`);
             
         }); 
      			  
@@ -141,7 +132,6 @@ $(document).ready(function () {
  
     var messageDiv = $(this).closest('.messageList');
 
-    // Remove the question itself
     messageDiv.remove();
     
         renumberMessages();
@@ -216,7 +206,6 @@ $(document).ready(function () {
         clonedDiv.find('input').prop('name', `personalizedMessage[${messageCounter}].message`);
         clonedDiv.show();
         originalDiv.append(clonedDiv);
-        alert(messageCounter);
     });
     
     
