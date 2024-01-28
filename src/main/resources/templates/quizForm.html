@@ -7,11 +7,13 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
 $(document).ready(function () {
-    var questionCounter = 0;
-    var messageCounter = 0;
+
     
     $("#cloneButton").click(function () {
+    	
         var originalDiv = $("#questionContainer");
+        
+        var questionCounter = originalDiv.find('.questionList').length; 
 
         // .clone() clones the contents of #cloneContainer instead of the container itself.
         var clonedDiv = $("#cloneContainer").clone();
@@ -28,13 +30,9 @@ $(document).ready(function () {
 
         clonedDiv.find('input[type="text"]').val('');
 
-        // Setting the name for each clone
-        // The server uses the names to map the values to corresponding fields in the data model.
-        // The value entered in that text field will be associated with the prompt field in the quizQuestion list when the form is submitted.
         clonedDiv.find('input').prop('name', `quizQuestion[${questionCounter}].prompt`);
         clonedDiv.show();
         originalDiv.append(clonedDiv);
-        questionCounter++;
     });
     
     
@@ -60,13 +58,14 @@ $(document).ready(function () {
 
 
     function renumberQuestionsAndChoices () {
+    	
         // If no question containers of class "questionList" exist, set questionCounter to 0 
         // Otherwise run the method as normal
-        var questionContainers = $(".questionList").length;
-
-        if (questionContainers === 0) {
-            // No question containers found, reset questionCounter
-            questionCounter = 0;
+       //   var questionContainers = $(".questionList").length;
+        
+        
+		var questionCounter = $(".questionList").length;
+        if (questionCounter === 0) {
             return;
         }
         
@@ -88,8 +87,34 @@ $(document).ready(function () {
 
         }); 
         }); 
-     			   questionCounter = questionContainers;
+     			
         }
+    
+    
+    function renumberMessages () {
+        // If no question containers of class "questionList" exist, set questionCounter to 0 
+        // Otherwise run the method as normal
+        var messageCounter = $(".messageList").length;
+
+        if (questionContainers === 0) {
+            // No question containers found, reset questionCounter
+            questionCounter = 0;
+            return;
+        }
+        
+        $(".questionList").each(function (index) {
+            var newId = "container" + (index);
+            $(this).attr("id", newId);
+
+            var newLabel = "Question: " + (index + 1);
+            $(this).find("label").text(newLabel);
+
+            $(this).find('input').prop('name', `quizQuestion[${index}].prompt`);
+            
+        }); 
+     			  
+        }
+   
    
     
     
@@ -111,6 +136,16 @@ $(document).ready(function () {
         renumberQuestionsAndChoices();
     });
     
+    
+    $(document).on("click", ".deleteMessageButton", function () {
+ 
+    var messageDiv = $(this).closest('.messageList');
+
+    // Remove the question itself
+    messageDiv.remove();
+    
+        renumberMessages();
+    });
     
     
    $(document).on("click", ".choiceDeleteButton", function () {	
@@ -153,6 +188,16 @@ $(document).ready(function () {
     $("#addMessageButton").click(function () {
         var originalDiv = $("#messageContainer");
 
+        
+        var messageCounter =  originalDiv.find('.messageList').length
+        
+        
+        if (messageCounter >=6) {
+        	
+        	alert("The maximum number of message options is 6")
+        	return;
+        }
+        
         // .clone() clones the contents of #cloneContainer instead of the container itself.
         var clonedDiv = $("#cloneMessageContainer").clone();
 
@@ -171,7 +216,7 @@ $(document).ready(function () {
         clonedDiv.find('input').prop('name', `personalizedMessage[${messageCounter}].message`);
         clonedDiv.show();
         originalDiv.append(clonedDiv);
-        messageCounter++;
+        alert(messageCounter);
     });
     
     
@@ -221,7 +266,7 @@ $(document).ready(function () {
 		<div id="cloneMessageContainer" style="display: none;"
 			class="cloneMessageClass">
 			<label> Message: </label> <input type="text" name="clone" />
-			<!--  	<button type="button" class="deleteMessageButton">Delete Question</button>	-->
+			<button type="button" class="deleteMessageButton">Delete Question</button>	
 		</div>
 
 		<div>
