@@ -7,8 +7,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
 $(document).ready(function () {
-
-    
+  
     $("#cloneButton").click(function () {
     	
         var originalDiv = $("#questionContainer");
@@ -155,18 +154,18 @@ $(document).ready(function () {
      
      var newClass = "choiceList";
      clonedChoiceDiv.attr("class", newClass);
-     
     
      var questionDiv = $(this).closest('.questionList');
      var questionIndex = questionDiv.index();
-     
      
      var choiceCounter = questionDiv.find('.choiceList').length; 
 
      var choiceId = "choice" + choiceCounter;
      clonedChoiceDiv.attr("id", choiceId);
      
-     var choiceLabel = "Choice " + (choiceCounter + 1);
+     var choiceLabel = "Choice: " + (choiceCounter + 1);
+     clonedChoiceDiv.find("label").text(choiceLabel);
+     
      clonedChoiceDiv.find('input[name="cloneChoice"]').attr('required', 'required');
 
      clonedChoiceDiv.find('input[name="cloneChoice"]').prop('name', `quizQuestion[${questionIndex}].questionChoice[${choiceCounter}].choicePrompt`);
