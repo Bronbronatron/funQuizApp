@@ -29,6 +29,9 @@ $(document).ready(function () {
         clonedDiv.find("label").text(newLabel);
 
         clonedDiv.find('input[type="text"]').val('');
+        //Make 'Quesiton Title' required
+        clonedDiv.find('input[name="clone"]').attr('required', 'required');
+
 
         clonedDiv.find('input').prop('name', `quizQuestion[${questionCounter}].prompt`);
         clonedDiv.show();
@@ -166,7 +169,7 @@ $(document).ready(function () {
      clonedChoiceDiv.attr("id", choiceId);
      
      var choiceLabel = "Choice " + (choiceCounter + 1);
-     clonedChoiceDiv.find("label").text(choiceLabel);
+     clonedChoiceDiv.find('input[name="cloneChoice"]').attr('required', 'required');
 
      clonedChoiceDiv.find('input[name="cloneChoice"]').prop('name', `quizQuestion[${questionIndex}].questionChoice[${choiceCounter}].choicePrompt`);
      clonedChoiceDiv.find('select[name = "cloneValueChoice"]').prop('name', `quizQuestion[${questionIndex}].questionChoice[${choiceCounter}].choiceValue`);
@@ -200,7 +203,7 @@ $(document).ready(function () {
         clonedDiv.find("label").text(newLabel);
 
         clonedDiv.find('input[type="text"]').val('');
-
+        clonedDiv.find('input[name="cloneMessageText"]').attr('required', 'required');
         clonedDiv.find('input[name = "cloneMessageText"]').prop('name', `personalizedMessage[${messageCounter}].message`);
         clonedDiv.find('select[name = "cloneMessageChoice"]').prop('name', `personalizedMessage[${messageCounter}].answerChoice`);
         clonedDiv.show();
@@ -226,7 +229,7 @@ $(document).ready(function () {
 
 
 		<div id="cloneContainer" style="display: none;" class="cloneClass">
-			<label> Question: </label> <input type="text" name="clone" required/>
+			<label> Question: </label> <input type="text" name="clone"/>
 			<button type="button" class="deleteButton">Delete Question</button>			
 			<button type="button" class="choiceButton">Add Choice</button> 
 		</div>
@@ -237,7 +240,7 @@ $(document).ready(function () {
 
 		<div id="choiceTemplate" style="display: none;"
 			class="cloneContainerClass">
-			<label> Choice: </label> <input type="text" name="cloneChoice" />
+			<label> Choice: </label> <input type="text" name="cloneChoice"/>
 			<label for="cloneValueChoice">Choice:</label>
 			<select id="cloneValueChoice" name="cloneValueChoice">
 		  	 <option value="A">A</option>
@@ -253,7 +256,7 @@ $(document).ready(function () {
 		
 		<div id="cloneMessageContainer" style="display: none;"
 			class="cloneMessageClass">
-			<label> Message: </label> <input type="text" name="cloneMessageText" />
+			<label> Message: </label> <input type="text" name="cloneMessageText"/>
 			<label for = "cloneMessage">Corresponds to: </label>
 			<select id = "cloneMessage" name = "cloneMessageChoice">
 			 <option value="A">A</option>
