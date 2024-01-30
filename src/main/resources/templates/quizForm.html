@@ -6,10 +6,12 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
+
+//----------------------Append Clone Methods ---------------------------------------------------------//
 $(document).ready(function () {
   
     $("#cloneButton").click(function () {
-    	
+
         var originalDiv = $("#questionContainer");
         
         var questionCounter = originalDiv.find('.questionList').length; 
@@ -38,24 +40,71 @@ $(document).ready(function () {
     });
     
     
-    function renumberQuestionChoices(questionDiv) {
+    //Even if the elements didn't exist when the event handler was initially attached, the handler will still catch the event 
+    $(document).on("click", ".choiceButton", function () {
+     var clonedChoiceDiv = $("#choiceTemplate").clone();
+     
+     var newClass = "choiceList";
+     clonedChoiceDiv.attr("class", newClass);
+    
+     var questionDiv = $(this).closest('.questionList');
+     var questionIndex = questionDiv.index();
+     
+     var choiceCounter = questionDiv.find('.choiceList').length; 
+
+     var choiceId = "choice" + choiceCounter;
+     clonedChoiceDiv.attr("id", choiceId);
+     
+     var choiceLabel = "Choice: " + (choiceCounter + 1);
+     clonedChoiceDiv.find("label").text(choiceLabel);
+     
+     clonedChoiceDiv.find('input[name="cloneChoice"]').attr('required', 'required');
+
+     clonedChoiceDiv.find('input[name="cloneChoice"]').prop('name', `quizQuestion[${questionIndex}].questionChoice[${choiceCounter}].choicePrompt`);
+     clonedChoiceDiv.find('select[name = "cloneValueChoice"]').prop('name', `quizQuestion[${questionIndex}].questionChoice[${choiceCounter}].choiceValue`);
+     clonedChoiceDiv.show();
+     questionDiv.append(clonedChoiceDiv);
     	 
-    	var choiceList = questionDiv.find('.choiceList');
-    	var questionIndex = questionDiv.index();
-    	
-    	choiceList.each(function(index){
-    		   
-            var newId = "choice" + (index);
-            $(this).attr("id", newId);
-            
-            var newLabel = "Choice: " + (index + 1);
-            $(this).find("label").text(newLabel);
-            $(this).find('input').prop('name', `quizQuestion[${questionIndex}].questionChoice[${index}].choicePrompt`);
-           
-       });
-    }
+    });
+    
+    
+    
+    $("#addMessageButton").click(function () {
+        var originalDiv = $("#messageContainer");
+
+        var messageCounter =  originalDiv.find('.messageList').length
+        if (messageCounter >=6) {
+        	
+        	alert("The maximum number of message options is 6")
+        	return;
+        }
+        
+        // .clone() clones the contents of #cloneContainer instead of the container itself.
+        var clonedDiv = $("#cloneMessageContainer").clone();
+
+        // Update name and Id fields for each clone div
+        var newId = "messageContainer" + (messageCounter);
+        clonedDiv.attr("id", newId);
+
+        var newClass = "messageList";
+        clonedDiv.attr("class", newClass);
+
+        var newLabel = "Message: " + (messageCounter + 1);
+        clonedDiv.find('label[name="cloneMessageText"]').text(newLabel);
+
+        clonedDiv.find('input[type="text"]').val('');
+        clonedDiv.find('input[name="cloneMessageText"]').attr('required', 'required');
+        clonedDiv.find('input[name = "cloneMessageText"]').prop('name', `personalizedMessage[${messageCounter}].message`);
+        clonedDiv.find('select[name = "cloneMessageChoice"]').prop('name', `personalizedMessage[${messageCounter}].answerChoice`);
+        clonedDiv.show();
+        originalDiv.append(clonedDiv);
+    });
+    
+    
 
 
+  //----------------------Renumeber Index Methods ---------------------------------------------------------//
+  
     function renumberQuestionsAndChoices() {
   
         
@@ -84,6 +133,24 @@ $(document).ready(function () {
         }); 
      			
         }
+  
+  
+    function renumberQuestionChoices(questionDiv) {
+   	 
+    	var choiceList = questionDiv.find('.choiceList');
+    	var questionIndex = questionDiv.index();
+    	
+    	choiceList.each(function(index){
+    		   
+            var newId = "choice" + (index);
+            $(this).attr("id", newId);
+            
+            var newLabel = "Choice: " + (index + 1);
+            $(this).find("label").text(newLabel);
+            $(this).find('input').prop('name', `quizQuestion[${questionIndex}].questionChoice[${index}].choicePrompt`);
+           
+       });
+    }
     
     
     function renumberMessages() {
@@ -112,7 +179,7 @@ $(document).ready(function () {
    
     
     
-    
+    //----------------------Delete Methods ---------------------------------------------------------//
  
 
     // Attach click event to the document and filter for elements with class 'deleteButton' inside '.cloneContainer'
@@ -148,64 +215,7 @@ $(document).ready(function () {
    
    
     
-    //Even if the elements didn't exist when the event handler was initially attached, the handler will still catch the event 
-    $(document).on("click", ".choiceButton", function () {
-     var clonedChoiceDiv = $("#choiceTemplate").clone();
-     
-     var newClass = "choiceList";
-     clonedChoiceDiv.attr("class", newClass);
-    
-     var questionDiv = $(this).closest('.questionList');
-     var questionIndex = questionDiv.index();
-     
-     var choiceCounter = questionDiv.find('.choiceList').length; 
-
-     var choiceId = "choice" + choiceCounter;
-     clonedChoiceDiv.attr("id", choiceId);
-     
-     var choiceLabel = "Choice: " + (choiceCounter + 1);
-     clonedChoiceDiv.find("label").text(choiceLabel);
-     
-     clonedChoiceDiv.find('input[name="cloneChoice"]').attr('required', 'required');
-
-     clonedChoiceDiv.find('input[name="cloneChoice"]').prop('name', `quizQuestion[${questionIndex}].questionChoice[${choiceCounter}].choicePrompt`);
-     clonedChoiceDiv.find('select[name = "cloneValueChoice"]').prop('name', `quizQuestion[${questionIndex}].questionChoice[${choiceCounter}].choiceValue`);
-     clonedChoiceDiv.show();
-     questionDiv.append(clonedChoiceDiv);
-    	 
-    });
-    
  
-    $("#addMessageButton").click(function () {
-        var originalDiv = $("#messageContainer");
-
-        var messageCounter =  originalDiv.find('.messageList').length
-        if (messageCounter >=6) {
-        	
-        	alert("The maximum number of message options is 6")
-        	return;
-        }
-        
-        // .clone() clones the contents of #cloneContainer instead of the container itself.
-        var clonedDiv = $("#cloneMessageContainer").clone();
-
-        // Update name and Id fields for each clone div
-        var newId = "messageContainer" + (messageCounter);
-        clonedDiv.attr("id", newId);
-
-        var newClass = "messageList";
-        clonedDiv.attr("class", newClass);
-
-        var newLabel = "Message: " + (messageCounter + 1);
-        clonedDiv.find('label[name="cloneMessageText"]').text(newLabel);
-
-        clonedDiv.find('input[type="text"]').val('');
-        clonedDiv.find('input[name="cloneMessageText"]').attr('required', 'required');
-        clonedDiv.find('input[name = "cloneMessageText"]').prop('name', `personalizedMessage[${messageCounter}].message`);
-        clonedDiv.find('select[name = "cloneMessageChoice"]').prop('name', `personalizedMessage[${messageCounter}].answerChoice`);
-        clonedDiv.show();
-        originalDiv.append(clonedDiv);
-    });
     
     
 })
