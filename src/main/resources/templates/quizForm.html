@@ -120,8 +120,6 @@ $(document).ready(function () {
     $(document).on("click", ".deleteButton", function () {
  
     var questionDiv = $(this).closest('.questionList');
-    alert(questionDiv.index());
-    
     // Find and remove question choices associated with the question
     questionDiv.find('.choiceList').remove();
 
@@ -200,7 +198,7 @@ $(document).ready(function () {
         clonedDiv.attr("class", newClass);
 
         var newLabel = "Message: " + (messageCounter + 1);
-        clonedDiv.find("label").text(newLabel);
+        clonedDiv.find('label[name="cloneMessageText"]').text(newLabel);
 
         clonedDiv.find('input[type="text"]').val('');
         clonedDiv.find('input[name="cloneMessageText"]').attr('required', 'required');
@@ -257,7 +255,7 @@ $(document).ready(function () {
 		<div id="cloneMessageContainer" style="display: none;"
 			class="cloneMessageClass">
 			<label> Message: </label> <input type="text" name="cloneMessageText"/>
-			<label for = "cloneMessage">Corresponds to: </label>
+			<label for = "cloneMessage">Corresponds to Choice: </label>
 			<select id = "cloneMessage" name = "cloneMessageChoice">
 			 <option value="A">A</option>
   		     <option value="B">B</option>
@@ -266,7 +264,7 @@ $(document).ready(function () {
   		     <option value="E">E</option>
   		     <option value="F">F</option>    
   		     </select>
-			<button type="button" class="deleteMessageButton">Delete Question</button>	
+			<button type="button" class="deleteMessageButton">Delete Message</button>	
 		</div>
 
 		<div>
