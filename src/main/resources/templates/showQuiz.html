@@ -30,20 +30,10 @@
                 <ul th:if="${question.questionChoice}">
                     <li th:each="choice : ${question.questionChoice}">
                     
-                  <!--  The radio buttons are clickable by default -->
-                  <!-- But the <label> tag provides an additional means to activate them by clicking on the associated text. -->
+           
                      <label> 
-                        
-                       <!-- The 'value' attribute represents the value that will be sent to the server when the radio button is selected. -->
-                       <!-- Thymeleaf expression dynamically sets the name attribute of the radio button by  creating a unique name for each radio button based on the question.id  -->
-                       <!-- Thymeleaf expression dynamically sets the value attribute of the radio button based on the choice.choiceValue. -->
-                       <!-- 'value' attribute represents the value that will be sent to the server when the radio button is selected. -->
-                        <!--  The default behavior of radio buttons is to be displayed on separate lines. -->
+                     
                             <input type="radio" th:name="'choice_' + ${question.id}" th:value="${choice.choiceValue}"/>
-                            
-                          <!--   When Thymeleaf processes the template, it replaces the content inside the <span> tag with the value of ${choice.choicePrompt}.  --> 
-                          <!--  This is done using the th:text attribute, which is a Thymeleaf-specific attribute. --> 
-                          <!--  If you were to directly place ${choice.choicePrompt} outside a Thymeleaf-specific attribute or tag, it would be treated as plain text and not processed by Thymeleaf.  --> 
                          <span th:text="${choice.choicePrompt}"></span>       
                      </label> 
                     </li>
