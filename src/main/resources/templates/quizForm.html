@@ -15,34 +15,33 @@ $(document).ready(function () {
 
         var originalDiv = $("#questionContainer");
         var questionCounter = originalDiv.find('.questionList').length; 
-        var clonedDiv = $("#cloneContainer").clone(true);
+        var clonedQuestionDiv = $("#cloneQuestionContainer").clone(true);
 
+        var questionId = "questionContainer" + (questionCounter);
+        clonedQuestionDiv.attr("id", questionId);
+
+        var questionClass = "questionList";
+        clonedQuestionDiv.attr("class", questionClass);
+
+        var questionLabel = "Question: " + (questionCounter + 1);
+        clonedQuestionDiv.find("label").text(questionLabel);
+
+        clonedQuestionDiv.find('input[type="text"]').val('');
+        clonedQuestionDiv.find('input').attr('required', 'required');
         
-        var newId = "container" + (questionCounter);
-        clonedDiv.attr("id", newId);
-
-        var newClass = "questionList";
-        clonedDiv.attr("class", newClass);
-
-        var newLabel = "Question: " + (questionCounter + 1);
-        clonedDiv.find("label").text(newLabel);
-
-        clonedDiv.find('input[type="text"]').val('');
-        clonedDiv.find('input').attr('required', 'required');
+        clonedQuestionDiv.find('input').prop('name', `quizQuestion[${questionCounter}].prompt`);  
         
-        clonedDiv.find('input').prop('name', `quizQuestion[${questionCounter}].prompt`);  
-        
-        clonedDiv.show();
-        originalDiv.append(clonedDiv);
+        clonedQuestionDiv.show();
+        originalDiv.append(clonedQuestionDiv);
 
     });
     
     
     $(document).on("click", ".choiceButton", function () {
-        var clonedChoiceDiv = $("#choiceTemplate").clone();
+        var clonedChoiceDiv = $("#cloneChoiceContainer").clone(true);
      
-        var newClass = "choiceList";
-        clonedChoiceDiv.attr("class", newClass);
+        var choiceClass = "choiceList";
+        clonedChoiceDiv.attr("class", choiceClass);
     
         var questionDiv = $(this).closest('.questionList');
         var questionIndex = questionDiv.index();
@@ -79,24 +78,24 @@ $(document).ready(function () {
         }
         
       
-        var clonedDiv = $("#cloneMessageContainer").clone();     
+        var clonedMessageDiv = $("#cloneMessageContainer").clone(true);     
         var newId = "messageContainer" + (messageCounter);
         
-        clonedDiv.attr("id", newId);
+        clonedMessageDiv.attr("id", newId);
 
-        var newClass = "messageList";
-        clonedDiv.attr("class", newClass);
+        var messageClass = "messageList";
+        clonedMessageDiv.attr("class", messageClass);
 
-        var textLabel = "Message: " + (messageCounter + 1);
-        clonedDiv.find('label:first-child').text(textLabel);
+        var messageTextLabel = "Message: " + (messageCounter + 1);
+        clonedMessageDiv.find('label:first-child').text(messageTextLabel);
         
-        clonedDiv.find('input[type="text"]').val('');
-        clonedDiv.find('input[name="cloneMessageText"]').attr('required', 'required');
+        clonedMessageDiv.find('input[type="text"]').val('');
+        clonedMessageDiv.find('input[name="cloneMessageText"]').attr('required', 'required');
         
-        clonedDiv.find('input').prop('name', `personalizedMessage[${messageCounter}].message`);
-        clonedDiv.find('select').prop('name', `personalizedMessage[${messageCounter}].answerChoice`);
-        clonedDiv.show();
-        originalDiv.append(clonedDiv);
+        clonedMessageDiv.find('input').prop('name', `personalizedMessage[${messageCounter}].message`);
+        clonedMessageDiv.find('select').prop('name', `personalizedMessage[${messageCounter}].answerChoice`);
+        clonedMessageDiv.show();
+        originalDiv.append(clonedMessageDiv);
 
     });
 
@@ -108,20 +107,15 @@ $(document).ready(function () {
   	    	var choiceList = questionDiv.find('.choiceList');
 			var questionIndex = questionDiv.index();
             choiceList.each(function(choiceIndex){
-            var newId = "choice" + (choiceIndex);
-            $(this).attr("id", newId);
+            var reIndexChoiceId = "choice" + (choiceIndex);
+            $(this).attr("id", reIndexChoiceId);
      
-            var newLabel = "Choice: " + (choiceIndex + 1);
-            $(this).find("label").text(newLabel);         
-
-            
+            var reIndexChoiceLabel = "Choice: " + (choiceIndex + 1);
+            $(this).find("label").text(reIndexChoiceLabel);             
             
             $(this).find('input').prop('name', `quizQuestion[${questionIndex}].questionChoice[${choiceIndex}].choicePrompt`);
             $(this).find('select').prop('name', `quizQuestion[${questionIndex}].questionChoice[${choiceIndex}].choiceValue`); 
-            
-            
-
-
+ 
         });
     }
     
@@ -131,45 +125,36 @@ $(document).ready(function () {
 		var originalDiv = $("#questionContainer");
 		var questionList = originalDiv.find('.questionList'); 
 	       
-        
-          questionList.each(function (questionListIndex) {
-            var newId = "container" + (questionListIndex);
-            $(this).attr("id", newId);
-            var newLabel = "Question: " + (questionListIndex + 1);
-            $(this).find("label").text(newLabel);
+          questionList.each(function (questionIndex) {
+            var reIndexQuestionId = "container" + (questionIndex);
+            $(this).attr("id", reIndexQuestionId);
+            var reIndexQuestionLabel = "Question: " + (questionIndex + 1);
+            $(this).find("label").text(reIndexQuestionLabel);
             
-              $(this).find('input').prop('name', `quizQuestion[${questionListIndex}].prompt`);
-            
-       			 $(this).find('.choiceList').each(function(choiceIndex){
-                    var newId = "choice" + (choiceIndex);
-                    $(this).attr("id", newId);
-             
-                    var newLabel = "Choice: " + (choiceIndex + 1);
-                    $(this).find("label").text(newLabel);         
-                   $(this).find('input').prop('name', `quizQuestion[${questionListIndex}].questionChoice[${choiceIndex}].choicePrompt`);
-                   $(this).find('select').prop('name', `quizQuestion[${questionListIndex}].questionChoice[${choiceIndex}].choiceValue`);            
-   
-        }); 
+              $(this).find('input').prop('name', `quizQuestion[${questionIndex}].prompt`);
+              questionDiv = $(this);
+              var choiceList = questionDiv.find('.choiceList'); 
+              if (choiceList.length > 0) {
+                  renumberQuestionChoices(questionDiv);
+              }
 	 }); 
     }
   	
     
     function renumberMessages() {
-        var messageCounter = $(".messageList").length;
-
-       if (messageCounter === 0) {
-           return;
-        }
+    	   
+		var messageDiv = $("#messageContainer");
+		var messageList = messageDiv.find('.messageList'); 
         
-        $(".messageList").each(function (index) {
-            var newId = "message" + (index);
-            $(this).attr("id", newId);
-
-            var newLabel = "Message: " + (index + 1);
-            $(this).find("label").text(newLabel);
-
-            $(this).find('input').prop('name', `personalizedMessage[${messageCounter}].message`); 
-            $(this).find('select').prop('name', `personalizedMessage[${messageCounter}].answerChoice`); 
+        $(".messageList").each(function (messageIndex) {
+            var reIndexMessageId = "message" + (messageIndex);
+            $(this).attr("id", reIndexMessageId);
+         
+            var reIndexMessageTextLabel = "Message: " + (messageIndex + 1);
+            $(this).find('label:first-child').text(reIndexMessageTextLabel);
+            
+            $(this).find('input').prop('name', `personalizedMessage[${messageIndex}].message`); 
+            $(this).find('select').prop('name', `personalizedMessage[${messageIndex}].answerChoice`); 
         }); 
     }
    
@@ -180,7 +165,6 @@ $(document).ready(function () {
     $(document).on("click", ".deleteButton", function () {
         var questionDiv = $(this).closest('.questionList');
         questionDiv.find('.choiceList').remove();
-        alert(questionDiv.index());
         questionDiv.remove();
         renumberQuestionsAndChoices();
     });
@@ -215,7 +199,7 @@ $(document).ready(function () {
 
 <!-- -------------   Container used for cloning/appending Questions  ------------------------------------>
 
-		<div id="cloneContainer" style="display: none;" class="cloneClass">
+		<div id="cloneQuestionContainer" style="display: none;" class="cloneQuestionClass">
 			<label> Question: </label> <input type="text" />
 			<button type="button" class="deleteButton">Delete Question</button>			
 			<button type="button" class="choiceButton">Add Choice</button> 
@@ -228,7 +212,7 @@ $(document).ready(function () {
 		
 <!-- -------------   Container used for cloning/appending Question Choices ------------------------------------>
 
-		<div id="choiceTemplate" style="display: none;"
+		<div id="cloneChoiceContainer" style="display: none;"
 			class="cloneContainerClass">
 			<label> Choice: </label> <input type="text" name="cloneChoice"/>
 			<label for="cloneValueChoice">Choice:</label>
