@@ -17,7 +17,7 @@ import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
 
 @Configuration
 public class QuizConfig {
-		
+	/*		
 	@Bean
 	@Transactional 
 	CommandLineRunner commandLineRunner(QuizService quizService) {
@@ -191,8 +191,9 @@ Quiz QuizOneAnimal = new Quiz("Animal Quiz");
 			
 				
 		};
-
+	
 	}
 	
+	*/
 }
-	
+		

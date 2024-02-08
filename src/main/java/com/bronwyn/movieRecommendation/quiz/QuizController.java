@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -56,8 +57,9 @@ public class QuizController {
 	}
 
 	@DeleteMapping(path = "{quizId}")
-	public void deleteQuiz(@PathVariable("quizId") Long quizId) {
+	 public ResponseEntity<Void> deleteQuiz(@PathVariable("quizId") Long quizId) {
 		quizService.deleteQuiz(quizId);
+		return ResponseEntity.noContent().build();
 	}
 	
 	  //When a request is sent to a specific URL, the framework looks for a method in the controller that is mapped to that URL. 

@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Quiz Questions</title>
+
 </head>
+
+
 <body>
     <h1 th:text="${quiz.quizTitle}"></h1>
 
@@ -41,6 +44,9 @@
                 <p th:unless="${question.questionChoice}">No choices available</p>
             </li>
         </ul>
+        
+           
+   
 
         <button type="submit">Submit Quiz</button>
     </form>
@@ -48,4 +54,3 @@
     <p th:unless="${questions}">No questions available</p>
 </body>
 </html>
-

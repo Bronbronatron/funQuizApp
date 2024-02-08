@@ -7,6 +7,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
 
+
 //---------------------- Append Clone Methods ---------------------------------------------------------//
 
 $(document).ready(function () {
@@ -35,6 +36,7 @@ $(document).ready(function () {
         originalDiv.append(clonedQuestionDiv);
 
     });
+    
     
     
     $(document).on("click", ".choiceButton", function () {
@@ -184,13 +186,52 @@ $(document).ready(function () {
         renumberQuestionChoices(questionDiv);
     }); 
     
+    
+    
+  //---------------------- Form validation Methods ---------------------------------------------------------//
+
+    $('#myForm').submit(function(event){
+    	var isValid = true;
+    	var originalDiv = $("#questionContainer");
+    	var messageDiv =  $("#messageContainer");
+    	var questionList = originalDiv.find('.questionList');
+    	var numberOfQuestions = originalDiv.find('.questionList').length;
+    	var numberOfMessages =  messageDiv.find('.messageList').length;
+		
+    	if (numberOfQuestions === 0) {
+    		isValid = false
+    		alert('A quiz must have at least 1 question');
+    		
+    	} 
+    	else if (numberOfMessages < 2) {
+    		isValid = false
+    		alert('A quiz must have at least 2 personality options');
+    		
+    	 }else{
+    	
+    	questionList.each(function(questionIndex){
+    		var choiceList = $(this).find('.choiceList');
+    		if (choiceList.length < 2) {
+    				isValid = false	
+    				alert('Each question must have at least 2 answer choices');
+    				//return false;
+                }	
+    	  });
+    	
+    	 }
+    	
+    	if (!isValid) {
+            event.preventDefault();
+            
+    	}
+    }); 	 
 });
 
 </script>
 </head>
 
 <body>
-	<form th:action="@{/api/v1/quiz/registerQuiz}" method="post"
+	<form th:action="@{/api/v1/quiz/registerQuiz}" id="myForm" method="post"
 		th:object=${quiz}>
 
 		<div>
