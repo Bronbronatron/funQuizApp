@@ -60,7 +60,7 @@ $(document).ready(function () {
 
         clonedChoiceDiv.find('input[name="cloneChoice"]').prop('name', `quizQuestion[${questionIndex}].questionChoice[${choiceCounter}].choicePrompt`);
         clonedChoiceDiv.find('select[name="cloneValueChoice"]').prop('name',`quizQuestion[${questionIndex}].questionChoice[${choiceCounter}].choiceValue`); 
-       
+        
         clonedChoiceDiv.show();
         questionDiv.append(clonedChoiceDiv);
         
@@ -93,9 +93,37 @@ $(document).ready(function () {
         
         clonedMessageDiv.find('input[type="text"]').val('');
         clonedMessageDiv.find('input[name="cloneMessageText"]').attr('required', 'required');
+        var myList = [];
+        $(".messageList").each(function (messageIndex) {
+         var ListItem = $(this).find('select').val();
+         myList.push(ListItem);
+        });
+        
+        if (!myList.includes('A')){
+        	clonedMessageDiv.find('select').val('A');
+        	
+        }
+        else if (!myList.includes('B')){
+        	clonedMessageDiv.find('select').val('B');
+        	
+        }
+        else if (!myList.includes('C')) {
+        	clonedMessageDiv.find('select').val('C');
+        
+        }
+        else if (!myList.includes('D')) {
+        	clonedMessageDiv.find('select').val('D');
+        }
+        else if (!myList.includes('E')) {
+        	clonedMessageDiv.find('select').val('E');
+        }
+        else {
+        	clonedMessageDiv.find('select').val('F'); 
+        } 
         
         clonedMessageDiv.find('input').prop('name', `personalizedMessage[${messageCounter}].message`);
         clonedMessageDiv.find('select').prop('name', `personalizedMessage[${messageCounter}].answerChoice`);
+            
         clonedMessageDiv.show();
         originalDiv.append(clonedMessageDiv);
 
@@ -197,16 +225,31 @@ $(document).ready(function () {
     	var questionList = originalDiv.find('.questionList');
     	var numberOfQuestions = originalDiv.find('.questionList').length;
     	var numberOfMessages =  messageDiv.find('.messageList').length;
-		
+    	var myList = [];
+        $(".messageList").each(function (messageIndex) {
+            var ListItem = $(this).find('select').val();
+            myList.push(ListItem);
+        });
+		var uniqueSet = new Set(myList);
+
     	if (numberOfQuestions === 0) {
     		isValid = false
     		alert('A quiz must have at least 1 question');
     		
     	} 
+    	
+
     	else if (numberOfMessages < 2) {
     		isValid = false
     		alert('A quiz must have at least 2 personality options');
     		
+    		
+    	}
+    	else if (uniqueSet.size !== myList.length) {
+    		  
+    		    isValid = false;
+    		    alert('Duplicate values found in the list');
+	
     	 }else{
     	
     	questionList.each(function(questionIndex){
@@ -214,7 +257,6 @@ $(document).ready(function () {
     		if (choiceList.length < 2) {
     				isValid = false	
     				alert('Each question must have at least 2 answer choices');
-    				//return false;
                 }	
     	  });
     	
@@ -237,6 +279,9 @@ $(document).ready(function () {
 		<div>
 			<label> Title </label> <input type="text" th:field="*{quizTitle}" required/>
 		</div>
+
+
+
 
 <!-- -------------   Container used for cloning/appending Questions  ------------------------------------>
 
