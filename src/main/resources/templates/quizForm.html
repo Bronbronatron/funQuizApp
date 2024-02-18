@@ -95,7 +95,7 @@ $(document).ready(function () {
 	   myList.splice(0, myList.length); 
        reletterQuestionChoiceValues(DivOne, myList);
    }
-    }
+    } 
     
 
     
@@ -248,40 +248,77 @@ $(document).ready(function () {
     
     
   //---------------------- Form validation Methods ---------------------------------------------------------//
-
+  
+    function findValuesNotInOtherList(list1, list2) {
+ 	   var valuesNotInOtherList = [];
+  	  list1.forEach(function(value) {
+		if (!list2.includes(value)) {
+            valuesNotInOtherList.push(value);
+        }
+    });
+  		  return valuesNotInOtherList;
+}
+  
     $('#myForm').submit(function(event){
     	var isValid = true;
     	var originalDiv = $("#questionContainer");
-    	var messageDiv =  $("#messageContainer");
+    	var messageDiv =  $("#messageContainer"); 	
+    	var messageList = messageDiv.find('.messageList')
+    	var choiceList = originalDiv.find('.choiceList')
+    	
+    	var messageListValues = [];
+    	var choiceListValues = [];
+    	
+    	messageList.each(function() {
+    	    messageListValues.push($(this).find('select').val());
+
+    	});
+
+    	choiceList.each(function() {
+    	    choiceListValues.push($(this).find('select').val());
+    	  
+    	});
+    	
+   
+    	var valuesOnlyInMessageList = findValuesNotInOtherList(messageListValues, choiceListValues);
+   		var valuesOnlyInChoiceList = findValuesNotInOtherList(choiceListValues, messageListValues);
+    
     	var questionList = originalDiv.find('.questionList');
     	var numberOfQuestions = originalDiv.find('.questionList').length;
     	var numberOfMessages =  messageDiv.find('.messageList').length;
     	var myList = [];
+    	
         $(".messageList").each(function (messageIndex) {
             var ListItem = $(this).find('select').val();
             myList.push(ListItem);
         });
+        
 		var uniqueSet = new Set(myList);
-
+		
     	if (numberOfQuestions === 0) {
     		isValid = false
-    		alert('A quiz must have at least 1 question');
-    		
+    		alert('A quiz must have at least 1 question');		
     	} 
     	
-
+     else if (valuesOnlyInMessageList.length !== 0) {
+		  isValid = false;
+	   alert("Values in messageList not in choiceList:", valuesOnlyInMessageList);
+		
+	   
+	} else if (valuesOnlyInChoiceList.length !== 0) {
+	  isValid = false;
+	  alert("Values in choiceList not in messageList:", valuesOnlyInMessageList);
+	}	
     	else if (numberOfMessages < 2) {
     		isValid = false
-    		alert('A quiz must have at least 2 personality options');
-    		
-    		
+    		alert('A quiz must have at least 2 personality options');	
     	}
+  
     	else if (uniqueSet.size !== myList.length) {
-    		  
     		    isValid = false;
     		    alert('Duplicate values found in the list');
-	
-    	 }else{
+
+    	}else{
     	
     	questionList.each(function(questionIndex){
     		var choiceList = $(this).find('.choiceList');
@@ -299,6 +336,8 @@ $(document).ready(function () {
     	}
     }); 	 
 });
+
+
 
 </script>
 </head>
