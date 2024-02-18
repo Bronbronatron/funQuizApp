@@ -57,15 +57,47 @@ $(document).ready(function () {
         clonedChoiceDiv.find("label").text(choiceLabel);
      
         clonedChoiceDiv.find('input[name="cloneChoice"]').attr('required', 'required');
-
+        var myList = [];
+        $(".choiceList").each(function (choiceIndex) {
+            var ListItem = $(this).find('select').val();
+            myList.push(ListItem);
+        	reletterQuestionChoiceValues(clonedChoiceDiv, myList);
+        });
+        
         clonedChoiceDiv.find('input[name="cloneChoice"]').prop('name', `quizQuestion[${questionIndex}].questionChoice[${choiceCounter}].choicePrompt`);
         clonedChoiceDiv.find('select[name="cloneValueChoice"]').prop('name',`quizQuestion[${questionIndex}].questionChoice[${choiceCounter}].choiceValue`); 
         
         clonedChoiceDiv.show();
-        questionDiv.append(clonedChoiceDiv);
-        
+        questionDiv.append(clonedChoiceDiv);     
     	 
     });
+    
+    function reletterQuestionChoiceValues(DivOne, myList) {	 
+    if (!myList.includes('A')){
+    	DivOne.find('select').val('A');
+   }
+   else if (!myList.includes('B')){
+	   DivOne.find('select').val('B');
+   }
+   else if (!myList.includes('C')) {
+	   DivOne.find('select').val('C');
+   }
+   else if (!myList.includes('D')) {
+	   DivOne.find('select').val('D');
+   }
+   else if (!myList.includes('E')) {
+	   DivOne.find('select').val('E');
+   }
+   else if (!myList.includes('F')) {
+	   DivOne.find('select').val('F'); 
+   } 
+   else{
+	   myList.splice(0, myList.length); 
+       reletterQuestionChoiceValues(DivOne, myList);
+   }
+    }
+    
+
     
     
     
@@ -79,7 +111,6 @@ $(document).ready(function () {
         	return;
         }
         
-      
         var clonedMessageDiv = $("#cloneMessageContainer").clone(true);     
         var newId = "messageContainer" + (messageCounter);
         
