@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Create Quiz</title>
+  <link rel="stylesheet" th:href="@{/css/formStyle.css}">
+
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
@@ -343,9 +345,8 @@ $(document).ready(function () {
     }); 	 
 });
 
-
-
 </script>
+
 </head>
 
 <body>
@@ -377,7 +378,7 @@ $(document).ready(function () {
 		<div id="cloneChoiceContainer" style="display: none;"
 			class="cloneContainerClass">
 			<label> Choice: </label> <input type="text" style = "width: 400px;" name="cloneChoice"/>
-			<label for="cloneValueChoice">Choice:</label>
+		<!-- 	<label for="cloneValueChoice"> Choice </label> -->
 			<select id="cloneValueChoice" name="cloneValueChoice">
 		  	 <option value="A">A</option>
   		     <option value="B">B</option>
