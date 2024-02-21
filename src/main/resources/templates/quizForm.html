@@ -58,11 +58,17 @@ $(document).ready(function () {
      
         clonedChoiceDiv.find('input[name="cloneChoice"]').attr('required', 'required');
         var myList = [];
-        $(".choiceList").each(function (choiceIndex) {
+        
+       
+        questionDiv.find(".choiceList").each(function (choiceIndex) {
             var ListItem = $(this).find('select').val();
             myList.push(ListItem);
-        	reletterQuestionChoiceValues(clonedChoiceDiv, myList);
+            if (['A', 'B', 'C', 'D', 'E', 'F'].every(letter => myList.includes(letter))) {
+                myList.splice(0, myList.length); 
+                     }
         });
+        
+        reletterQuestionChoiceValues(clonedChoiceDiv, myList);
         
         clonedChoiceDiv.find('input[name="cloneChoice"]').prop('name', `quizQuestion[${questionIndex}].questionChoice[${choiceCounter}].choicePrompt`);
         clonedChoiceDiv.find('select[name="cloneValueChoice"]').prop('name',`quizQuestion[${questionIndex}].questionChoice[${choiceCounter}].choiceValue`); 
@@ -72,7 +78,7 @@ $(document).ready(function () {
     	 
     });
     
-    function reletterQuestionChoiceValues(DivOne, myList) {	 
+    function reletterQuestionChoiceValues(DivOne, myList ) {	
     if (!myList.includes('A')){
     	DivOne.find('select').val('A');
    }
@@ -87,15 +93,15 @@ $(document).ready(function () {
    }
    else if (!myList.includes('E')) {
 	   DivOne.find('select').val('E');
+
    }
-   else if (!myList.includes('F')) {
-	   DivOne.find('select').val('F'); 
-   } 
-   else{
-	   myList.splice(0, myList.length); 
-       reletterQuestionChoiceValues(DivOne, myList);
-   }
+   else {
+	   DivOne.find('select').val('F');
+   
     } 
+    }
+    
+    
     
 
     
@@ -347,7 +353,7 @@ $(document).ready(function () {
 		th:object=${quiz}>
 
 		<div>
-			<label> Title </label> <input type="text" th:field="*{quizTitle}" required/>
+			<label> Title </label> <input type="text" style = "width: 400px;" th:field="*{quizTitle}" required/>
 		</div>
 
 
@@ -356,7 +362,7 @@ $(document).ready(function () {
 <!-- -------------   Container used for cloning/appending Questions  ------------------------------------>
 
 		<div id="cloneQuestionContainer" style="display: none;" class="cloneQuestionClass">
-			<label> Question: </label> <input type="text" />
+			<label> Question: </label> <input type="text"  style = "width: 800px;" />
 			<button type="button" class="deleteButton">Delete Question</button>			
 			<button type="button" class="choiceButton">Add Choice</button> 
 		</div>
@@ -370,7 +376,7 @@ $(document).ready(function () {
 
 		<div id="cloneChoiceContainer" style="display: none;"
 			class="cloneContainerClass">
-			<label> Choice: </label> <input type="text" name="cloneChoice"/>
+			<label> Choice: </label> <input type="text" style = "width: 400px;" name="cloneChoice"/>
 			<label for="cloneValueChoice">Choice:</label>
 			<select id="cloneValueChoice" name="cloneValueChoice">
 		  	 <option value="A">A</option>

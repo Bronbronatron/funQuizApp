@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bronwyn.movieRecommendation.formSubmission.QuizUpdateForm;
 import com.bronwyn.movieRecommendation.personalizedMessage.PersonalizedMessage;
 import com.bronwyn.movieRecommendation.personalizedMessage.PersonalizedMessageService;
 import com.bronwyn.movieRecommendation.question.Question;
@@ -61,6 +62,36 @@ public class QuizController {
 		quizService.deleteQuiz(quizId);
 		return ResponseEntity.noContent().build();
 	}
+	
+	
+	
+	@GetMapping("/edit/{quizId}")
+	public String editQuiz(Model model, @PathVariable("quizId") Long quizId) {
+		
+		try {
+			Quiz quiz = quizService.findQuizByID(quizId).get();
+			model.addAttribute(quiz);
+			
+			 List<Question> questions = quizService.getQuestionsForQuiz(quizId);
+		      model.addAttribute("questions", questions);
+		        
+			QuizUpdateForm quizUpdateForm = new QuizUpdateForm();
+			
+			quizUpdateForm.setQuizQuestion(quizUpdateForm.getQuizQuestion());
+			quizUpdateForm.setQuizTitle(quizUpdateForm.getQuizTitle());
+			quizUpdateForm.setPersonalizedMessage(quizUpdateForm.getPersonalizedMessage());
+			
+			model.addAttribute("quizUpdateForm", quizUpdateForm);		
+		}
+		
+		catch(Exception ex){
+			System.out.println("Quiz does not exist");
+			return "quizList";
+		}
+		return "updateQuiz";
+	}
+	
+	
 	
 	  //When a request is sent to a specific URL, the framework looks for a method in the controller that is mapped to that URL. 
 	  //The mapping is done using annotations like @RequestMapping, @GetMapping, @PostMapping, etc. 
@@ -113,13 +144,6 @@ public class QuizController {
 
 	       // Extract quizId from formData
 	       Long quizId = Long.parseLong(formData.get("quizId"));
-
-	       // Proceed with processing answer choices and quizId
-	       
-	       
-	     //  String findMostCommonChoice = quizService.findMostCommonChoice(formData);
-	       
-	       
 	       
 	       String findMostCommonChoice = quizService.findMostCommonChoice(answerChoices);
 	       System.out.println("Answer Choices: " + answerChoices);

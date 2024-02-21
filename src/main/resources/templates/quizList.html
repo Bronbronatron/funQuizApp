@@ -50,6 +50,7 @@ $(document).ready(function(){
         <li th:each="quiz : ${quizzes}">
             <a th:href="@{'/api/v1/quiz/quiz/' + ${quiz.id}}" th:text="${quiz.quizTitle}"></a>
             <a href="#" class="deleteQuiz-btn" th:data-quiz-id ="${quiz.id}" role="button">Delete</a>
+            <a th:href="@{'/api/v1/quiz/edit/' + ${quiz.id}}" role="button">Update Quiz</a>
         </li>
     </ul>
     <p th:unless="${quizzes}">No quizzes available</p>
