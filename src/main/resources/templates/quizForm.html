@@ -26,7 +26,7 @@ $(document).ready(function () {
         var questionClass = "questionList";
         clonedQuestionDiv.attr("class", questionClass);
 
-        var questionLabel = "Question: " + (questionCounter + 1);
+        var questionLabel = "Question " + (questionCounter + 1) + ": ";
         clonedQuestionDiv.find("label").text(questionLabel);
 
         clonedQuestionDiv.find('input[type="text"]').val('');
@@ -55,7 +55,7 @@ $(document).ready(function () {
         var choiceId = "choice" + choiceCounter;
         clonedChoiceDiv.attr("id", choiceId);
      
-        var choiceLabel = "Choice: " + (choiceCounter + 1);
+        var choiceLabel = "Choice " + (choiceCounter + 1) + ": ";
         clonedChoiceDiv.find("label").text(choiceLabel);
      
         clonedChoiceDiv.find('input[name="cloneChoice"]').attr('required', 'required');
@@ -127,7 +127,7 @@ $(document).ready(function () {
         var messageClass = "messageList";
         clonedMessageDiv.attr("class", messageClass);
 
-        var messageTextLabel = "Message: " + (messageCounter + 1);
+        var messageTextLabel = "Message " + (messageCounter + 1) + ": ";
         clonedMessageDiv.find('label:first-child').text(messageTextLabel);
         
         clonedMessageDiv.find('input[type="text"]').val('');
@@ -352,9 +352,13 @@ $(document).ready(function () {
 <body>
 	<form th:action="@{/api/v1/quiz/registerQuiz}" id="myForm" method="post"
 		th:object=${quiz}>
+		
+		<div>
+			<h1 class = "centered"> Create a Quiz! </h1>
+		</div>
 
 		<div>
-			<label> Title </label> <input type="text" style = "width: 400px;" th:field="*{quizTitle}" required/>
+			<label> Quiz Title: </label> <input type="text" style = "width: 400px;" th:field="*{quizTitle}" required/>
 		</div>
 
 
@@ -363,12 +367,17 @@ $(document).ready(function () {
 <!-- -------------   Container used for cloning/appending Questions  ------------------------------------>
 
 		<div id="cloneQuestionContainer" style="display: none;" class="cloneQuestionClass">
-			<label> Question: </label> <input type="text"  style = "width: 800px;" />
+			<label for = "cloneQuestionContainer" class = "bold-Label"> Question: </label> <input type="text"  style = "width: 800px;" />
 			<button type="button" class="deleteButton">Delete Question</button>			
 			<button type="button" class="choiceButton">Add Choice</button> 
 		</div>
 		
 		<div id="questionContainer"></div>
+		
+		<div>
+		<button type="button" class = "endButton" id="cloneButton">Add Question</button>
+		</div>
+		
 		
 		<div id="messageContainer"></div>
 		
@@ -378,7 +387,6 @@ $(document).ready(function () {
 		<div id="cloneChoiceContainer" style="display: none;"
 			class="cloneContainerClass">
 			<label> Choice: </label> <input type="text" style = "width: 400px;" name="cloneChoice"/>
-		<!-- 	<label for="cloneValueChoice"> Choice </label> -->
 			<select id="cloneValueChoice" name="cloneValueChoice">
 		  	 <option value="A">A</option>
   		     <option value="B">B</option>
@@ -395,7 +403,7 @@ $(document).ready(function () {
 
 		<div id="cloneMessageContainer" style="display: none;"
 			class="cloneMessageClass">
-			<label> Message: </label> <input type="text" style = "width: 400px; height: 75px;" name="cloneMessageText"/>
+			<label for = "cloneMessageClass" class = "bold-Label"> Message: </label> <input type="text" style = "width: 400px; height: 75px;" name="cloneMessageText"/>
 			<label for = "cloneMessage">Corresponds to Choice: </label>
 			<select id = "cloneMessage" name = "cloneMessageChoice">
 			 <option value="A">A</option>
@@ -411,13 +419,13 @@ $(document).ready(function () {
 		<div>
 
 		<!-- Match the selector at the time when this code runs so it won't work for elements dynamically added to the DOM after the initial page load -->
-			<button type="button" id="cloneButton">Add Question</button>
-			<button type="button" id="addMessageButton">Add Message</button>
+			
+			<button type="button" class = "endButton" id="addMessageButton">Add Message</button>
 			
 		</div>
 		
 		<div>
-			<input type="submit" value="Submit">
+			<input type="submit" id = "submitButton" value="Submit">
 		</div>
 	</form>
 </body>

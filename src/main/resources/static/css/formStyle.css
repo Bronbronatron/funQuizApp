@@ -9,3 +9,34 @@ label {
     width: 80px; 
     display: inline-block;
 }
+
+
+.questionList {	
+	margin-top: 20px;
+}
+
+ .choiceList {
+	margin-top: 5px;
+}
+
+.messageList {
+	margin-top: 15px;
+}
+
+.endButton {
+	margin-top: 15px;
+}
+.centered {
+	text-align: center;
+}
+
+.bold-Label {
+	font-weight: bold;
+}
+
+#submitButton{
+	width: 200px;
+	margin-top: 5px;
+	display: block;
+	margin: 0 auto;
+}
