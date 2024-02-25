@@ -160,9 +160,10 @@ $(document).ready(function () {
         	clonedMessageDiv.find('select').val('F'); 
         } 
         
-        clonedMessageDiv.find('input').prop('name', `personalizedMessage[${messageCounter}].message`);
-        clonedMessageDiv.find('select').prop('name', `personalizedMessage[${messageCounter}].answerChoice`);
-            
+       // clonedMessageDiv.find('input').prop('name', `personalizedMessage[${messageCounter}].message`);
+       
+           clonedMessageDiv.find('textarea').prop('name', `personalizedMessage[${messageCounter}].message`);
+ 		 clonedMessageDiv.find('select').prop('name', `personalizedMessage[${messageCounter}].answerChoice`);  
         clonedMessageDiv.show();
         originalDiv.append(clonedMessageDiv);
 
@@ -354,15 +355,12 @@ $(document).ready(function () {
 		th:object=${quiz}>
 		
 		<div>
-			<h1 class = "centered"> Create a Quiz! </h1>
+			<h1 class = "centered"> Create your Quiz </h1>
 		</div>
 
-		<div>
-			<label> Quiz Title: </label> <input type="text" style = "width: 400px;" th:field="*{quizTitle}" required/>
+		<div id = "titleDiv" class = "labelClass">
+			<label for = "titleDiv" class = "bold-Label"> Quiz Title: </label> <input type="text" style = "width: 400px;" th:field="*{quizTitle}" required/>
 		</div>
-
-
-
 
 <!-- -------------   Container used for cloning/appending Questions  ------------------------------------>
 
@@ -403,7 +401,7 @@ $(document).ready(function () {
 
 		<div id="cloneMessageContainer" style="display: none;"
 			class="cloneMessageClass">
-			<label for = "cloneMessageClass" class = "bold-Label"> Message: </label> <input type="text" style = "width: 400px; height: 75px;" name="cloneMessageText"/>
+			<label for = "cloneMessageClass" class = "bold-Label"> Message: </label> <textarea style = "width: 400px; height: 80px;" name="cloneMessageText"></textarea>
 			<label for = "cloneMessage">Corresponds to Choice: </label>
 			<select id = "cloneMessage" name = "cloneMessageChoice">
 			 <option value="A">A</option>
@@ -425,7 +423,7 @@ $(document).ready(function () {
 		</div>
 		
 		<div>
-			<input type="submit" id = "submitButton" value="Submit">
+			<input type="submit" id = "submitButton" value="Create Quiz">
 		</div>
 	</form>
 </body>
