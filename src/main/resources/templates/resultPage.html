@@ -2,10 +2,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<!-- Your head content here -->
+<link rel="stylesheet" th:href="@{/css/formStyle.css}">
 </head>
 <body>
-	<div>
+	<div id= "message:container">
 		<!-- Your other result page content here -->
 
 		<!-- Display the personalized message -->
@@ -17,7 +17,7 @@
 	<!-- Without the Elvis operator, possible need to write explicit conditional checks e.g.  if (personalizedMessage.isPresent()) etc. -->
 		<!-- Check if personalizedMessage is present -->
 			<!-- Display the personalized message -->
-			<p th:text="${personalizedMessage?.getMessage} ?: ('No message for Quiz: ' + ${quiz.quizTitle} + ' found')"></p>
+			<p th:text="${personalizedMessage?.getMessage} ?: ('No message for Quiz: ' + ${quiz.quizTitle} + ' found')" id="message-text"></p>
 	</div>
 
 </body>

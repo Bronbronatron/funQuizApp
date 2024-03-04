@@ -386,13 +386,11 @@ $(document).ready(function () {
 			class="cloneContainerClass">
 			<label> Choice: </label> <input type="text" style = "width: 400px;" name="cloneChoice"/>
 			<select id="cloneValueChoice" name="cloneValueChoice">
-		  	 <option value="A">A</option>
-  		     <option value="B">B</option>
-  		     <option value="C">C</option>
-  		     <option value="D">D</option>
-  		     <option value="E">E</option>
-  		     <option value="F">F</option>    
-  		     </select>
+		  	<option th:each="value : ${choiceValues}" 
+                                th:value="${value}" 
+                                th:text="${value}" 
+                                ></option>
+                  		  </select>   
 			<button type="button" class="choiceDeleteButton">Delete Choice</button>		
 		</div>
 		
@@ -404,12 +402,10 @@ $(document).ready(function () {
 			<label for = "cloneMessageClass" class = "bold-Label"> Message: </label> <textarea style = "width: 400px; height: 80px;" name="cloneMessageText"></textarea>
 			<label for = "cloneMessage">Corresponds to Choice: </label>
 			<select id = "cloneMessage" name = "cloneMessageChoice">
-			 <option value="A">A</option>
-  		     <option value="B">B</option>
-  		     <option value="C">C</option>
-  		     <option value="D">D</option>
-  		     <option value="E">E</option>
-  		     <option value="F">F</option>    
+			 <option th:each = "choice: ${answerChoice}"
+			 					th:value = ${choice}
+			 					th:text = ${choice}
+			 					></option>
   		     </select>
 			<button type="button" class="deleteMessageButton">Delete Message</button>	
 		</div>

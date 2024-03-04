@@ -40,3 +40,10 @@ label {
 	display: block;
 	margin: 0 auto;
 }
+
+
+#message-text{
+	font-size: 30px;
+	text-align: center;
+}
+

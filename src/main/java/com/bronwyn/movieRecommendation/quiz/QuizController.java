@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bronwyn.movieRecommendation.formSubmission.QuizUpdateForm;
+import com.bronwyn.movieRecommendation.personalizedMessage.AnswerChoice;
 import com.bronwyn.movieRecommendation.personalizedMessage.PersonalizedMessage;
 import com.bronwyn.movieRecommendation.personalizedMessage.PersonalizedMessageService;
 import com.bronwyn.movieRecommendation.question.Question;
+import com.bronwyn.movieRecommendation.questionChoice.ChoiceValue;
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
 
 
@@ -48,6 +50,8 @@ public class QuizController {
     public String showQuizFrom(Model model) {
     	Quiz quiz = new Quiz();
     	model.addAttribute("quiz", quiz);
+    	model.addAttribute("choiceValues", ChoiceValue.values());
+    	model.addAttribute("answerChoice", AnswerChoice.values()); 
     	return "quizForm";
     }
 
@@ -81,6 +85,7 @@ public class QuizController {
 			quizUpdateForm.setQuizTitle(quizUpdateForm.getQuizTitle());
 			quizUpdateForm.setPersonalizedMessage(quizUpdateForm.getPersonalizedMessage());
 			
+			model.addAttribute("choiceValues", ChoiceValue.values());
 			model.addAttribute("quizUpdateForm", quizUpdateForm);		
 		}
 		

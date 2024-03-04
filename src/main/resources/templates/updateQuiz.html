@@ -15,23 +15,19 @@
 
 
 		<ul th:if="${questions}">
-			<li th:each="question : ${questions}"><input type="text"
+			<li th:each="question : ${questions}"><input type="text" style = "width: 400px;"
 				th:value="${question.prompt}" /> <input type="hidden"
 				th:name="questionId" th:value="${question.id}" /> <!-- Iterate over the choices for the current question -->
 				<ul th:if="${question.questionChoice}">
 					<li th:each="choice : ${question.questionChoice}"><label>
-							<select th:name="'choice_' + ${question.id}"
-							th:value="${choice.choiceValue}">
-							
-								<option th:selected="${choice.choiceValue == 'A'}">A</option>
-								<option th:selected="${choice.choiceValue == 'B'}">B</option>
-								<option th:selected="${choice.choiceValue == 'C'}">C</option>
-								<option th:selected="${choice.choiceValue == 'D'}">D</option>
-								<option th:selected="${choice.choiceValue == 'E'}">E</option>
-								<option th:selected="${choice.choiceValue == 'F'}">F</option>
-						</select> 
-						
-						<input type="text" th:value="${choice.choicePrompt}" />
+						     <select th:name="'choice_' + ${question.id}" >
+                        <!-- Iterate over enum values for each QuestionChoice -->
+                        <option th:each="value : ${choiceValues}" 
+                                th:value="${value}" 
+                                th:text="${value}" 
+                                th:selected="${value == choice.choiceValue}"></option>
+                  		  </select>
+                      <span th:text="${choice.choicePrompt}"></span> 
 					</label></li>
 				</ul>
 				<p th:unless="${question.questionChoice}">No choices available</p></li>
@@ -40,7 +36,7 @@
 
 
 
-		<button type="submit">Submit Quiz</button>
+		<button type="submit">Update Quiz</button>
 	</form>
 
 	<p th:unless="${questions}">No questions available</p>

@@ -33,7 +33,6 @@
                 <ul th:if="${question.questionChoice}">
                     <li th:each="choice : ${question.questionChoice}">
                     
-           
                      <label> 
                      
                             <input type="radio" th:name="'choice_' + ${question.id}" th:value="${choice.choiceValue}"/>
