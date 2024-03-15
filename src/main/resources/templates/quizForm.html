@@ -160,9 +160,8 @@ $(document).ready(function () {
         	clonedMessageDiv.find('select').val('F'); 
         } 
         
-       // clonedMessageDiv.find('input').prop('name', `personalizedMessage[${messageCounter}].message`);
        
-           clonedMessageDiv.find('textarea').prop('name', `personalizedMessage[${messageCounter}].message`);
+          clonedMessageDiv.find('textarea').prop('name', `personalizedMessage[${messageCounter}].message`);
  		 clonedMessageDiv.find('select').prop('name', `personalizedMessage[${messageCounter}].answerChoice`);  
         clonedMessageDiv.show();
         originalDiv.append(clonedMessageDiv);

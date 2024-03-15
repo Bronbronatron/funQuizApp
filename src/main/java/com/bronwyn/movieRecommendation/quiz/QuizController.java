@@ -31,12 +31,14 @@ import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
 public class QuizController {
 
 	@Autowired
+	private final QuizRepository quizRepository;
 	private final QuizService quizService;
 	private final PersonalizedMessageService personalizedMessageService;
 
-	public QuizController(QuizService quizService, PersonalizedMessageService personalizedMessageService) {
+	public QuizController(QuizService quizService, QuizRepository quizRepository, PersonalizedMessageService personalizedMessageService) {
 		this.quizService = quizService;
 		this.personalizedMessageService = personalizedMessageService;
+		this.quizRepository = quizRepository;
 	}
 
 	@GetMapping("/{quizId}")
@@ -70,23 +72,17 @@ public class QuizController {
 	
 	
 	@GetMapping("/edit/{quizId}")
-	public String editQuiz(Model model, @PathVariable("quizId") Long quizId) {
+	public String getEditQuiz(Model model, @PathVariable("quizId") Long quizId) {
 		
 		try {
 			Quiz quiz = quizService.findQuizByID(quizId).get();
-			model.addAttribute(quiz);
+			model.addAttribute("quiz", quiz);
 			
 			 List<Question> questions = quizService.getQuestionsForQuiz(quizId);
 		      model.addAttribute("questions", questions);
-		        
-			QuizUpdateForm quizUpdateForm = new QuizUpdateForm();
-			
-			quizUpdateForm.setQuizQuestion(quizUpdateForm.getQuizQuestion());
-			quizUpdateForm.setQuizTitle(quizUpdateForm.getQuizTitle());
-			quizUpdateForm.setPersonalizedMessage(quizUpdateForm.getPersonalizedMessage());
 			
 			model.addAttribute("choiceValues", ChoiceValue.values());
-			model.addAttribute("quizUpdateForm", quizUpdateForm);		
+			
 		}
 		
 		catch(Exception ex){
@@ -96,6 +92,35 @@ public class QuizController {
 		return "updateQuiz";
 	}
 	
+	
+	@PostMapping("/submitEdit")
+	public String postEditQuiz(@ModelAttribute("updateForm") QuizUpdateForm updateForm) {
+		Long quizId = updateForm.getId();
+	    System.out.println(quizId);
+		Optional<Quiz> optionalQuiz = quizService.findQuizByID(quizId);
+		
+		if (optionalQuiz.isPresent()) {
+		    Quiz existingQuiz = optionalQuiz.get(); // Extract the Quiz object from Optional
+		    updateForm.setQuizTitle(existingQuiz.getQuizTitle());
+		    
+		    quizRepository.save(existingQuiz);
+		    System.out.println("Succuss");
+			return "quizList";
+		} else {
+		    System.out.println("Quiz not found");
+			return "quizList";
+		}
+	}
+
+		
+	//quizUpdateForm.setQuizQuestion(quiz.getQuizQuestion());
+	//quizUpdateForm.setPersonalizedMessage(quiz.getPersonalizedMessage());
+
+  	
+	
+		
+		
+		
 	
 	
 	  //When a request is sent to a specific URL, the framework looks for a method in the controller that is mapped to that URL. 
