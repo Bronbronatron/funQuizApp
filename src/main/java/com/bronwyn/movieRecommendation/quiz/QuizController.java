@@ -94,17 +94,17 @@ public class QuizController {
 	
 	
 	@PostMapping("/submitEdit")
-	public String postEditQuiz(@ModelAttribute("updateForm") QuizUpdateForm updateForm) {
+	public String postEditQuiz(@ModelAttribute("updateForm") QuizUpdateForm updateForm, Model model) {
 		Long quizId = updateForm.getId();
-	    System.out.println(quizId);
 		Optional<Quiz> optionalQuiz = quizService.findQuizByID(quizId);
 		
 		if (optionalQuiz.isPresent()) {
 		    Quiz existingQuiz = optionalQuiz.get(); // Extract the Quiz object from Optional
-		    updateForm.setQuizTitle(existingQuiz.getQuizTitle());
-		    
+		
+		    existingQuiz.setQuizTitle(updateForm.getQuizTitle());
+		    System.out.println(existingQuiz.getQuizTitle());
 		    quizRepository.save(existingQuiz);
-		    System.out.println("Succuss");
+		    model.addAttribute("quizzes", quizService.getAllQuizzes());
 			return "quizList";
 		} else {
 		    System.out.println("Quiz not found");

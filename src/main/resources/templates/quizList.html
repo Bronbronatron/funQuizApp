@@ -53,7 +53,7 @@ $(document).ready(function(){
             <a th:href="@{'/api/v1/quiz/edit/' + ${quiz.id}}" role="button">Update Quiz</a>
         </li>
     </ul>
-    <p th:unless="${quizzes}">No quizzes available</p>
+    <p th:unless="${quizzes}">Sorry! No quizzes available</p>
 
 </body>
 </html>
