@@ -10,11 +10,11 @@ import com.bronwyn.movieRecommendation.question.Question;
 public class QuizUpdateForm {
 	protected long id;
 	protected String quizTitle;
-	protected List<Question> quizQuestion = new ArrayList<Question>();
+	protected List<QuestionUpdateForm> quizQuestion = new ArrayList<QuestionUpdateForm>();
 	protected List<PersonalizedMessageUpdateForm> personalizedMessage = new ArrayList<PersonalizedMessageUpdateForm>();
 
 	
-	public QuizUpdateForm(Long id, String quizTitle, List<Question> quizQuestion,
+	public QuizUpdateForm(Long id, String quizTitle, List<QuestionUpdateForm> quizQuestion,
 			List<PersonalizedMessageUpdateForm> personalizedMessage) {
 		super();
 		this.quizTitle = quizTitle;
@@ -48,12 +48,12 @@ public class QuizUpdateForm {
 	}
 
 
-	public List<Question> getQuizQuestion() {
+	public List<QuestionUpdateForm> getQuizQuestion() {
 		return quizQuestion;
 	}
 
 
-	public void setQuizQuestion(List<Question> quizQuestion) {
+	public void setQuizQuestion(List<QuestionUpdateForm> quizQuestion) {
 		this.quizQuestion = quizQuestion;
 	}
 

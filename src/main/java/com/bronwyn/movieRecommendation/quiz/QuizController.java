@@ -80,6 +80,7 @@ public class QuizController {
 		try {
 			Quiz quiz = quizService.findQuizByID(quizId).get();
 			model.addAttribute("quiz", quiz);
+			model.addAttribute("choiceValues", ChoiceValue.values());
 		}
 
 		catch (Exception ex) {
@@ -108,16 +109,16 @@ public class QuizController {
 				System.out.println("-----------Existing prompt " + existingQuestion.getPrompt() + "------------------");
 			}
 			
-			List<Question> quizQuestionList = updateForm.getQuizQuestion();
+			List<QuestionUpdateForm> quizQuestionList = updateForm.getQuizQuestion();
 				System.out.println("-----------Number of Question " + quizQuestionList.size() + "------------------");
 			
-			for (Question singleQuestion : quizQuestionList) {
+			for (QuestionUpdateForm singleQuestion : quizQuestionList) {
 				System.out.println("-----------Updated prompt " + singleQuestion.getPrompt() + "------------------");
 			}
 			
 			for (int i = 0; i < ExistingQuestions.size(); i++) {
 				Question question = ExistingQuestions.get(i);
-				Question updatedQuestion = quizQuestionList.get(i);
+				QuestionUpdateForm updatedQuestion = quizQuestionList.get(i);
 				String updatedPrompt = updatedQuestion.getPrompt();
 				question.setPrompt(updatedPrompt);
 			
