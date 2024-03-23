@@ -14,15 +14,19 @@
 	<input type="text" th:name="quizTitle" th:value="${quiz.quizTitle}">
 		<!-- Add a hidden input field to store the quizId -->
 		<input type="hidden" th:name="id" th:value="${quiz.id}" />
-
-		<ul th:if="${questions}">
-			<li th:each="question : ${questions}"><input type="text" style = "width: 400px;"
-				th:value="${question.prompt}" /> <input type="hidden"
-				th:name="questionId" th:value="${question.id}" /> 
+		<input type="hidden" th:name="quizQuestionList" th:value="${quiz.quizQuestion}" />
+	
+	    	<ul th:if="${quiz.quizQuestion}"> 
+	    	
+			<li th:each="question, iterStat : ${quiz.quizQuestion}">
+			<input type="text" style = "width: 400px;"
+				th:value="${question.prompt}"
+			    th:name="'quizQuestion[' + __${iterStat.index}__ + '].prompt'" /> 
+				
+				
 				<ul th:if="${question.questionChoice}">
 					<li th:each="choice : ${question.questionChoice}"><label>
-						     <select th:name="'choice_' + ${question.id}" >
-                        <!-- Iterate over enum values for each QuestionChoice -->
+						 <select th:name="'choice_' + ${question.id}" >
                         <option th:each="value : ${choiceValues}" 
                                 th:value="${value}" 
                                 th:text="${value}" 
@@ -37,6 +41,6 @@
 		<button type="submit">Update Quiz</button>
 	</form>
 
-	<p th:unless="${questions}">No questions available</p>
+	<p th:unless="${quiz.quizQuestion}">No questions available</p>
 </body>
 </html>

@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bronwyn.movieRecommendation.formSubmission.QuestionUpdateForm;
 import com.bronwyn.movieRecommendation.formSubmission.QuizUpdateForm;
 import com.bronwyn.movieRecommendation.personalizedMessage.AnswerChoice;
 import com.bronwyn.movieRecommendation.personalizedMessage.PersonalizedMessage;
 import com.bronwyn.movieRecommendation.personalizedMessage.PersonalizedMessageService;
 import com.bronwyn.movieRecommendation.question.Question;
+import com.bronwyn.movieRecommendation.question.QuestionService;
 import com.bronwyn.movieRecommendation.questionChoice.ChoiceValue;
 import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
 
@@ -33,10 +35,12 @@ public class QuizController {
 	@Autowired
 	private final QuizRepository quizRepository;
 	private final QuizService quizService;
+	private final QuestionService questionService;
 	private final PersonalizedMessageService personalizedMessageService;
 
-	public QuizController(QuizService quizService, QuizRepository quizRepository, PersonalizedMessageService personalizedMessageService) {
+	public QuizController(QuizService quizService, QuestionService questionService, QuizRepository quizRepository, PersonalizedMessageService personalizedMessageService) {
 		this.quizService = quizService;
+		this.questionService = questionService;
 		this.personalizedMessageService = personalizedMessageService;
 		this.quizRepository = quizRepository;
 	}
@@ -70,61 +74,65 @@ public class QuizController {
 	}
 	
 	
-	
 	@GetMapping("/edit/{quizId}")
 	public String getEditQuiz(Model model, @PathVariable("quizId") Long quizId) {
-		
+
 		try {
 			Quiz quiz = quizService.findQuizByID(quizId).get();
 			model.addAttribute("quiz", quiz);
-			
-			 List<Question> questions = quizService.getQuestionsForQuiz(quizId);
-		      model.addAttribute("questions", questions);
-			
-			model.addAttribute("choiceValues", ChoiceValue.values());
-			
 		}
-		
-		catch(Exception ex){
+
+		catch (Exception ex) {
 			System.out.println("Quiz does not exist");
 			return "quizList";
 		}
 		return "updateQuiz";
 	}
-	
-	
+
 	@PostMapping("/submitEdit")
 	public String postEditQuiz(@ModelAttribute("updateForm") QuizUpdateForm updateForm, Model model) {
+
 		Long quizId = updateForm.getId();
 		Optional<Quiz> optionalQuiz = quizService.findQuizByID(quizId);
 		
+
 		if (optionalQuiz.isPresent()) {
-		    Quiz existingQuiz = optionalQuiz.get(); // Extract the Quiz object from Optional
-		
-		    existingQuiz.setQuizTitle(updateForm.getQuizTitle());
-		    System.out.println(existingQuiz.getQuizTitle());
-		    quizRepository.save(existingQuiz);
-		    model.addAttribute("quizzes", quizService.getAllQuizzes());
+			Quiz existingQuiz = optionalQuiz.get();
+			existingQuiz.setQuizTitle(updateForm.getQuizTitle());
+
+			
+			List<Question> ExistingQuestions = existingQuiz.getQuizQuestion();
+			
+			
+			for (Question existingQuestion : ExistingQuestions) {
+				System.out.println("-----------Existing prompt " + existingQuestion.getPrompt() + "------------------");
+			}
+			
+			List<Question> quizQuestionList = updateForm.getQuizQuestion();
+				System.out.println("-----------Number of Question " + quizQuestionList.size() + "------------------");
+			
+			for (Question singleQuestion : quizQuestionList) {
+				System.out.println("-----------Updated prompt " + singleQuestion.getPrompt() + "------------------");
+			}
+			
+			for (int i = 0; i < ExistingQuestions.size(); i++) {
+				Question question = ExistingQuestions.get(i);
+				Question updatedQuestion = quizQuestionList.get(i);
+				String updatedPrompt = updatedQuestion.getPrompt();
+				question.setPrompt(updatedPrompt);
+			
+			//	System.out.println("-----------Updated prompt " + updatedPrompt + "------------------");
+			}
+			quizRepository.save(existingQuiz);
+
+			model.addAttribute("quizzes", quizService.getAllQuizzes());
 			return "quizList";
 		} else {
-		    System.out.println("Quiz not found");
+			System.out.println("Quiz not found");
 			return "quizList";
 		}
 	}
 
-		
-	//quizUpdateForm.setQuizQuestion(quiz.getQuizQuestion());
-	//quizUpdateForm.setPersonalizedMessage(quiz.getPersonalizedMessage());
-
-  	
-	
-		
-		
-		
-	
-	
-	  //When a request is sent to a specific URL, the framework looks for a method in the controller that is mapped to that URL. 
-	  //The mapping is done using annotations like @RequestMapping, @GetMapping, @PostMapping, etc. 
       @GetMapping(path = "/selection") 
       public String showQuizList(Model model) {
           // Retrieve the list of existing Quiz objects from the service or repository

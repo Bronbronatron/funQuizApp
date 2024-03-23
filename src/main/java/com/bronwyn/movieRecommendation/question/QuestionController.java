@@ -49,8 +49,4 @@ public class QuestionController {
 	}
 	
 	
-	 @PutMapping("{questionId}")
-	    public void updateQuestion(@PathVariable Long questionId, @RequestBody QuestionUpdateForm questionUpdateForm) {
-	        questionService.updateQuestionUsingForm(questionId, questionUpdateForm);
-	    }
 }

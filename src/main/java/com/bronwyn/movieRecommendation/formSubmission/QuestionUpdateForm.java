@@ -2,6 +2,9 @@ package com.bronwyn.movieRecommendation.formSubmission;
 
 import java.util.List;
 
+import com.bronwyn.movieRecommendation.questionChoice.QuestionChoice;
+import com.bronwyn.movieRecommendation.quiz.Quiz;
+
 public class QuestionUpdateForm {
 
 
@@ -9,21 +12,48 @@ public class QuestionUpdateForm {
 	
 	}
 
-	
+	protected long id;
 	private String prompt;
-	private List<QuestionChoiceUpdateForm> questionChoiceUpdateForm;
+	private List<QuestionChoice> questionChoice;
+	
+	
+	protected Quiz quiz;
 
 	
-    public QuestionUpdateForm(List<QuestionChoiceUpdateForm> questionChoiceUpdateForm) {
-		
-		this.questionChoiceUpdateForm = questionChoiceUpdateForm;
+    public List<QuestionChoice> getQuestionChoice() {
+		return questionChoice;
 	}
 
 
 
-	public QuestionUpdateForm(String prompt, List<QuestionChoiceUpdateForm> questionChoiceUpdateForm) {
+	public void setQuestionChoice(List<QuestionChoice> questionChoice) {
+		
+		this.questionChoice = questionChoice;
+	}
+
+
+
+	public Quiz getQuiz() {
+		return quiz;
+	}
+
+
+
+	public void setQuiz(Quiz quiz) {
+		this.quiz = quiz;
+	}
+
+
+
+	public QuestionUpdateForm(List<QuestionChoice> questionChoiceUpdateForm) {
+		this.questionChoice = questionChoiceUpdateForm;
+	}
+
+
+
+	public QuestionUpdateForm(String prompt, List<QuestionChoice> questionChoiceUpdateForm) {
         this.prompt = prompt;
-        this.questionChoiceUpdateForm = questionChoiceUpdateForm;
+        this.questionChoice = questionChoiceUpdateForm;
     }
 
 
@@ -31,7 +61,7 @@ public class QuestionUpdateForm {
 	@Override
 	public String toString() {
 		return "QuestionUpdateForm{" + "prompt='" + prompt + '\'' + '\'' + ", questionChoices="
-				+ questionChoiceUpdateForm + '}';
+				+ questionChoice + '}';
 
 	}
 
@@ -42,13 +72,18 @@ public class QuestionUpdateForm {
 	public void setPrompt(String prompt) {
 		this.prompt = prompt;
 	}
+	
 
 
-	public List<QuestionChoiceUpdateForm> getQuestionChoiceUpdateForm() {
-		return questionChoiceUpdateForm;
+	public long getId() {
+		return id;
 	}
 
-	public void setQuestionChoiceUpdateForm(List<QuestionChoiceUpdateForm> questionChoiceUpdateForm) {
-		this.questionChoiceUpdateForm = questionChoiceUpdateForm;
+
+
+	public void setId(long id) {
+		this.id = id;
 	}
+
+
 }

@@ -71,6 +71,8 @@ public class QuestionService {
 		questionRepository.deleteById(questionId);
 	}
 
+	
+	/*
 	@Transactional
 	public void updateQuestionUsingForm(Long questionId, QuestionUpdateForm questionUpdateForm) {
 	    Question existingQuestion = questionRepository.findById(questionId)
@@ -104,6 +106,6 @@ public class QuestionService {
 	    questionRepository.save(existingQuestion);
 	    
 	}
-
+*/
 
 }
