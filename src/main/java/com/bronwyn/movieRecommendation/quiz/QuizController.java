@@ -122,19 +122,19 @@ public class QuizController {
 		   
 		   
 		  for ( QuestionChoiceUpdateForm updatedQuestionChoice : questionChoicelist ) {
-			  System.out.println("------------New Prompt-----------" + updatedQuestionChoice);
+			  System.out.println("------------New Prompt-----------" + updatedQuestionChoice.getChoicePrompt());
+			  System.out.println("------------Choice Value-----------" + updatedQuestionChoice.getChoiceValue());
+			  
 		  }
-
-		
 					
 					
-						//	for (int j = 0; i < existingQuestionChoices.size(); j++) {
-						//				QuestionChoice existingQuestionChoice = existingQuestionChoices.get(j);
-						//				QuestionChoiceUpdateForm updatedQuestionChoice = updatedQuestionChoices.get(j);
-						//				existingQuestionChoice.setChoicePrompt(updatedQuestionChoice.getChoicePrompt());
-						//				existingQuestionChoice.setChoiceValue(updatedQuestionChoice.getChoiceValue())
+						for (int j = 0; j < existingChoicelist.size(); j++) {
+									QuestionChoice existingQuestionChoice = existingChoicelist.get(j);
+					    			QuestionChoiceUpdateForm updatedQuestionChoice = questionChoicelist.get(j);
+					    			existingQuestionChoice.setChoicePrompt(updatedQuestionChoice.getChoicePrompt());
+									existingQuestionChoice.setChoiceValue(updatedQuestionChoice.getChoiceValue());
 								
-							//}
+							}
 			
 				
 			}
