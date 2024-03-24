@@ -14,25 +14,24 @@
 	<input type="text" th:name="quizTitle" th:value="${quiz.quizTitle}">
 		<!-- Add a hidden input field to store the quizId -->
 		<input type="hidden" th:name="id" th:value="${quiz.id}" />
-		<input type="hidden" th:name="quizQuestionList" th:value="${quiz.quizQuestion}" />
-	
+
+		
 	    	<ul th:if="${quiz.quizQuestion}"> 
 	    	
-			<li th:each="question, iterStat : ${quiz.quizQuestion}">
+			<li th:each="question, questionIterStat : ${quiz.quizQuestion}">
 			<input type="text" style = "width: 400px;"
 				th:value="${question.prompt}"
-			    th:name="'quizQuestion[' + __${iterStat.index}__ + '].prompt'" /> 
-				
-				
+			    th:name="'quizQuestion[' + __${questionIterStat.index}__ + '].prompt'" /> 
+			 
 				<ul th:if="${question.questionChoice}">
-					<li th:each="choice : ${question.questionChoice}"><label>
-						 <select th:name="'choice_' + ${question.id}" >
+					<li th:each="choice, choiceIterStat : ${question.questionChoice}"><label>
+						 <select th:name="'quizQuestion[' + __${questionIterStat.index}__ + '].questionChoice[' + __${choiceIterStat.index}__ + '].choiceValue'" >
                         <option th:each="value : ${choiceValues}" 
                                 th:value="${value}" 
                                 th:text="${value}" 
                                 th:selected="${value == choice.choiceValue}"></option>
                   		  </select>
-                      <input th:value="${choice.choicePrompt}" th:name = "choicePrompt" type="text" style = "width: 200px;" >
+                      <input th:value="${choice.choicePrompt}" th:name = "'quizQuestion[' + __${questionIterStat.index}__ + '].questionChoice[' + __${choiceIterStat.index}__ + '].choicePrompt'" type="text" style = "width: 200px;" >
 					</label></li>
 				</ul>
 				<p th:unless="${question.questionChoice}">No choices available</p></li>

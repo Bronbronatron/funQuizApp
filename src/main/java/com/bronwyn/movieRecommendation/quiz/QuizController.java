@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bronwyn.movieRecommendation.formSubmission.QuestionChoiceUpdateForm;
 import com.bronwyn.movieRecommendation.formSubmission.QuestionUpdateForm;
 import com.bronwyn.movieRecommendation.formSubmission.QuizUpdateForm;
 import com.bronwyn.movieRecommendation.personalizedMessage.AnswerChoice;
@@ -103,26 +104,39 @@ public class QuizController {
 
 			
 			List<Question> ExistingQuestions = existingQuiz.getQuizQuestion();
-			
-			
-			for (Question existingQuestion : ExistingQuestions) {
-				System.out.println("-----------Existing prompt " + existingQuestion.getPrompt() + "------------------");
-			}
-			
 			List<QuestionUpdateForm> quizQuestionList = updateForm.getQuizQuestion();
-				System.out.println("-----------Number of Question " + quizQuestionList.size() + "------------------");
+				
+
 			
-			for (QuestionUpdateForm singleQuestion : quizQuestionList) {
-				System.out.println("-----------Updated prompt " + singleQuestion.getPrompt() + "------------------");
-			}
 			
 			for (int i = 0; i < ExistingQuestions.size(); i++) {
 				Question question = ExistingQuestions.get(i);
 				QuestionUpdateForm updatedQuestion = quizQuestionList.get(i);
 				String updatedPrompt = updatedQuestion.getPrompt();
 				question.setPrompt(updatedPrompt);
+				
+							
+		   List<QuestionChoice> existingChoicelist = question.getQuestionChoice(); 
+	
+		   List<QuestionChoiceUpdateForm>  questionChoicelist = updatedQuestion.getQuestionChoice();
+		   
+		   
+		  for ( QuestionChoiceUpdateForm updatedQuestionChoice : questionChoicelist ) {
+			  System.out.println("------------New Prompt-----------" + updatedQuestionChoice);
+		  }
+
+		
+					
+					
+						//	for (int j = 0; i < existingQuestionChoices.size(); j++) {
+						//				QuestionChoice existingQuestionChoice = existingQuestionChoices.get(j);
+						//				QuestionChoiceUpdateForm updatedQuestionChoice = updatedQuestionChoices.get(j);
+						//				existingQuestionChoice.setChoicePrompt(updatedQuestionChoice.getChoicePrompt());
+						//				existingQuestionChoice.setChoiceValue(updatedQuestionChoice.getChoiceValue())
+								
+							//}
 			
-			//	System.out.println("-----------Updated prompt " + updatedPrompt + "------------------");
+				
 			}
 			quizRepository.save(existingQuiz);
 

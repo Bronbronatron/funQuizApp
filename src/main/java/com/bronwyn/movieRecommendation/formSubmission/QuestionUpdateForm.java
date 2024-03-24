@@ -12,21 +12,29 @@ public class QuestionUpdateForm {
 	
 	}
 
+	public QuestionUpdateForm(long id, String prompt, List<QuestionChoiceUpdateForm> questionChoice, Quiz quiz) {
+		super();
+		this.id = id;
+		this.prompt = prompt;
+		this.questionChoice = questionChoice;
+		this.quiz = quiz;
+	}
+
 	protected long id;
 	private String prompt;
-	private List<QuestionChoice> questionChoice;
+	private List<QuestionChoiceUpdateForm> questionChoice;
 	
 	
 	protected Quiz quiz;
 
 	
-    public List<QuestionChoice> getQuestionChoice() {
+    public List<QuestionChoiceUpdateForm> getQuestionChoice() {
 		return questionChoice;
 	}
 
 
 
-	public void setQuestionChoice(List<QuestionChoice> questionChoice) {
+	public void setQuestionChoice(List<QuestionChoiceUpdateForm> questionChoice) {
 		
 		this.questionChoice = questionChoice;
 	}
@@ -45,13 +53,13 @@ public class QuestionUpdateForm {
 
 
 
-	public QuestionUpdateForm(List<QuestionChoice> questionChoiceUpdateForm) {
+	public QuestionUpdateForm(List<QuestionChoiceUpdateForm> questionChoiceUpdateForm) {
 		this.questionChoice = questionChoiceUpdateForm;
 	}
 
 
 
-	public QuestionUpdateForm(String prompt, List<QuestionChoice> questionChoiceUpdateForm) {
+	public QuestionUpdateForm(String prompt, List<QuestionChoiceUpdateForm> questionChoiceUpdateForm) {
         this.prompt = prompt;
         this.questionChoice = questionChoiceUpdateForm;
     }
