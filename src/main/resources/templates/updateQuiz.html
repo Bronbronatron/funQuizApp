@@ -36,6 +36,15 @@
 				</ul>
 				<p th:unless="${question.questionChoice}">No choices available</p></li>
 		</ul>
+		
+		
+		   <ul th:if="${quiz.personalizedMessage}">
+			<li th:each = "message, messageIterStat : ${quiz.personalizedMessage}">
+				  <textarea style="width: 400px; height: 80px;" th:name = "'personalizedMessage[' + __${messageIterStat.index}__ + '].message'" >[[${message.message}]]</textarea>
+				 
+			 </li>
+			</ul>
+				
 
 		<button type="submit">Update Quiz</button>
 	</form>
