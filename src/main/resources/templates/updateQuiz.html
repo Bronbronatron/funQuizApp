@@ -24,7 +24,8 @@
 			    th:name="'quizQuestion[' + __${questionIterStat.index}__ + '].prompt'" /> 
 			 
 				<ul th:if="${question.questionChoice}">
-					<li th:each="choice, choiceIterStat : ${question.questionChoice}"><label>
+					<li th:each="choice, choiceIterStat : ${question.questionChoice}">
+					<label>
 						 <select th:name="'quizQuestion[' + __${questionIterStat.index}__ + '].questionChoice[' + __${choiceIterStat.index}__ + '].choiceValue'" >
                         <option th:each="value : ${choiceValues}" 
                                 th:value="${value}" 
@@ -40,10 +41,18 @@
 		
 		   <ul th:if="${quiz.personalizedMessage}">
 			<li th:each = "message, messageIterStat : ${quiz.personalizedMessage}">
-				  <textarea style="width: 400px; height: 80px;" th:name = "'personalizedMessage[' + __${messageIterStat.index}__ + '].message'" >[[${message.message}]]</textarea>
-				 
-			 </li>
-			</ul>
+			<label>
+			<select th:name = "'personalizedMessage[' + __${messageIterStat.index}__ + '].answerChoice'">
+			<option th:each = "answerValue : ${answerChoice}"
+			th:value = "${answerValue}"
+			th:text = "${answerValue}"
+			th:selected="${answerValue == message.answerChoice}"></option>
+			</select>
+			  <textarea style="width: 400px; height: 80px;" th:name = "'personalizedMessage[' + __${messageIterStat.index}__ + '].message'" >[[${message.message}]]</textarea>
+			</label> </li>
+		</ul>
+		
+		
 				
 
 		<button type="submit">Update Quiz</button>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bronwyn.movieRecommendation.formSubmission.PersonalizedMessageUpdateForm;
 import com.bronwyn.movieRecommendation.formSubmission.QuestionChoiceUpdateForm;
 import com.bronwyn.movieRecommendation.formSubmission.QuestionUpdateForm;
 import com.bronwyn.movieRecommendation.formSubmission.QuizUpdateForm;
@@ -81,6 +82,7 @@ public class QuizController {
 			Quiz quiz = quizService.findQuizByID(quizId).get();
 			model.addAttribute("quiz", quiz);
 			model.addAttribute("choiceValues", ChoiceValue.values());
+			model.addAttribute("answerChoice", AnswerChoice.values());
 		}
 
 		catch (Exception ex) {
@@ -110,14 +112,8 @@ public class QuizController {
 				question.setPrompt(updatedPrompt);
 
 				List<QuestionChoice> existingChoicelist = question.getQuestionChoice();
-
 				List<QuestionChoiceUpdateForm> questionChoicelist = updatedQuestion.getQuestionChoice();
 
-				for (QuestionChoiceUpdateForm updatedQuestionChoice : questionChoicelist) {
-					System.out.println("------------New Prompt-----------" + updatedQuestionChoice.getChoicePrompt());
-					System.out.println("------------Choice Value-----------" + updatedQuestionChoice.getChoiceValue());
-
-				}
 
 				for (int j = 0; j < existingChoicelist.size(); j++) {
 					QuestionChoice existingQuestionChoice = existingChoicelist.get(j);
@@ -128,6 +124,16 @@ public class QuizController {
 				}
 
 			}
+			
+			List<PersonalizedMessage> existingPersonalizedMessage = existingQuiz.getPersonalizedMessage();
+			List<PersonalizedMessageUpdateForm> updatedPersonalizedMessage = updateForm.getPersonalizedMessage();
+			
+			for (PersonalizedMessageUpdateForm newMessage : updatedPersonalizedMessage) {
+				//System.out.println("------------New Message Prompt-----------" + newMessage.getMessage());
+				System.out.println("------------Choice Value-----------" + newMessage.getAnswerChoice());
+
+			}
+
 			quizRepository.save(existingQuiz);
 
 			model.addAttribute("quizzes", quizService.getAllQuizzes());

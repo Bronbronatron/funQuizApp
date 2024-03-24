@@ -7,6 +7,10 @@ import com.bronwyn.movieRecommendation.personalizedMessage.AnswerChoice;
 
 public class PersonalizedMessageUpdateForm {
 
+	public PersonalizedMessageUpdateForm() {
+		super();
+	}
+
 	public PersonalizedMessageUpdateForm(String message, AnswerChoice answerChoice) {
 		this.message = message;
 		this.answerChoice = answerChoice;
