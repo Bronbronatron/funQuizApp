@@ -108,9 +108,7 @@ public class QuizController {
 			for (int i = 0; i < ExistingQuestions.size(); i++) {
 				Question question = ExistingQuestions.get(i);
 				QuestionUpdateForm updatedQuestion = quizQuestionList.get(i);
-				String updatedPrompt = updatedQuestion.getPrompt();
-				question.setPrompt(updatedPrompt);
-
+				question.setPrompt(updatedQuestion.getPrompt());
 				List<QuestionChoice> existingChoicelist = question.getQuestionChoice();
 				List<QuestionChoiceUpdateForm> questionChoicelist = updatedQuestion.getQuestionChoice();
 
@@ -120,19 +118,20 @@ public class QuizController {
 					QuestionChoiceUpdateForm updatedQuestionChoice = questionChoicelist.get(j);
 					existingQuestionChoice.setChoicePrompt(updatedQuestionChoice.getChoicePrompt());
 					existingQuestionChoice.setChoiceValue(updatedQuestionChoice.getChoiceValue());
-
 				}
 
 			}
 			
 			List<PersonalizedMessage> existingPersonalizedMessage = existingQuiz.getPersonalizedMessage();
-			List<PersonalizedMessageUpdateForm> updatedPersonalizedMessage = updateForm.getPersonalizedMessage();
+			List<PersonalizedMessageUpdateForm> updatedPersonalizedMessageList = updateForm.getPersonalizedMessage();
 			
-			for (PersonalizedMessageUpdateForm newMessage : updatedPersonalizedMessage) {
-				//System.out.println("------------New Message Prompt-----------" + newMessage.getMessage());
-				System.out.println("------------Choice Value-----------" + newMessage.getAnswerChoice());
-
+			for (int k = 0; k < existingPersonalizedMessage.size(); k++) {
+				PersonalizedMessage currentPersonalizedMessage = existingPersonalizedMessage.get(k);
+				PersonalizedMessageUpdateForm updatedPersonalizedMessage = updatedPersonalizedMessageList.get(k);
+				currentPersonalizedMessage.setMessage(updatedPersonalizedMessage.getMessage());
+				currentPersonalizedMessage.setAnswerChoice(updatedPersonalizedMessage.getAnswerChoice());
 			}
+		
 
 			quizRepository.save(existingQuiz);
 
